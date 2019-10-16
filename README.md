@@ -9,12 +9,12 @@ A bot to scour postings on secondhand market sites so I don't have to.
 ### Search
 
 Scourable platforms:
-- [ ] Craigslist
-- [ ] eBay
-- [ ] LetGo
-- [ ] OfferUp
+- [ ] [Craigslist](https://seattle.craigslist.org/)
+- [ ] [eBay](https://www.ebay.com/)
+- [ ] [LetGo](https://us.letgo.com/en)
+- [ ] [OfferUp](https://offerup.com/)
 
 ### Notifications
 
-Modes of findings notification:
+Modes of sending findings:
 - [ ] E-mail

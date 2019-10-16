@@ -1,4 +1,11 @@
+# TEMPORARY
+contacts.txt
+
+# PERMANENT
 .env
 *.env
+
+.vscode
+.vscode/*
 
 node_modules
