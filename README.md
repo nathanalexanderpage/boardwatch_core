@@ -8,7 +8,7 @@ A bot to scour postings on secondhand market sites so I don't have to.
 
 ### Search
 
-Platforms to be scoured, by method:
+Scourable platforms:
 - [ ] Craigslist
 - [ ] eBay
 - [ ] LetGo
