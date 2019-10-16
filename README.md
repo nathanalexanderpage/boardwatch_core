@@ -18,3 +18,8 @@ Platforms to be scoured, by method:
 
 Modes of findings notification:
 * E-mail
+
+But I have to admit, tasks lists are my favorite:
+
+- [x] This is a complete item
+- [ ] This is an incomplete item
