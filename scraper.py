@@ -1,8 +1,6 @@
-import pprint
 import requests
+from scraper_result import *
 from bs4 import BeautifulSoup
-
-pp = pprint.PrettyPrinter(indent=2)
 
 class Scraper():
 	def __init__(self):
@@ -38,20 +36,19 @@ class CraigslistScraper(Scraper):
 	def parse_search_response(self, html_response):
 		soup = BeautifulSoup(html_response, 'html.parser')
 		results = soup.find(id='sortable-results').ul.find_all('li')
+		
 		results_data = []
 		for result in results:
-			print(result.prettify())
-			result_data = {}
-			title_tag = result.find(class_='result-title')
-			result_data["title"] = title_tag.text.lower()
-			result_data["url"] = title_tag['href']
-			result_data["datetime"] = result.p.time['datetime']
-			result_data["price"] = result.find(class_='result-price').text
-			result_data["neighborhood"] = result.find(class_='result-hood').text
-			results_data.append(result_data)
+			result_data = CraigslistScraperResult(result)
+			results_data.append(result_data.data)
 		return results_data
 
 if __name__ == '__main__':
+	print('running ' + __file__)
+
+	import pprint
+	pp = pprint.PrettyPrinter(indent=2)
+
 	cl_scraper = CraigslistScraper()
 	test_response = cl_scraper.search('video_games').content
 	test_parsed_results = cl_scraper.parse_search_response(test_response)
