@@ -1,5 +1,5 @@
 import requests
-from scraper_result import *
+from result_parser import *
 from bs4 import BeautifulSoup
 
 class Scraper():
