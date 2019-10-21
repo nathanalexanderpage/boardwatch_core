@@ -18,7 +18,7 @@ class ScraperResult():
 class CraigslistScraperResult(ScraperResult):
 	def scrape_data(self):
 		title_tag = self.soup.find(class_='result-title')
-		self.data['title'] = title_tag.text.lower().strip()
+		self.data['title'] = title_tag.text.strip()
 		self.data['url'] = title_tag['href'].strip()
 		self.data['datetime'] = self.soup.p.time['datetime'].strip()
 		if self.soup.find(class_='result-price'):
