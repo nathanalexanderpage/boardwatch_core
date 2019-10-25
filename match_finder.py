@@ -1,14 +1,17 @@
-from console_data_resource import *
-
 class MatchFinder():
+	"""parent match finder class -- mostly for rules inheritance; not to be used to find actual matches"""
+
+	# class variables
+	MATCH_SCORE_THRESHOLD = 2
+
 	def __init__(self, want, config):
-		self.type = 'generic'
 		self.want = want
 		self.config = config
-		self.def_self_attr(config)
+		self.def_self_attr(self)
 
 	def def_self_attr(self):
-
+		self.type = 'generic'
+		self.attr = 'this is a catch-all function for the parent class; usually, this is where child classes define instance attributes that are specific to each child class'
 
 	def assess_match(self, result):
 		match_score = 0.9
@@ -24,8 +27,9 @@ class MatchFinder():
 		return match_score
 
 class ConsoleMatchFinder(MatchFinder):
-	def def_self_attr(self, config):
-		self.type = 'console'
+	"""for finding consoles"""
+	
+	def def_self_attr(self):
 		self.avoid = {
 			'anywhere': [
 				'I will'
@@ -47,6 +51,8 @@ if __name__ == '__main__':
 	print('running ' + __file__)
 
 	import pprint
+	from console_data_resource import *
+	
 	pp = pprint.PrettyPrinter(indent=2)
 	
 	result = {
@@ -57,7 +63,11 @@ if __name__ == '__main__':
 		'url': 'https://seattle.craigslist.org/see/vgm/d/seattle-playstation-4-pro/6999023452.html'
 	}
 
+	config = {
+		'price_point': 100
+	}
+
 	pp.pprint(consoles)
-	matcher = MatchFinder(example_want_ps4)
+	matcher = MatchFinder(ps4)
 	print(matcher.assess_match(result))
 	# matches = [x for x in lst if fulfills_some_condition(x)]
