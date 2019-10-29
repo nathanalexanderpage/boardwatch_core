@@ -9,6 +9,8 @@ ps4 = {
 	'developer': 'Sony',
 	'manufacturers': [],
 	'generation': 8,
+	'names_other': [
+	],
 	'variations': [
 		{
 			'id': '01',
