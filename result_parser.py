@@ -1,4 +1,5 @@
 import pprint
+import re
 from bs4 import BeautifulSoup
 
 pp = pprint.PrettyPrinter(indent=2)
@@ -18,7 +19,22 @@ class ScraperResult():
 class CraigslistScraperResult(ScraperResult):
 	def scrape_data(self):
 		title_tag = self.soup.find(class_='result-title')
-		self.data['title'] = title_tag.text.strip()
+		title_tag_cleaned = re.sub(',', ', ', title_tag.text).strip()
+		title_tag_cleaned = re.sub(' {2,}', ' ', title_tag_cleaned)
+		self.data['title'] = title_tag_cleaned
+		duplicate_remove_chars = [
+			'\\?'
+			'\\*'
+			'!',
+			'-',
+			',',
+			'~',
+			'&'
+		]
+		for char in duplicate_remove_chars:
+			str_to_replace_command = char + '{2,}'
+			title_tag_cleaned = re.sub(str_to_replace_command, char, title_tag_cleaned)
+		self.data['title_massaged'] = title_tag_cleaned
 		self.data['url'] = title_tag['href'].strip()
 		self.data['datetime'] = self.soup.p.time['datetime'].strip()
 		if self.soup.find(class_='result-price'):

@@ -40,29 +40,51 @@ class MatchFinder():
 	def build_string_matches(self):
 		print('use child class\'s')
 
-	def assess_match(self, result):
-		stop_matching = False
+	def match_score_calculate(self, result):
+		stop_matching_positive = False
+		stop_matching_negative = False
 		match_score = 1
 		title_compare = result['title'].lower()
+		# positive match multipliers
 		for match_string_exact in self.match_factors['positive']['exact']:
 			if match_string_exact.lower() == title_compare:
-				stop_matching = True
+				stop_matching_positive = True
 				match_score *= self.MATCH_MULTIPLIER_EXACT
 				break
 		for match_string_strong in self.match_factors['positive']['strong']:
-			if stop_matching:
+			if stop_matching_positive:
 				break
 			if match_string_strong.lower() in title_compare:
 				match_score *= self.MATCH_MULTIPLIER_STRONG
 				break
 		for match_string_weak in self.match_factors['positive']['weak']:
-			if stop_matching:
+			if stop_matching_positive:
 				break
 			if match_string_weak.lower() in title_compare:
 				match_score *= self.MATCH_MULTIPLIER_WEAK
 				break
+		# negative match multipliers
+		for match_string_strong in self.match_factors['negative']['strong']:
+			if stop_matching_negative:
+				break
+			if match_string_strong.lower() in title_compare:
+				match_score /= self.MATCH_MULTIPLIER_STRONG
+				break
+		for match_string_weak in self.match_factors['negative']['weak']:
+			if stop_matching_negative:
+				break
+			if match_string_weak.lower() in title_compare:
+				match_score /= self.MATCH_MULTIPLIER_STRONG
+				break
+
 		print(str(match_score))
 		return match_score
+	
+	def assess_match(self, result):
+		if self.match_score_calculate(result) >= self.MATCH_SCORE_THRESHOLD:
+			return True
+		else:
+			return False
 
 	def assess_meta_price_point(self, result):
 		"""determine if match is at or below user's specified price point"""
@@ -79,11 +101,6 @@ class ConsoleMatchFinder(MatchFinder):
 
 	def __str__(self):
 		return 'MatchFinder instance for finding ' + self.want['developer'] + ' ' + self.want['name']
-
-	match_factors = {
-		'positive': {},
-		'negative': {}
-	}
 	
 	def def_self_attr(self):
 		self.avoid = {
@@ -94,7 +111,8 @@ class ConsoleMatchFinder(MatchFinder):
 				'box only',
 				'repairs',
 				'broken',
-				'busted'
+				'busted',
+				'defective'
 			],
 			'before': {
 				'space_separated_yes': [
@@ -107,16 +125,18 @@ class ConsoleMatchFinder(MatchFinder):
 			},
 			'after': {
 				'space_separated_yes': [
+					'compatible'
 					'for parts',
 					'for pieces',
 					'accessory',
 					'accessories',
 					'controller',
 					'control',
-					'pad',
-
+					'pad'
 				],
-				'space_separated_no': []
+				'space_separated_no': [
+					'-compatible'
+				]
 			}
 		}
 		self.seek_modifiers = {
@@ -193,10 +213,13 @@ class ConsoleMatchFinder(MatchFinder):
 		# positive strong matches
 		pos_strong = []
 		pos_strong.append(self.want['developer'] + ' ' + self.want['name'] + ' console')
+		pos_strong.append(self.want['developer'] + ' ' + self.want['name'] + ' system')
 		if self.want['abbreviation_official']:
 			pos_strong.append(self.want['developer'] + ' ' + self.want['abbreviation_official'] + ' console')
+			pos_strong.append(self.want['developer'] + ' ' + self.want['abbreviation_official'] + ' system')
 		for name in self.want['names_other']:
 			pos_strong.append(self.want['developer'] + ' ' + name + ' console')
+			pos_strong.append(self.want['developer'] + ' ' + name + ' system')
 		for vtn in self.want['variations']:
 			if vtn['model_no']:
 				pos_strong.append(vtn['model_no'])
@@ -220,7 +243,8 @@ class ConsoleMatchFinder(MatchFinder):
 		pos_weak = []
 
 		pos_weak.append(self.want['name'])
-		pos_weak.append(self.want['abbreviation_official'])
+		if self.want['abbreviation_official']:
+			pos_weak.append(self.want['abbreviation_official'])
 		for name in self.want['names_other']:
 			pos_weak.append(name)
 
@@ -236,6 +260,12 @@ class ConsoleMatchFinder(MatchFinder):
 		# negative strong matches
 		neg_strong = []
 
+		neg_strong.append('(' + self.want['name'] + ')')
+		neg_strong.append('(' + self.want['name_group'] + ')')
+		for name in self.want['names_other']:
+			neg_strong.append('(' + self.want['name_group'] + ')')
+		if self.want['abbreviation_official']:
+			neg_strong.append('(' + self.want['abbreviation_official'] + ')')
 		for name in self.name_group_members:
 			neg_strong.append(name)
 
@@ -263,6 +293,6 @@ if __name__ == '__main__':
 	pp.pprint(consoles)
 	matcher = ConsoleMatchFinder(ps4, {})
 	pp.pprint(matcher.match_factors)
-	match_score = matcher.assess_match(result)
+	match_score = matcher.match_score_calculate(result)
 	print(match_score)
 	# matches = [x for x in lst if fulfills_some_condition(x)]
