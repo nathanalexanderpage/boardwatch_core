@@ -9,7 +9,7 @@ A bot to scour postings on secondhand market sites so I don't have to.
 ### Search
 
 Scourable platforms:
-- [ ] [Craigslist](https://seattle.craigslist.org/)
+- [x] [Craigslist](https://seattle.craigslist.org/)
 - [ ] [eBay](https://www.ebay.com/)
 - [ ] [LetGo](https://us.letgo.com/en)
 - [ ] [OfferUp](https://offerup.com/)
