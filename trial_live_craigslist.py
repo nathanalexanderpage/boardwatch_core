@@ -5,7 +5,7 @@ from scraper import *
 
 pp = pprint.PrettyPrinter(indent=2)
 
-console_to_test = ps4
+console_to_test = ps1
 
 cl_scraper = CraigslistScraper()
 test_response = cl_scraper.search('video_games').content

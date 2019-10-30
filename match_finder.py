@@ -12,11 +12,6 @@ class MatchFinder():
 				'strong': [],
 				'weak': [],
 				'minor': []
-			},
-			'negative': {
-				'strong': [],
-				'weak': [],
-				'minor': []
 			}
 		}
 		self.MATCH_SCORE_THRESHOLD = 1.5
@@ -40,9 +35,33 @@ class MatchFinder():
 	def build_string_matches(self):
 		print('use child class\'s')
 
+	def check_if_weed_out(self, title_compare):
+		for check in self.avoid['anywhere']:
+			if check in title_compare: return True
+		return False
+
+	def check_if_negative_matches(self, title_compare, positive_match_string):
+		print('CHECKING if \'' + positive_match_string + '\' truly matches with \'' + title_compare + '\'')
+		if self.check_if_weed_out(title_compare): return True
+		if title_compare.find(positive_match_string) > 0:
+			for check in self.avoid['before']['space_separated_yes']:
+				print('CHECKING IF \'' + check.lower() + ' ' + positive_match_string + '\' in \'' + title_compare + '\'')
+				if check.lower() + ' ' + positive_match_string in title_compare: return True
+			for check in self.avoid['before']['space_separated_no']:
+				print('CHECKING IF \'' + check.lower() + positive_match_string + '\' in \'' + title_compare + '\'')
+				if check.lower() + positive_match_string in title_compare: return True
+		if title_compare.find(positive_match_string) + len(positive_match_string) < len(title_compare) - 1:
+			for check in self.avoid['after']['space_separated_yes']:
+				print('CHECKING IF \'' + positive_match_string + ' ' + check.lower() + '\' in \'' + title_compare + '\'')
+				if positive_match_string + ' ' + check.lower() in title_compare: return True
+			for check in self.avoid['after']['space_separated_no']:
+				print('CHECKING IF \'' + positive_match_string + check.lower() + '\' in \'' + title_compare + '\'')
+				if positive_match_string + check.lower() in title_compare: return True
+		print(positive_match_string)
+		return False
+
 	def match_score_calculate(self, result):
 		stop_matching_positive = False
-		stop_matching_negative = False
 		match_score = 1
 		title_compare = result['title'].lower()
 		# positive match multipliers
@@ -55,26 +74,21 @@ class MatchFinder():
 			if stop_matching_positive:
 				break
 			if match_string_strong.lower() in title_compare:
-				match_score *= self.MATCH_MULTIPLIER_STRONG
-				break
+				if not self.check_if_negative_matches(title_compare, match_string_strong.lower()):
+					match_score *= self.MATCH_MULTIPLIER_STRONG
 		for match_string_weak in self.match_factors['positive']['weak']:
 			if stop_matching_positive:
 				break
 			if match_string_weak.lower() in title_compare:
-				match_score *= self.MATCH_MULTIPLIER_WEAK
-				break
-		# negative match multipliers
-		for match_string_strong in self.match_factors['negative']['strong']:
-			if stop_matching_negative:
-				break
-			if match_string_strong.lower() in title_compare:
-				match_score /= self.MATCH_MULTIPLIER_STRONG
-				break
-		for match_string_weak in self.match_factors['negative']['weak']:
-			if stop_matching_negative:
+				print('FOUND: ' + match_string_weak)
+				if not self.check_if_negative_matches(title_compare, match_string_weak.lower()):
+					match_score *= self.MATCH_MULTIPLIER_WEAK
+		for match_string_weak in self.match_factors['positive']['minor']:
+			if stop_matching_positive:
 				break
 			if match_string_weak.lower() in title_compare:
-				match_score /= self.MATCH_MULTIPLIER_STRONG
+				stop_matching_positive = True
+				match_score *= self.MATCH_MULTIPLIER_MINOR
 				break
 
 		print(str(match_score))
@@ -109,7 +123,7 @@ class ConsoleMatchFinder(MatchFinder):
 				'wanted:',
 				'no console',
 				'box only',
-				'repairs',
+				'repair',
 				'broken',
 				'busted',
 				'defective'
@@ -119,7 +133,8 @@ class ConsoleMatchFinder(MatchFinder):
 					'for',
 					'for the',
 					'buying',
-					'your'
+					'your',
+					'no'
 				],
 				'space_separated_no': []
 			},
@@ -140,22 +155,12 @@ class ConsoleMatchFinder(MatchFinder):
 			}
 		}
 		self.seek_modifiers = {
-			'anywhere': [],
+			'anywhere': [
+				'Limited Edition'
+			],
 			'before': {
-				'space_separated_yes': [],
-				'space_separated_no': []
-			},
-			'after': {
 				'space_separated_yes': [
-					'with',
-					'plus'
-				],
-				'space_separated_no': []
-			}
-		}
-		self.conjunctions = {
-			'before_or_after': {
-				'positive': [
+					'+',
 					'&',
 					',',
 					';',
@@ -166,20 +171,19 @@ class ConsoleMatchFinder(MatchFinder):
 					'with',
 					'also'
 				],
-				'negative': []
-			},
-			'before': {
-				'positive': [],
-				'negative': [
-					'no'
+				'space_separated_no': [
+					' no'
 				]
 			},
 			'after': {
-				'positive': [],
-				'negative': []
+				'space_separated_yes': [
+					'with',
+					'plus'
+				],
+				'space_separated_no': []
 			}
 		}
-		self.name_group_members = list(filter(lambda console: console['name_group'] == self.want['name_group'], consoles))
+		self.name_group_members = list(filter(lambda console: console['name_group'] == self.want['name_group'] and console['name'] != self.want['name'], consoles))
 
 	def build_string_matches(self):
 		print('building item match profile...')
@@ -197,6 +201,8 @@ class ConsoleMatchFinder(MatchFinder):
 		for vtn in self.want['variations']:
 			if vtn['model_no']:
 				pos_exact.append(vtn['model_no'])
+			if vtn['storage_capacity'] and self.want['abbreviation_official']:
+				pos_exact.append(self.want['abbreviation_official'] + ' ' + vtn['storage_capacity'])
 			if vtn['name']:
 				pos_exact.append(self.want['name'] + ' ' + vtn['name'])
 				pos_exact.append(self.want['developer'] + ' ' + self.want['name'] + ' ' + vtn['name'])
@@ -205,6 +211,7 @@ class ConsoleMatchFinder(MatchFinder):
 					pos_exact.append(self.want['developer'] + ' ' + self.want['name'] + ' ' + vtn['name'] + ' ' + vtn['storage_capacity'])
 					if self.want['abbreviation_official']:
 						pos_exact.append(self.want['abbreviation_official'] + ' ' + vtn['name'] + ' ' + vtn['storage_capacity'])
+						pos_exact.append(self.want['developer'] + ' ' + self.want['abbreviation_official'] + ' ' + vtn['name'] + ' ' + vtn['storage_capacity'])
 				if self.want['abbreviation_official']:
 					pos_exact.append(self.want['abbreviation_official'] + ' ' + vtn['name'])
 					pos_exact.append(self.want['developer'] + ' ' + self.want['abbreviation_official'] + ' ' + vtn['name'])
@@ -233,6 +240,11 @@ class ConsoleMatchFinder(MatchFinder):
 					# 	split_edition_name = edn['name'].split(':')
 					pos_strong.append(self.want['name'] + ' ' + edn['name'])
 					pos_strong.append(edn['name'] + ' ' + self.want['name'])
+					for color in edn['colors']:
+						pos_strong.append(self.want['name'] + ' ' + edn['name'] + ' ' + color)
+						pos_strong.append(color + ' ' + self.want['name'])
+						if vtn['name']:
+							pos_strong.append(self.want['name'] + ' ' + vtn['name'] + ' ' + edn['name'] + ' ' + color)
 				for color in edn['colors']:
 					pos_strong.append(self.want['name'] + ' ' + color)
 					pos_strong.append(color + ' ' + self.want['name'])
@@ -257,19 +269,50 @@ class ConsoleMatchFinder(MatchFinder):
 
 		self.match_factors['positive']['minor'] = pos_minor
 
-		# negative strong matches
-		neg_strong = []
+		# negative matches
+		avoid = {
+			'anywhere': [],
+			'before': {
+				'space_separated_yes': [],
+				'space_separated_no': []
+			},
+			'after': {
+				'space_separated_yes': [],
+				'space_separated_no': []
+			}
+		}
 
-		neg_strong.append('(' + self.want['name'] + ')')
-		neg_strong.append('(' + self.want['name_group'] + ')')
-		for name in self.want['names_other']:
-			neg_strong.append('(' + self.want['name_group'] + ')')
+		for system in self.name_group_members:
+			# if system['name'] not in self.want['name']:
+			# 	avoid['anywhere'].append(system['name'])
+			if self.want['name'] in system['name']:
+				if system['name_prefix']:
+					avoid['before']['space_separated_yes'].append(system['name_prefix'])
+					avoid['before']['space_separated_no'].append(system['name_prefix'])
+				if system['name_suffix']:
+					avoid['after']['space_separated_yes'].append(system['name_suffix'])
+					avoid['after']['space_separated_no'].append(system['name_suffix'])
+
+
+		for neg_match in avoid['anywhere']:
+			self.avoid['anywhere'].append(neg_match)
+		for neg_match in avoid['before']['space_separated_yes']:
+			self.avoid['before']['space_separated_yes'].append(neg_match)
+		for neg_match in avoid['before']['space_separated_no']:
+			self.avoid['before']['space_separated_no'].append(neg_match)
+		for neg_match in avoid['after']['space_separated_yes']:
+			self.avoid['after']['space_separated_yes'].append(neg_match)
+		for neg_match in avoid['after']['space_separated_no']:
+			self.avoid['after']['space_separated_no'].append(neg_match)
+		
+	def parentheses_judger(self, comp_title):
+		pass
 		if self.want['abbreviation_official']:
-			neg_strong.append('(' + self.want['abbreviation_official'] + ')')
-		for name in self.name_group_members:
-			neg_strong.append(name)
-
-		self.match_factors['negative']['strong'] = neg_strong
+			avoid.append('(' + self.want['abbreviation_official'] + ')')
+		avoid.append('(' + self.want['name'] + ')')
+		avoid.append('(' + self.want['name_group'] + ')')
+		for name in self.want['names_other']:
+			avoid.append('(' + self.want['name_group'] + ')')
 
 if __name__ == '__main__':
 	print('running ' + __file__)
@@ -291,8 +334,9 @@ if __name__ == '__main__':
 	}
 
 	pp.pprint(consoles)
-	matcher = ConsoleMatchFinder(ps4, {})
+	matcher = ConsoleMatchFinder(wii, {})
 	pp.pprint(matcher.match_factors)
+	pp.pprint(matcher.avoid)
 	match_score = matcher.match_score_calculate(result)
 	print(match_score)
 	# matches = [x for x in lst if fulfills_some_condition(x)]

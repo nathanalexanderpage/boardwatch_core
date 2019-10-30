@@ -17,4 +17,4 @@ Scourable platforms:
 ### Notifications
 
 Modes of sending findings:
-- [ ] E-mail
+- [x] E-mail

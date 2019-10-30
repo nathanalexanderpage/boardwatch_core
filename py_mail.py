@@ -121,6 +121,11 @@ if __name__ == '__main__':
 
 	<h2>Posts from Craigslist:</h2>
 
+	<details>
+		<summary>This is what you want to show before expanding</summary>
+		<p>This is where you put the details that are shown once expanded</p>
+	</details>
+
 	<p>[ { 'datetime': '2019-10-18 00:56',
 		'neighborhood': '(Kirkland/Kingsgate/Northgate/Greenlake)',
 		'price': 25,
