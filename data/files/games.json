@@ -1,0 +1,1665 @@
+[
+  {
+    "id": 11195,
+    "first_release_date": 1449100800,
+    "name": "Mario & Luigi: Paper Jam",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 37151,
+    "first_release_date": 1507161600,
+    "name": "Mario & Luigi: Superstar Saga + Bowser's Minions",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 90101,
+    "first_release_date": 1544140800,
+    "name": "Super Smash Bros. Ultimate",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 2256,
+    "first_release_date": 1132272000,
+    "name": "Super Mario Strikers",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 6505,
+    "first_release_date": 1085356800,
+    "name": "Mario vs. Donkey Kong",
+    "platforms": [
+      24,
+      37,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 1698,
+    "first_release_date": 953596800,
+    "name": "Wario Land 3",
+    "platforms": [
+      22,
+      37
+    ]
+  },
+  {
+    "id": 1073,
+    "first_release_date": 807580800,
+    "name": "Super Mario World 2: Yoshi's Island",
+    "platforms": [
+      19,
+      24,
+      47,
+      130
+    ]
+  },
+  {
+    "id": 2332,
+    "first_release_date": 714873600,
+    "name": "Super Mario Kart",
+    "platforms": [
+      5,
+      19,
+      37,
+      41,
+      47,
+      58
+    ]
+  },
+  {
+    "id": 115276,
+    "first_release_date": 1561680000,
+    "name": "Super Mario Maker 2",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 2336,
+    "first_release_date": 1330646400,
+    "name": "Mario Party 9",
+    "platforms": [
+      5
+    ]
+  },
+  {
+    "id": 2333,
+    "first_release_date": 1100736000,
+    "name": "Mario Party 6",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 1079,
+    "first_release_date": 1320278400,
+    "name": "Super Mario 3D Land",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 3350,
+    "first_release_date": 1352592000,
+    "name": "Paper Mario: Sticker Star",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 26157,
+    "first_release_date": 1480550400,
+    "name": "Super Mario Maker for Nintendo 3DS",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 1077,
+    "first_release_date": 1193875200,
+    "name": "Super Mario Galaxy",
+    "platforms": [
+      5,
+      41
+    ]
+  },
+  {
+    "id": 9602,
+    "first_release_date": 1416528000,
+    "name": "Super Smash Bros. for Wii U",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 2485,
+    "first_release_date": 1000425600,
+    "name": "Luigi's Mansion",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 20386,
+    "first_release_date": 806284800,
+    "name": "Mario's Tennis",
+    "platforms": [
+      87
+    ]
+  },
+  {
+    "id": 103339,
+    "first_release_date": 1538697600,
+    "name": "Super Mario Party",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 1704,
+    "first_release_date": 1097712000,
+    "name": "WarioWare: Twisted!",
+    "platforms": [
+      24
+    ]
+  },
+  {
+    "id": 1628,
+    "first_release_date": 1201132800,
+    "name": "Super Smash Bros. Brawl",
+    "platforms": [
+      5
+    ]
+  },
+  {
+    "id": 1708,
+    "first_release_date": 1240963200,
+    "name": "WarioWare D.I.Y.",
+    "platforms": [
+      20
+    ]
+  },
+  {
+    "id": 1076,
+    "first_release_date": 1147651200,
+    "name": "New Super Mario Bros.",
+    "platforms": [
+      20,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 2343,
+    "first_release_date": 995673600,
+    "name": "Mario Kart: Super Circuit",
+    "platforms": [
+      24,
+      37,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 1700,
+    "first_release_date": 1056067200,
+    "name": "Wario World",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 3987,
+    "first_release_date": 1213833600,
+    "name": "Mario Super Sluggers",
+    "platforms": [
+      5,
+      41
+    ]
+  },
+  {
+    "id": 1696,
+    "first_release_date": 817430400,
+    "name": "Virtual Boy Wario Land",
+    "platforms": [
+      87
+    ]
+  },
+  {
+    "id": 2349,
+    "first_release_date": 1322784000,
+    "name": "Mario Kart 7",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 2183,
+    "first_release_date": 1207785600,
+    "name": "Mario Kart Wii",
+    "platforms": [
+      5
+    ]
+  },
+  {
+    "id": 2193,
+    "first_release_date": 1180396800,
+    "name": "Mario Party 8",
+    "platforms": [
+      5
+    ]
+  },
+  {
+    "id": 2337,
+    "first_release_date": 1105574400,
+    "name": "Mario Party Advance",
+    "platforms": [
+      24,
+      41
+    ]
+  },
+  {
+    "id": 1626,
+    "first_release_date": 916876800,
+    "name": "Super Smash Bros.",
+    "platforms": [
+      4,
+      5,
+      47
+    ]
+  },
+  {
+    "id": 22141,
+    "first_release_date": 1415836800,
+    "name": "Mario Kart 8: DLC Pack One",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 8734,
+    "first_release_date": 1272326400,
+    "name": "Super Mario Bros. Crossover",
+    "platforms": [
+      6
+    ]
+  },
+  {
+    "id": 90113,
+    "first_release_date": 1545868800,
+    "name": "Mario & Luigi: Bowser's Inside Story + Bowser Jr's Journey",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 71976,
+    "first_release_date": 794016000,
+    "name": "Mario's Picross",
+    "platforms": [
+      33,
+      37
+    ]
+  },
+  {
+    "id": 26939,
+    "first_release_date": 1489104000,
+    "name": "Mario Sports Superstars",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 2476,
+    "first_release_date": 1363737600,
+    "name": "Luigi's Mansion: Dark Moon",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 1068,
+    "first_release_date": 591840000,
+    "name": "Super Mario Bros. 3",
+    "platforms": [
+      5,
+      18,
+      19,
+      24,
+      37,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 3365,
+    "first_release_date": 1373587200,
+    "name": "Mario & Luigi: Dream Team",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 2338,
+    "first_release_date": 1385078400,
+    "name": "Mario Party Island Tour",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 67197,
+    "first_release_date": 1506470400,
+    "name": "Arcade Archives Mario Bros.",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 3351,
+    "first_release_date": 1069027200,
+    "name": "Mario & Luigi: Superstar Saga",
+    "platforms": [
+      24,
+      41
+    ]
+  },
+  {
+    "id": 19599,
+    "first_release_date": 1475798400,
+    "name": "Mario Party Star Rush",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 2171,
+    "first_release_date": 1353196800,
+    "name": "New Super Mario Bros. U",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 1702,
+    "first_release_date": 1216857600,
+    "name": "Wario Land: Shake It!",
+    "platforms": [
+      5,
+      41
+    ]
+  },
+  {
+    "id": 3989,
+    "first_release_date": 1290643200,
+    "name": "Mario Sports Mix",
+    "platforms": [
+      5,
+      41
+    ]
+  },
+  {
+    "id": 9511,
+    "first_release_date": 692668800,
+    "name": "Mario & Yoshi",
+    "platforms": [
+      18,
+      33,
+      47
+    ]
+  },
+  {
+    "id": 6503,
+    "first_release_date": 1093478400,
+    "name": "Mario Pinball Land",
+    "platforms": [
+      24,
+      41
+    ]
+  },
+  {
+    "id": 2342,
+    "first_release_date": 850521600,
+    "name": "Mario Kart 64",
+    "platforms": [
+      4,
+      5,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 1711,
+    "first_release_date": 761616000,
+    "name": "Wario's Woods",
+    "platforms": [
+      5,
+      18,
+      19,
+      37,
+      41
+    ]
+  },
+  {
+    "id": 16747,
+    "first_release_date": 1032480000,
+    "name": "Super Mario Advance 3: Yoshi's Island",
+    "platforms": [
+      24,
+      37,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 8535,
+    "first_release_date": 765504000,
+    "name": "Hotel Mario",
+    "platforms": [
+      51,
+      117
+    ]
+  },
+  {
+    "id": 1701,
+    "first_release_date": 1169078400,
+    "name": "Wario: Master of Disguise",
+    "platforms": [
+      20,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 1072,
+    "first_release_date": 765072000,
+    "name": "Wario Land: Super Mario Land 3",
+    "platforms": [
+      33,
+      37
+    ]
+  },
+  {
+    "id": 2330,
+    "first_release_date": 1035158400,
+    "name": "Mario Party 4",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 1074,
+    "first_release_date": 835488000,
+    "name": "Super Mario 64",
+    "platforms": [
+      4,
+      5,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 1627,
+    "first_release_date": 1006300800,
+    "name": "Super Smash Bros. Melee",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 1712,
+    "first_release_date": 1066348800,
+    "name": "WarioWare, Inc.: Mega Party Games!",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 2329,
+    "first_release_date": 976147200,
+    "name": "Mario Party 3",
+    "platforms": [
+      4
+    ]
+  },
+  {
+    "id": 7337,
+    "first_release_date": 1415836800,
+    "name": "Captain Toad: Treasure Tracker",
+    "platforms": [
+      37,
+      41,
+      130
+    ]
+  },
+  {
+    "id": 28414,
+    "first_release_date": 1503964800,
+    "name": "Mario + Rabbids Kingdom Battle",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 3986,
+    "first_release_date": 1121904000,
+    "name": "Mario Superstar Baseball",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 20497,
+    "first_release_date": 1129766400,
+    "name": "Super Princess Peach",
+    "platforms": [
+      20
+    ]
+  },
+  {
+    "id": 85663,
+    "first_release_date": 1569369600,
+    "name": "Mario Kart Tour",
+    "platforms": [
+      34,
+      39
+    ]
+  },
+  {
+    "id": 5418,
+    "first_release_date": 831945600,
+    "name": "Super Mario RPG: Legend of the Seven Stars",
+    "platforms": [
+      5,
+      19,
+      41
+    ]
+  },
+  {
+    "id": 20385,
+    "first_release_date": 812246400,
+    "name": "Mario Clash",
+    "platforms": [
+      87
+    ]
+  },
+  {
+    "id": 1078,
+    "first_release_date": 1274572800,
+    "name": "Super Mario Galaxy 2",
+    "platforms": [
+      5,
+      41
+    ]
+  },
+  {
+    "id": 1699,
+    "first_release_date": 998352000,
+    "name": "Wario Land 4",
+    "platforms": [
+      24,
+      37,
+      41
+    ]
+  },
+  {
+    "id": 26764,
+    "first_release_date": 1493337600,
+    "name": "Mario Kart 8 Deluxe",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 1705,
+    "first_release_date": 1101945600,
+    "name": "WarioWare: Touched!",
+    "platforms": [
+      20,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 1080,
+    "first_release_date": 1343433600,
+    "name": "New Super Mario Bros. 2",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 2191,
+    "first_release_date": 1176076800,
+    "name": "Super Paper Mario",
+    "platforms": [
+      5,
+      41
+    ]
+  },
+  {
+    "id": 2255,
+    "first_release_date": 1180051200,
+    "name": "Mario Strikers Charged",
+    "platforms": [
+      5,
+      41
+    ]
+  },
+  {
+    "id": 14738,
+    "first_release_date": 757296000,
+    "name": "Super Mario's Wacky Worlds",
+    "platforms": [
+      117
+    ]
+  },
+  {
+    "id": 1710,
+    "first_release_date": 1364428800,
+    "name": "Game & Wario",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 18169,
+    "first_release_date": 1475798400,
+    "name": "Paper Mario: Color Splash",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 2180,
+    "first_release_date": 1384992000,
+    "name": "Super Mario 3D World",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 1075,
+    "first_release_date": 1027036800,
+    "name": "Super Mario Sunshine",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 26758,
+    "first_release_date": 1509062400,
+    "name": "Super Mario Odyssey",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 22301,
+    "first_release_date": 1100908800,
+    "name": "Super Mario 64 DS",
+    "platforms": [
+      20,
+      41
+    ]
+  },
+  {
+    "id": 11068,
+    "first_release_date": 1433030400,
+    "name": "Dr. Mario: Miracle Cure",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 3364,
+    "first_release_date": 1133136000,
+    "name": "Mario & Luigi: Partners in Time",
+    "platforms": [
+      20,
+      41
+    ]
+  },
+  {
+    "id": 2328,
+    "first_release_date": 945388800,
+    "name": "Mario Party 2",
+    "platforms": [
+      4,
+      5,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 66812,
+    "first_release_date": 1510272000,
+    "name": "Mario Party: The Top 100",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 1071,
+    "first_release_date": 719625600,
+    "name": "Super Mario Land 2: 6 Golden Coins",
+    "platforms": [
+      33,
+      37
+    ]
+  },
+  {
+    "id": 114767,
+    "first_release_date": 1562716800,
+    "name": "Dr. Mario World",
+    "platforms": [
+      34,
+      39
+    ]
+  },
+  {
+    "id": 1706,
+    "first_release_date": 1165017600,
+    "name": "WarioWare: Smooth Moves",
+    "platforms": [
+      5,
+      41
+    ]
+  },
+  {
+    "id": 1707,
+    "first_release_date": 1230076800,
+    "name": "WarioWare: Snapped!",
+    "platforms": [
+      159
+    ]
+  },
+  {
+    "id": 11604,
+    "first_release_date": 742608000,
+    "name": "Yoshi's Safari",
+    "platforms": [
+      19,
+      58
+    ]
+  },
+  {
+    "id": 1709,
+    "first_release_date": 746409600,
+    "name": "Mario & Wario",
+    "platforms": [
+      58
+    ]
+  },
+  {
+    "id": 2327,
+    "first_release_date": 913593600,
+    "name": "Mario Party",
+    "platforms": [
+      4
+    ]
+  },
+  {
+    "id": 3349,
+    "first_release_date": 1090454400,
+    "name": "Paper Mario: The Thousand-Year Door",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 2345,
+    "first_release_date": 1131148800,
+    "name": "Mario Kart DS",
+    "platforms": [
+      20,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 1067,
+    "first_release_date": 589075200,
+    "name": "Super Mario Bros. 2",
+    "platforms": [
+      5,
+      18,
+      19,
+      24,
+      37,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 3105,
+    "first_release_date": 426988800,
+    "name": "Mario Bros.",
+    "platforms": [
+      5,
+      15,
+      18,
+      24,
+      25,
+      26,
+      37,
+      41,
+      52,
+      59,
+      60,
+      65,
+      66,
+      125
+    ]
+  },
+  {
+    "id": 23796,
+    "first_release_date": 1473206400,
+    "name": "Super Mario Run",
+    "platforms": [
+      34,
+      39
+    ]
+  },
+  {
+    "id": 2173,
+    "first_release_date": 1371686400,
+    "name": "New Super Luigi U",
+    "platforms": [
+      6,
+      41
+    ]
+  },
+  {
+    "id": 1713,
+    "first_release_date": 934243200,
+    "name": "Wario Blast: Featuring Bomberman!",
+    "platforms": [
+      33
+    ]
+  },
+  {
+    "id": 1086,
+    "first_release_date": 363484800,
+    "name": "Donkey Kong",
+    "platforms": [
+      13,
+      15,
+      18,
+      25,
+      26,
+      27,
+      47,
+      51,
+      52,
+      59,
+      60,
+      65,
+      67,
+      68,
+      71,
+      75,
+      129
+    ]
+  },
+  {
+    "id": 90109,
+    "first_release_date": 1539302400,
+    "name": "Luigi's Mansion",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 11220,
+    "first_release_date": 1447977600,
+    "name": "Mario Tennis: Ultra Smash",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 2350,
+    "first_release_date": 1401321600,
+    "name": "Mario Kart 8",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 2335,
+    "first_release_date": 1194480000,
+    "name": "Mario Party DS",
+    "platforms": [
+      20,
+      41
+    ]
+  },
+  {
+    "id": 3478,
+    "first_release_date": 1388448000,
+    "name": "Dr. Luigi",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 3680,
+    "first_release_date": 1121299200,
+    "name": "Dance Dance Revolution Mario Mix",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 7340,
+    "first_release_date": 1426118400,
+    "name": "Mario Party 10",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 5712,
+    "first_release_date": 1337472000,
+    "name": "Mario Tennis Open",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 48711,
+    "first_release_date": 1499990400,
+    "name": "Mario Kart Arcade GP VR",
+    "platforms": [
+      52
+    ]
+  },
+  {
+    "id": 67198,
+    "first_release_date": 1513814400,
+    "name": "Arcade Archives VS. SUPER MARIO BROS.",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 22146,
+    "first_release_date": 1429747200,
+    "name": "Mario Kart 8: DLC Pack Two",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 2178,
+    "first_release_date": 1257897600,
+    "name": "New Super Mario Bros. Wii",
+    "platforms": [
+      5,
+      41
+    ]
+  },
+  {
+    "id": 1066,
+    "first_release_date": 515462400,
+    "name": "Super Mario Bros.: The Lost Levels",
+    "platforms": [
+      5,
+      18,
+      19,
+      22,
+      24,
+      37,
+      41,
+      47,
+      51
+    ]
+  },
+  {
+    "id": 6504,
+    "first_release_date": 1126569600,
+    "name": "Mario Tennis: Power Tour",
+    "platforms": [
+      24,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 109457,
+    "first_release_date": 1547164800,
+    "name": "New Super Mario Bros. U Deluxe",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 2331,
+    "first_release_date": 1068422400,
+    "name": "Mario Party 5",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 2334,
+    "first_release_date": 1121040000,
+    "name": "Mario Party 7",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 1070,
+    "first_release_date": 659145600,
+    "name": "Super Mario World",
+    "platforms": [
+      5,
+      19,
+      41,
+      130,
+      137
+    ]
+  },
+  {
+    "id": 1703,
+    "first_release_date": 1048204800,
+    "name": "WarioWare, Inc.: Mega Microgames!",
+    "platforms": [
+      24,
+      37,
+      41
+    ]
+  },
+  {
+    "id": 90108,
+    "first_release_date": 1532649600,
+    "name": "WarioWare Gold",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 1697,
+    "first_release_date": 888796800,
+    "name": "Wario Land II",
+    "platforms": [
+      22,
+      33,
+      37
+    ]
+  },
+  {
+    "id": 8203,
+    "first_release_date": 711072000,
+    "name": "Mario Paint",
+    "platforms": [
+      19,
+      58
+    ]
+  },
+  {
+    "id": 358,
+    "first_release_date": 495417600,
+    "name": "Super Mario Bros.",
+    "platforms": [
+      5,
+      18,
+      19,
+      22,
+      24,
+      37,
+      41,
+      51
+    ]
+  },
+  {
+    "id": 2344,
+    "first_release_date": 1068163200,
+    "name": "Mario Kart: Double Dash!!",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 1069,
+    "first_release_date": 609120000,
+    "name": "Super Mario Land",
+    "platforms": [
+      33,
+      37,
+      47
+    ]
+  },
+  {
+    "id": 77336,
+    "first_release_date": 1038787200,
+    "name": "The Legend of Zelda: A Link to the Past & Four Swords",
+    "platforms": [
+      24
+    ]
+  },
+  {
+    "id": 115284,
+    "first_release_date": 1568937600,
+    "name": "The Legend of Zelda: Link's Awakening",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 41826,
+    "first_release_date": 1512604800,
+    "name": "The Legend of Zelda: Breath of the Wild - The Champions' Ballad",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 18066,
+    "first_release_date": 1086134400,
+    "name": "Classic NES Series: The Legend of Zelda",
+    "platforms": [
+      24
+    ]
+  },
+  {
+    "id": 9602,
+    "first_release_date": 1416528000,
+    "name": "Super Smash Bros. for Wii U",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 25840,
+    "first_release_date": 1249516800,
+    "name": "Ripened Tingle's Balloon Trip of Love",
+    "platforms": [
+      20
+    ]
+  },
+  {
+    "id": 116419,
+    "first_release_date": 1560384000,
+    "name": "Cadence of Hyrule: Crypt of the NecroDancer Featuring The Legend of Zelda",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 1628,
+    "first_release_date": 1201132800,
+    "name": "Super Smash Bros. Brawl",
+    "platforms": [
+      5
+    ]
+  },
+  {
+    "id": 18017,
+    "first_release_date": 1457049600,
+    "name": "The Legend of Zelda: Twilight Princess HD",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 1037,
+    "first_release_date": 1182556800,
+    "name": "The Legend of Zelda: Phantom Hourglass",
+    "platforms": [
+      20,
+      41
+    ]
+  },
+  {
+    "id": 1035,
+    "first_release_date": 1099526400,
+    "name": "The Legend of Zelda: The Minish Cap",
+    "platforms": [
+      24,
+      37,
+      41
+    ]
+  },
+  {
+    "id": 2276,
+    "first_release_date": 1380153600,
+    "name": "The Legend of Zelda: The Wind Waker HD",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 41825,
+    "first_release_date": 1498780800,
+    "name": "The Legend of Zelda: Breath of the Wild - The Master Trials",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 1626,
+    "first_release_date": 916876800,
+    "name": "Super Smash Bros.",
+    "platforms": [
+      4,
+      5,
+      47
+    ]
+  },
+  {
+    "id": 1027,
+    "first_release_date": 912470400,
+    "name": "The Legend of Zelda: Link's Awakening DX",
+    "platforms": [
+      22,
+      37
+    ]
+  },
+  {
+    "id": 7346,
+    "first_release_date": 1488499200,
+    "name": "The Legend of Zelda: Breath of the Wild",
+    "platforms": [
+      41,
+      130
+    ]
+  },
+  {
+    "id": 81147,
+    "first_release_date": 1521676800,
+    "name": "Hyrule Warriors: Definitive Edition",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 11193,
+    "first_release_date": 1453334400,
+    "name": "Hyrule Warriors: Legends",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 42308,
+    "first_release_date": 859680000,
+    "name": "BS The Legend of Zelda: Ancient Stone Tablets",
+    "platforms": [
+      58
+    ]
+  },
+  {
+    "id": 2909,
+    "first_release_date": 1385078400,
+    "name": "The Legend of Zelda: A Link Between Worlds",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 534,
+    "first_release_date": 1321574400,
+    "name": "The Legend of Zelda: Skyward Sword",
+    "platforms": [
+      5,
+      41
+    ]
+  },
+  {
+    "id": 1022,
+    "first_release_date": 509328000,
+    "name": "The Legend of Zelda",
+    "platforms": [
+      5,
+      18,
+      21,
+      24,
+      37,
+      41,
+      51
+    ]
+  },
+  {
+    "id": 1041,
+    "first_release_date": 983232000,
+    "name": "The Legend of Zelda: Oracle of Ages",
+    "platforms": [
+      22,
+      37
+    ]
+  },
+  {
+    "id": 41829,
+    "first_release_date": 1488499200,
+    "name": "The Legend of Zelda: Breath of the Wild - Expansion Pass",
+    "platforms": [
+      41,
+      130
+    ]
+  },
+  {
+    "id": 8534,
+    "first_release_date": 788832000,
+    "name": "Zelda's Adventure",
+    "platforms": [
+      51
+    ]
+  },
+  {
+    "id": 45143,
+    "first_release_date": 1317168000,
+    "name": "The Legend of Zelda: Four Swords Anniversary Edition",
+    "platforms": [
+      37,
+      159
+    ]
+  },
+  {
+    "id": 45142,
+    "first_release_date": 1046390400,
+    "name": "The Legend of Zelda: Ocarina of Time - Master Quest",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 1038,
+    "first_release_date": 1260144000,
+    "name": "The Legend of Zelda: Spirit Tracks",
+    "platforms": [
+      20,
+      41
+    ]
+  },
+  {
+    "id": 116648,
+    "first_release_date": 1141171200,
+    "name": "The Legend of Zelda: Hero of Dreams",
+    "platforms": [
+      6
+    ]
+  },
+  {
+    "id": 1032,
+    "first_release_date": 983232000,
+    "name": "The Legend of Zelda: Oracle of Seasons",
+    "platforms": [
+      22,
+      37
+    ]
+  },
+  {
+    "id": 11194,
+    "first_release_date": 1445472000,
+    "name": "The Legend of Zelda: Tri Force Heroes",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 1033,
+    "first_release_date": 1039737600,
+    "name": "The Legend of Zelda: The Wind Waker",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 1036,
+    "first_release_date": 1163894400,
+    "name": "The Legend of Zelda: Twilight Princess",
+    "platforms": [
+      5,
+      21
+    ]
+  },
+  {
+    "id": 1025,
+    "first_release_date": 537580800,
+    "name": "Zelda II: The Adventure of Link",
+    "platforms": [
+      5,
+      18,
+      21,
+      24,
+      37,
+      41,
+      47,
+      51
+    ]
+  },
+  {
+    "id": 1029,
+    "first_release_date": 911606400,
+    "name": "The Legend of Zelda: Ocarina of Time",
+    "platforms": [
+      4,
+      5,
+      21,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 1034,
+    "first_release_date": 1079568000,
+    "name": "The Legend of Zelda: Four Swords Adventures",
+    "platforms": [
+      21
+    ]
+  },
+  {
+    "id": 1030,
+    "first_release_date": 956793600,
+    "name": "The Legend of Zelda: Majora's Mask",
+    "platforms": [
+      4,
+      5,
+      21,
+      41,
+      47
+    ]
+  },
+  {
+    "id": 1026,
+    "first_release_date": 690681600,
+    "name": "The Legend of Zelda: A Link to the Past",
+    "platforms": [
+      5,
+      19,
+      24,
+      37,
+      41,
+      47,
+      58,
+      130
+    ]
+  },
+  {
+    "id": 11607,
+    "first_release_date": 1157155200,
+    "name": "Freshly-Picked Tingle's Rosy Rupeeland",
+    "platforms": [
+      20
+    ]
+  },
+  {
+    "id": 5314,
+    "first_release_date": 1407974400,
+    "name": "Hyrule Warriors",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 37140,
+    "first_release_date": 1505433600,
+    "name": "Metroid: Samus Returns",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 76247,
+    "first_release_date": 1085097600,
+    "name": "Classic Nes Series: Metroid",
+    "platforms": [
+      24
+    ]
+  },
+  {
+    "id": 9602,
+    "first_release_date": 1416528000,
+    "name": "Super Smash Bros. for Wii U",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 1628,
+    "first_release_date": 1201132800,
+    "name": "Super Smash Bros. Brawl",
+    "platforms": [
+      5
+    ]
+  },
+  {
+    "id": 1107,
+    "first_release_date": 1076284800,
+    "name": "Metroid: Zero Mission",
+    "platforms": [
+      24,
+      41
+    ]
+  },
+  {
+    "id": 27238,
+    "first_release_date": 1470441600,
+    "name": "AM2R - Return of Samus",
+    "platforms": [
+      6
+    ]
+  },
+  {
+    "id": 11217,
+    "first_release_date": 1471564800,
+    "name": "Metroid Prime: Federation Force",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 90101,
+    "first_release_date": 1544140800,
+    "name": "Super Smash Bros. Ultimate",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 9602,
+    "first_release_date": 1416528000,
+    "name": "Super Smash Bros. for Wii U",
+    "platforms": [
+      41
+    ]
+  },
+  {
+    "id": 122229,
+    "first_release_date": 1567555200,
+    "name": "Super Kirby Clash",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 37137,
+    "first_release_date": 1521158400,
+    "name": "Kirby Star Allies",
+    "platforms": [
+      130
+    ]
+  },
+  {
+    "id": 60587,
+    "first_release_date": 849398400,
+    "name": "Special Tee Shot",
+    "platforms": [
+      58
+    ]
+  },
+  {
+    "id": 18221,
+    "first_release_date": 1461801600,
+    "name": "Kirby: Planet Robobot",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 1063,
+    "first_release_date": 704332800,
+    "name": "Kirby's Dream Land",
+    "platforms": [
+      33,
+      37
+    ]
+  },
+  {
+    "id": 28126,
+    "first_release_date": 1491955200,
+    "name": "Team Kirby Clash Deluxe",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 113211,
+    "first_release_date": 886291200,
+    "name": "Kirby's Super Star Stacker",
+    "platforms": [
+      58
+    ]
+  },
+  {
+    "id": 3717,
+    "first_release_date": 732844800,
+    "name": "Kirby's Adventure",
+    "platforms": [
+      5,
+      18,
+      41,
+      47,
+      130
+    ]
+  },
+  {
+    "id": 28127,
+    "first_release_date": 1499126400,
+    "name": "Kirby's Blowout Blast",
+    "platforms": [
+      37
+    ]
+  },
+  {
+    "id": 2239,
+    "first_release_date": 1004054400,
+    "name": "Pikmin",
+    "platforms": [
+      5,
+      21
+    ]
+  }
+]
