@@ -6,9 +6,7 @@ In short: a bot to root through postings on secondhand market sites so I don't h
 
 ## Table of Contents
 
-Use your browser or program's `Find` function to jump to different parts of this document!
-
-section		|description
+section		|subsections
 ---			|---
 Features	|Search, Notifications
 Structure	|Overview, Database
