@@ -4,6 +4,7 @@ from console_data_resource import *
 from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+# from email.MIMEImage import MIMEImage
 from match_finder import *
 from scraper import *
 from string import Template
@@ -11,12 +12,13 @@ from string import Template
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
-cl_scraper = CraigslistScraper()
-test_response = cl_scraper.search('video_games').content
-test_parsed_results = cl_scraper.parse_search_response(test_response)
+cl_results_scraper = CraigslistScraper()
+test_parsed_results = cl_results_scraper.scrape()
+
 pp.pprint(test_parsed_results)
-pp.pprint(ps4)
-matcher = ConsoleMatchFinder(ps4, {})
+pp.pprint(ps1)
+
+matcher = ConsoleMatchFinder(ps1, {})
 matches = [result for result in test_parsed_results if matcher.assess_match(result)]
 
 pp.pprint(matches)
@@ -53,7 +55,7 @@ def generate_message_html(listings):
 			listing_url = listing["url"]
 			listing_datetime = listing["datetime"]
 			listing_price = '$' + str(listing["price"])
-			site_message = site_message + '\n<li style="margin: 2px 0;border: 3px solid lightgrey;padding: 1em;background-color: #f4f4f4;">\n<span style="font-size: 1.15em;">' + listing_no + '. <a href="' + listing_url + '" style="color: black;">' + listing_title + '</a>' + ' – <span style="color: green; font-weight: bold;">' + listing_price + '</span>\n</span>\n<p><span style="color: #563900;">' + listing_datetime + '</span></p>\n</li>'
+			site_message = site_message + '\n<li style="margin: 2px 0;border: 3px solid lightgrey;padding: 1em;background-color: #f4f4f4;">\n<span style="font-size: 1.15em;">' + listing_no + '. <a href="' + listing_url + '" style="color: black;">' + listing_title + '</a>' + ' – <span style="color: green; font-weight: bold;">' + listing_price + '</span>\n</span>\n<p><span style="color: #563900;"><time>' + listing_datetime + '</time></span></p>\n</li>'
 			listing_ct += 1
 		site_message = site_message + '\n</ul>'
 		message_text_matches = message_text_matches + site_message

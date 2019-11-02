@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 pp = pprint.PrettyPrinter(indent=2)
 
-class ScraperResult():
+class ResultScraper():
 	def __init__(self, soup):
 		self.soup = soup
 		self.data = {}
@@ -16,7 +16,7 @@ class ScraperResult():
 	def scrape_data(self):
 		print('This is when a child class (specific to a certain site) would scrape data from each posting using BeautifulSoup.')
 
-class CraigslistScraperResult(ScraperResult):
+class CraigslistResultScraper(ResultScraper):
 	def scrape_data(self):
 		title_tag = self.soup.find(class_='result-title')
 		title_tag_cleaned = re.sub(',', ', ', title_tag.text).strip()
@@ -100,5 +100,5 @@ if __name__ == '__main__':
 	</li>
 	"""
 	res_soup = BeautifulSoup(res_html, 'html.parser')
-	result = ScraperResult(res_soup)
-	result2 = CraigslistScraperResult(res_soup)
+	result = ResultScraper(res_soup)
+	result2 = CraigslistResultScraper(res_soup)

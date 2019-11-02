@@ -60,6 +60,8 @@ class MatchFinder():
 		print(positive_match_string)
 		return False
 
+	# FIXME: account for possibility of variations of different consoles with same names (PS2 slim, PS4 slim)
+	# FIXME: when preventing false matches for sibling consoles, ensure absence of foil strings using intra-string position instead of 'not in [entire str]'
 	def match_score_calculate(self, result):
 		stop_matching_positive = False
 		match_score = 1
