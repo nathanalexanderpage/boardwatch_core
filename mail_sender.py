@@ -87,8 +87,8 @@ def read_template(filename):
 
 def py_mail():
 	names, emails = get_contacts('contacts.txt')
-	message_html_template = read_template('message.html')
-	message_text_template = read_template('message.txt')
+	message_html_template = read_template('mail_message.html')
+	message_text_template = read_template('mail_message.txt')
 
 	print(names)
 	print(emails)
