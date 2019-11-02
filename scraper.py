@@ -100,10 +100,17 @@ class CraigslistPostScraper(Scraper):
 		print(map_latitude)
 		map_data_accuracy_score = mapbox['data-accuracy']
 		print(map_data_accuracy_score)
-		pix = soup.find_all(class_='thumb')
 		pics = []
-		for pic in pix:
-			pics.append(pic['href'])
+		main_section = soup.find(class_='userbody')
+		figure = main_section.find('figure')
+		if figure:
+			pix_quantity = int(soup.find(class_='slider-info').text.split(' ')[3])
+			if pix_quantity > 1:
+				pix = soup.find_all(class_='thumb')
+				for pic in pix:
+					pics.append(pic['href'])
+			else:
+				pics.append(figure.find('img')['src'])
 		print(pics)
 		attrs = soup.find(class_='attrgroup').find_all('span')
 		condition = None
@@ -145,5 +152,8 @@ if __name__ == '__main__':
 	# pp.pprint(test_parsed_results)
 
 	single_post_scraper = CraigslistPostScraper()
-	single_post_scraper.set_url('https://seattle.craigslist.org/see/vgm/d/seattle-3ds-fire-emblem-echoes-limited/6992105694.html')
+	no_img_url = 'https://seattle.craigslist.org/see/vgm/d/woodinville-game-boy-and-games/7011448918.html'
+	single_img_url = 'https://seattle.craigslist.org/see/vgm/d/seattle-3ds-fire-emblem-echoes-limited/6992105694.html'
+	multi_img_url = 'https://seattle.craigslist.org/see/vgm/d/seattle-nintendo-switch-lot/7011771234.html'
+	single_post_scraper.set_url(single_img_url)
 	data = single_post_scraper.scrape()
