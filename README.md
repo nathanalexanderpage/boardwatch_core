@@ -154,15 +154,12 @@ template:
 	abbreviation_official: text | null,
 	developer: company_id | null,
 	generation: int | null,
-	names_other: [
-		text,
-		...
-	],
+	names_other: text[],
 	variations: variation_id[]
 }
 ```
 
-example:
+example (collapsed):
 ```
 {
 	"id": "584d947dea542a13e9ec7ae7",
@@ -207,7 +204,7 @@ template:
 }
 ```
 
-example:
+example (collapsed):
 ```
 {
 	"id": "584d947dea542a13e9ec7ae7",
@@ -248,7 +245,7 @@ template:
 }
 ```
 
-example:
+example (collapsed):
 ```
 {
 	"name": "25th Anniversary Edition",
@@ -267,7 +264,7 @@ template:
 }
 ```
 
-example:
+example (collapsed):
 ```
 {
 	id: id,
@@ -333,7 +330,7 @@ template:
 }
 ```
 
-example:
+example (collapsed):
 ```
 {
 	id: id,
@@ -355,7 +352,7 @@ template:
 }
 ```
 
-example:
+example (collapsed):
 ```
 {
 	consoles: embedded_CA[],
@@ -374,7 +371,7 @@ template:
 }
 ```
 
-example:
+example (collapsed):
 ```
 {
 	console_id: id,
@@ -396,7 +393,7 @@ template:
 }
 ```
 
-example:
+example (collapsed):
 ```
 {
 	console_id: id,
