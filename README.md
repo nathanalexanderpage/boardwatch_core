@@ -2,12 +2,12 @@
 
 ## Concept
 
-In short: a bot to root through postings on secondhand market sites so I don't have to.
+In short: a bot to root through postings on secondhand market sites in search of things I want so I don't have to.
 
 ## Table of Contents
 
 section		|subsections
----			|---
+---				|---
 Features	|Search, Notifications
 Structure	|Overview, Database
 
@@ -55,41 +55,40 @@ Tables List:
 * games
 * peripherals/accessories
 * users
-* watches (who wants what)
-* item types
+* item_watches (who wants what)
 
 #### Document Schema (normalized view)
 
 ##### `consoles` (platforms)
 
-data					|type	|rules
----						|---	|---
-id						|int	|PK, NOT NULL
-name					|text	|NOT NULL
-generation				|int	|NULL
+data									|type	|rules
+---										|---	|---
+id										|int	|PK
+name									|text	|NOT NULL
+generation						|int	|NULL
 abbreviation_official	|text	|NULL
-developer				|id		|company_id NOT NULL
-name_group				|id		|name_group_id NOT NULL
-name_prefix				|text	|NULL
-name_suffix				|text	|NULL
-name_alternatives		|id[]	|name_alt_id
-variations				|id[]	|variation_id
+developer							|id		|company_id NOT NULL
+name_group						|id		|name_group_id NOT NULL
+name_prefix						|text	|NULL
+name_suffix						|text	|NULL
+name_alternatives			|id[]	|name_alt_id
+variations						|id[]	|variation_id
 
 ##### `variations`
 
-data					|type		|rules
----						|---		|---
-id						|int		|PK, NOT NULL
-name					|text		|NULL
-model_no				|text		|NULL
-storage					|embed[]	|(see table: embedded_A)
-editions				|embed		|(see table: embedded_B)
+data					|type			|rules
+---						|---			|---
+id						|int			|PK
+name					|text			|NULL
+model_no			|text			|NULL
+storage				|embed[]	|(see table: embedded_A)
+editions			|embed		|(see table: embedded_B)
 
 ##### `storage` (embedded_A)
 
 data					|type		|rules
 ---						|---		|---
-capacity				|int		|NULL
+capacity			|int		|NULL
 unit					|text		|NULL
 type					|text		|NULL
 
@@ -98,53 +97,50 @@ type					|text		|NULL
 data					|type		|rules
 ---						|---		|---
 name					|text		|NULL
-colors					|id[]		|color_id
+colors				|id[]		|color_id
 
 ##### `colors`
 
-data					|type		|rules
----						|---		|---
-id						|int		|PK, NOT NULL
-name					|text		|NULL
-similar_colors			|id[]		|color_id
+data						|type		|rules
+---							|---		|---
+id							|int		|PK
+name						|text		|NULL
+similar_colors	|id[]		|color_id
 
 ##### `games`
 
-data					|type		|rules
----						|---		|---
-id						|int		|PK, NOT NULL
-name					|text		|NULL
-platforms				|id[]		|console_id
-date_first_release		|int		|NULL
-is_bootleg				|boolean	|NOT NULL
+data								|type		|rules
+---									|---		|---
+id									|int		|PK
+name								|text		|NULL
+platforms						|id[]		|console_id
+date_first_release	|int		|NULL
+is_bootleg					|boolean	|NOT NULL
 
 ##### `peripherals` (accessories)
 
 data					|type		|rules
 ---						|---		|---
-id						|int		|PK, NOT NULL
+id						|int		|PK
 TBD
 
 ##### `users`
 
-data					|type		|rules
----						|---		|---
-id						|int		|PK, NOT NULL
-TBD
+data						|type		|rules
+---							|---		|---
+id							|int		|PK
+e-mail					|text		|NOT NULL, UNIQUE
+username				|text		|NOT NULL, UNIQUE
+password				|text		|NOT NULL, HASH
+item_watches		|embed	|(see table: embedded_C)
 
-##### `watches` (who wants what)
+##### `item_watches` (embedded_C)
 
-data					|type		|rules
----						|---		|---
-id						|int		|PK, NOT NULL
-TBD
-
-##### `item_types`
-
-data					|type		|rules
----						|---		|---
-id						|int		|PK, NOT NULL
-TBD
+data					|type			|rules
+---						|---			|---
+consoles			|embed[]	|(see table: embedded_D)
+games					|embed[]	|(see table: embedded_E)
+peripherals		|embed[]	|(see table: embedded_F)
 
 #### Document Schema (non-normalized view)
 
@@ -195,13 +191,13 @@ template:
 example:
 ```
 {
-	'id': '003',
+	'id': '584d947dea542a13e9ec7ae7',
 	'type': 'console',
 	'name': 'Wii',
 	'name_group': 'Wii',
-	'name_prefix': None,
-	'name_suffix': None,
-	'abbreviation': None,
+	'name_prefix': null,
+	'name_suffix': null,
+	'abbreviation': null,
 	'developer': 'Nintendo',
 	'generation': 7,
 	'names_other': [
@@ -209,53 +205,26 @@ example:
 	],
 	'variations': [
 		{
-			'id': '01',
-			'name': None,
+			'id': '584d947dea542a13e9ec7ae7',
+			'name': null,
 			'model_no': 'RVL-001',
 			'storage_capacity': '512MB',
 			'editions': [
 				{
-					'name': None,
-					'colors': ['white']
-				},
-				{
-					'name': None,
-					'colors': ['black']
-				},
-				{
 					'name': '25th Anniversary Edition',
 					'colors': ['red']
-				}
+				},
+				...
 			]
 		},
 		{
-			'id': '02',
-			'name': 'Family Edition',
-			'model_no': 'RVL-101',
-			'storage_capacity': '512MB',
-			'editions': [
-				{
-					'name': None,
-					'colors': ['white']
-				},
-				{
-					'name': None,
-					'colors': ['black']
-				},
-				{
-					'name': None,
-					'colors': ['blue']
-				}
-			]
-		},
-		{
-			'id': '03',
+			'id': '584d947dea542a13e9ec7ae7',
 			'name': 'Mini',
 			'model_no': 'RVL-201',
-			'storage_capacity': None,
+			'storage_capacity': null,
 			'editions': [
 				{
-					'name': None,
+					'name': null,
 					'colors': ['red', 'black']
 				}
 			]
@@ -270,12 +239,41 @@ template:
 ```
 {
 	id: text,
+	name: text | null,
+	model_no: text | null,
+	storage: [
+		{
+			capacity: int,
+			unit: text | null,
+			type: text | null
+		},
+		...
+	],
+	editions: [
+		{
+			name: text,
+			colors: [color_id, ...]
+		},
+		...
+	]
 }
 ```
 
 example:
 ```
-{}
+{
+	'id': '584d947dea542a13e9ec7ae7',
+	'name': null,
+	'model_no': 'RVL-001',
+	'storage_capacity': '512MB',
+	'editions': [
+		{
+			'name': '25th Anniversary Edition',
+			'colors': ['red']
+		},
+		...
+	]
+}
 ```
 
 ##### `storage` (embedded_A)
@@ -283,13 +281,19 @@ example:
 template:
 ```
 {
-	id: text,
+	capacity: int,
+	unit: text,
+	type: text
 }
 ```
 
 example:
 ```
-{}
+{
+	capacity: 512,
+	unit: "MB",
+	type: disk
+}
 ```
 
 ##### `editions` (embedded_B)
@@ -303,7 +307,10 @@ template:
 
 example:
 ```
-{}
+{
+	'name': '25th Anniversary Edition',
+	'colors': ['red']
+}
 ```
 
 ##### `colors`
@@ -362,7 +369,26 @@ example:
 {}
 ```
 
-##### `watches` (who wants what)
+##### `item_watches` (embedded_C)
+
+template:
+```
+{
+	consoles: embed[],
+	games: embed[],
+	peripherals: embed[]
+}
+```
+
+example:
+```
+{
+	consoles: console_watch[],
+	games: game_watch[],
+	peripherals: peripheral_watch[]
+}
+```
+##### `console_watch`
 
 template:
 ```
@@ -375,8 +401,23 @@ example:
 ```
 {}
 ```
-##### `item_types`
 
+##### `game_watch`
+TBD
+template:
+```
+{
+	id: text,
+}
+```
+
+example:
+```
+{}
+```
+
+##### `peripheral_watch`
+TBD
 template:
 ```
 {
