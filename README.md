@@ -118,19 +118,16 @@ is_bootleg			|boolean	|NOT NULL
 
 ##### `peripherals` (accessories)
 
-data		|type		|rules
----			|---		|---
-id			|int		|PK
 TBD
 
 ##### `users`
 
-data						|type		|rules
----							|---		|---
-id							|int		|PK
-e-mail						|text		|NOT NULL, UNIQUE
-username					|text		|NOT NULL, UNIQUE
-password					|text		|NOT NULL, HASH
+data					|type		|rules
+---						|---		|---
+id						|int		|PK
+e-mail					|text		|NOT NULL, UNIQUE
+username				|text		|NOT NULL, UNIQUE
+password				|text		|NOT NULL, HASH
 watch_list				|embed		|(see table: embedded_C)
 
 ##### `watch_list` (embedded_C)
@@ -311,22 +308,17 @@ template:
 
 example:
 ```
-{}
+{
+	"id": "584d947dea542a13e9ec7ae7",
+	"name": "Captain Toad: Treasure Tracker",
+	"first_release_date": 1415836800,
+	"platforms": console_id[]
+}
 ```
 
 ##### `peripherals` (accessories)
 
-template:
-```
-{
-	id: id,
-}
-```
-
-example:
-```
-{}
-```
+TBD
 
 ##### `users`
 
@@ -416,15 +408,3 @@ example:
 ##### `peripheral_watch` (embedded_CC)
 
 TBD
-
-template:
-```
-{
-	id: id,
-}
-```
-
-example:
-```
-{}
-```
