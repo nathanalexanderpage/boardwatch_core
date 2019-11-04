@@ -186,21 +186,8 @@ template:
 	id: id,
 	name: text | null,
 	model_no: text | null,
-	storage: [
-		{
-			capacity: int,
-			unit: text | null,
-			type: text | null
-		},
-		...
-	],
-	editions: [
-		{
-			name: text,
-			colors: color_id[]
-		},
-		...
-	]
+	storage: embed,
+	editions: embed[]
 }
 ```
 
@@ -229,9 +216,9 @@ template:
 example:
 ```
 {
-	capacity: 512,
-	unit: "MB",
-	type: disk
+	"capacity": 512,
+	"unit": "MB",
+	"type": "disk"
 }
 ```
 
@@ -267,9 +254,9 @@ template:
 example (collapsed):
 ```
 {
-	id: "584d947dea542a13e9ec7ae7",
-	name: "Glacier White",
-	similar_colors: similar_color_id[]
+	"id": "584d947dea542a13e9ec7ae7",
+	"name": "Glacier White",
+	"similar_colors": similar_color_id[]
 }
 ```
 
@@ -333,11 +320,11 @@ template:
 example (collapsed):
 ```
 {
-	id: "584d947dea542a13e9ec7ae7",
-	email: address@domain.tld,
-	username: ya_boi,
-	password: 14$ya_bois_pw_hashed,
-	watch_list: embedded_C
+	"id": "584d947dea542a13e9ec7ae7",
+	"email": "address@domain.tld",
+	"username": "ya_boi",
+	"password": "14$ya_bois_pw_hashed",
+	"watch_list": embedded_C
 }
 ```
 
@@ -355,9 +342,9 @@ template:
 example (collapsed):
 ```
 {
-	consoles: embedded_CA[],
-	games: embedded_CB[],
-	peripherals: embedded_CC[]
+	"consoles": embedded_CA[],
+	"games": embedded_CB[],
+	"peripherals": embedded_CC[]
 }
 ```
 ##### `watch_console` (embedded_CA)
@@ -374,9 +361,9 @@ template:
 example (collapsed):
 ```
 {
-	console_id: "584d947dea542a13e9ec7ae7",
-	desired_variations: variation_id[],
-	desired_price: 60
+	"console_id": "584d947dea542a13e9ec7ae7",
+	"desired_variations": variation_id[],
+	"desired_price": 60
 }
 ```
 
@@ -396,9 +383,9 @@ template:
 example (collapsed):
 ```
 {
-	console_id: "584d947dea542a13e9ec7ae7",
-	desired_compatible_consoles: console_id[],
-	desired_price: 20
+	"console_id": "584d947dea542a13e9ec7ae7",
+	"desired_compatible_consoles": console_id[],
+	"desired_price": 20
 }
 ```
 
