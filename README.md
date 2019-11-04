@@ -134,9 +134,9 @@ watch_list				|embed		|(see table: embedded_C)
 
 data				|type			|rules
 ---					|---			|---
-consoles			|embed[]		|(see table: embedded_D)
-games				|embed[]		|(see table: embedded_E)
-peripherals			|embed[]		|(see table: embedded_F)
+consoles			|embed[]		|(see table: embedded_CA)
+games				|embed[]		|(see table: embedded_CB)
+peripherals			|embed[]		|(see table: embedded_CC)
 
 #### Document Schema (non-normalized view)
 
@@ -267,8 +267,8 @@ template:
 example (collapsed):
 ```
 {
-	id: id,
-	name: text,
+	id: "584d947dea542a13e9ec7ae7",
+	name: "Glacier White",
 	similar_colors: similar_color_id[]
 }
 ```
@@ -286,8 +286,8 @@ template:
 example:
 ```
 {
-	id: id,
-	name: text
+	"id": "584d947dea542a13e9ec7ae7",
+	"name": "white"
 }
 ```
 
@@ -333,7 +333,7 @@ template:
 example (collapsed):
 ```
 {
-	id: id,
+	id: "584d947dea542a13e9ec7ae7",
 	email: address@domain.tld,
 	username: ya_boi,
 	password: 14$ya_bois_pw_hashed,
@@ -360,7 +360,7 @@ example (collapsed):
 	peripherals: embedded_CC[]
 }
 ```
-##### `console_watch` (embedded_CA)
+##### `watch_console` (embedded_CA)
 
 template:
 ```
@@ -374,13 +374,13 @@ template:
 example (collapsed):
 ```
 {
-	console_id: id,
+	console_id: "584d947dea542a13e9ec7ae7",
 	desired_variations: variation_id[],
 	desired_price: 60
 }
 ```
 
-##### `game_watch` (embedded_CB)
+##### `watch_game` (embedded_CB)
 
 TBD
 
@@ -396,12 +396,12 @@ template:
 example (collapsed):
 ```
 {
-	console_id: id,
+	console_id: "584d947dea542a13e9ec7ae7",
 	desired_compatible_consoles: console_id[],
 	desired_price: 20
 }
 ```
 
-##### `peripheral_watch` (embedded_CC)
+##### `watch_peripheral` (embedded_CC)
 
 TBD
