@@ -46,6 +46,56 @@ class CraigslistResultScraper(ResultScraper):
 		else:
 			self.data['neighborhood'] = None
 
+class CraigslistPostScraper(ResultScraper):
+	def parse_search_response(self, soup):
+		mapbox = soup.find(id='map')
+		map_longitude = mapbox['data-longitude']
+		print(map_longitude)
+		map_latitude = mapbox['data-latitude']
+		print(map_latitude)
+		map_data_accuracy_score = mapbox['data-accuracy']
+		print(map_data_accuracy_score)
+		pics = []
+		main_section = soup.find(class_='userbody')
+		figure = main_section.find('figure')
+		if figure:
+			pix_quantity = int(soup.find(class_='slider-info').text.split(' ')[3])
+			if pix_quantity > 1:
+				pix = soup.find_all(class_='thumb')
+				for pic in pix:
+					pics.append(pic['href'])
+			else:
+				pics.append(figure.find('img')['src'])
+		print(pics)
+		attrs = soup.find(class_='attrgroup').find_all('span')
+		condition = None
+		manufacturer = None
+		model = None
+		for attr in attrs:
+			if attr.name == 'span':
+				if 'condition:' in attr.text:
+					condition = attr.find('b').text.strip()
+					print(condition)
+				if 'make / manufacturer:' in attr.text:
+					manufacturer = attr.find('b').text.strip()
+					print(manufacturer)
+				if 'model name / number:' in attr.text:
+					model = attr.find('b').text.strip()
+					print(model)
+		posting_body = soup.find(id='postingbody')
+		qr_code_text = posting_body.find(class_='print-information print-qrcode-container').text
+		post_text = posting_body.text[len(qr_code_text):].strip()
+		print(post_text)
+		post_info_tags = soup.find_all(class_='postinginfo')
+		post_id = None
+		for tag in post_info_tags:
+			if tag.name == 'p':
+				if 'post id:' in tag.text:
+					post_id = tag.text[len('post id:'):].strip()
+		print(post_id)
+		return post_id
+
+
 if __name__ == '__main__':
 	print('running ' + __file__)
 
