@@ -1,4 +1,4 @@
-[
+consoles = [
 	{
 		"abbreviation": "NGC",
 		"alternate_name": "Dolphin",
@@ -7,18 +7,18 @@
 		"name_group": "Gamecube",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -34,20 +34,20 @@
 		"developer": "Nintendo",
 		"manufacturers": [],
 		"name_prefix": "Super",
-		"name_suffix": null,
+		"name_suffix": None,
 		"names_other": [
 			"Super Comboy",
 			"Super Famicom"
 		],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -62,18 +62,18 @@
 		"name_group": "Famicom",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "Disk System",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -88,18 +88,18 @@
 		"name_group": "Nintendo 64",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -107,24 +107,24 @@
 		"name": "Nintendo 64"
 	},
 	{
-		"abbreviation": null,
+		"abbreviation": None,
 		"generation": 5,
 		"category": "console",
 		"name_group": "Virtual Boy",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -137,18 +137,18 @@
 		"name_group": "DS",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "i",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -164,17 +164,17 @@
 		"developer": "Nintendo",
 		"manufacturers": [],
 		"name_prefix": "Super",
-		"name_suffix": null,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -189,18 +189,18 @@
 		"name_group": "Wii",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -214,18 +214,18 @@
 		"name_group": "Game Boy",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -240,18 +240,18 @@
 		"name_group": "Game Boy",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "Advance",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -265,18 +265,18 @@
 		"name_group": "Wii",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "U",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -290,17 +290,17 @@
 		"developer": "Nintendo",
 		"manufacturers": [],
 		"name_prefix": "New Nintendo",
-		"name_suffix": null,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -313,18 +313,18 @@
 		"name_group": "3DS",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -338,18 +338,18 @@
 		"name_group": "Switch",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -364,18 +364,18 @@
 		"name_group": "Famicom",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -389,18 +389,18 @@
 		"name_group": "Nintendo Entertainment System",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -415,18 +415,18 @@
 		"name_group": "DS",
 		"developer": "Nintendo",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -440,18 +440,18 @@
 		"name_group": "Game Gear",
 		"developer": "Sega",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -465,18 +465,18 @@
 		"name_group": "32X",
 		"developer": "Sega",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -491,18 +491,18 @@
 		"name_group": "SG-1000",
 		"developer": "Sega",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -517,18 +517,18 @@
 		"name_group": "Sega CD",
 		"developer": "Sega",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -543,18 +543,18 @@
 		"name_group": "Genesis",
 		"developer": "Sega",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -569,8 +569,8 @@
 		"name_group": "Saturn",
 		"developer": "Sega",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [
 			"JVC Saturn",
 			"Hi-Saturn",
@@ -579,13 +579,13 @@
 		],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -599,18 +599,18 @@
 		"name_group": "Master System",
 		"developer": "Sega",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -621,20 +621,20 @@
 		"alternate_name": "Project Scarlett",
 		"category": "console",
 		"name_group": "Xbox",
-		"developer": "Microsoft",
+		"developer": "Sega",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -647,18 +647,18 @@
 		"name_group": "Xbox",
 		"developer": "Microsoft",
 		"manufacturers": [],
-		"name_prefix": null,
-		"name_suffix": null,
+		"name_prefix": None,
+		"name_suffix": None,
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -672,18 +672,18 @@
 		"name_group": "Xbox",
 		"developer": "Microsoft",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "360",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -698,18 +698,18 @@
 		"name_group": "Xbox",
 		"developer": "Microsoft",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "One",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -724,18 +724,18 @@
 		"name_group": "PlayStation",
 		"developer": "Sony",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "2",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -749,18 +749,18 @@
 		"name_group": "PlayStation",
 		"developer": "Sony",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "3",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -775,18 +775,18 @@
 		"name_group": "PlayStation",
 		"developer": "Sony",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "Vita",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -800,18 +800,18 @@
 		"name_group": "PlayStation",
 		"developer": "Sony",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "Portable",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -825,18 +825,18 @@
 		"name_group": "PlayStation",
 		"developer": "Sony",
 		"manufacturers": [],
-		"name_prefix": null,
+		"name_prefix": None,
 		"name_suffix": "5",
 		"names_other": [],
 		"variations": [
 			{
-				"name": null,
-				"model_no": null,
-				"storage_capacity": null,
+				"name": None,
+				"model_no": None,
+				"storage_capacity": None,
 				"editions": [
 					{
-						"name": null,
-						"colors": [null]
+						"name": None,
+						"colors": [None]
 					}
 				]
 			}
@@ -844,3 +844,24 @@
 		"name": "PlayStation 5"
 	}
 ]
+
+for console in consoles:
+	name = console['name']
+	generation = None
+	if 'generation' in console.keys():
+		generation = console['generation']
+	if generation is None:
+		generation = 'NULL'
+	else:
+		generation = str(console['generation'])
+	abbreviation = None
+	if 'abbreviation' in console.keys():
+		abbreviation = console['abbreviation']
+	if abbreviation is None:
+		abbreviation = 'NULL'
+	else:
+		abbreviation = '\'' + console['abbreviation'] + '\''
+	developer = console['developer']
+	if developer is None:
+		developer = 'NULL'
+	print('INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES(\''+ name + '\', ' + generation + ', ' + abbreviation + ', \'' + developer + '\');')
