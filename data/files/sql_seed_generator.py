@@ -37,15 +37,16 @@ with open('console_editions.tsv', newline='') as csv_editions:
                 else:
                     row_data[current_column] = None
                 column_no += 1
-            pprint.pprint(row_data)
+            # FIXME: properly escape for SQL; ensure right columns present
+            print(f"INSERT INTO platform_editions (name, official_color, has_matte, has_transparency, has_gloss, note, image_url_filename) VALUES('{row_data['edition']}', '{row_data['color']}', {row_data['matte']}, {row_data['gloss']}, {row_data['transparency']}, {row_data['design note']}, NULL);")
         row_no += 1
 
-with open('consoles.tsv', newline='') as csv_consoles:
-    consoles_reader = csv.reader(csv_consoles, delimiter='\t')
+with open('consoles.tsv', newline='') as csv_platforms:
+    platforms_reader = csv.reader(csv_platforms, delimiter='\t')
     row_no = 0
     columns = []
     editions = []
-    for row in consoles_reader:
+    for row in platforms_reader:
         if row_no is 0:
             for column in row:
                 columns.append(column)
@@ -65,6 +66,33 @@ with open('consoles.tsv', newline='') as csv_consoles:
                 else:
                     row_data[current_column] = None
                 column_no += 1
-            pprint.pprint(row_data)
-            # print("INSERT INTO platforms (name, platform_family, name_group, model_no, storage_capacity, description, disambiguation, relevance) VALUES('GameCube', 'FK', 'FK', 'DOL-001', 'pink', 'Nintendo''s ______th home console, debuted in', 'the original GameCube', 10);")
+            # FIXME: properly escape for SQL; ensure right columns present
+            # print(f"INSERT INTO platforms (name, platform_family, name_group, model_no, storage_capacity, disambiguation, relevance) VALUES('{row_data['name']}', 'FK', 'FK', '{row_data['model no']}', '{row_data['storage']}', '{row_data['notes']}', {row_data['relevance']});")
+        row_no += 1
+
+with open('console_families.tsv', newline='') as csv_platform_families:
+    platform_families_reader = csv.reader(csv_platform_families, delimiter='\t')
+    row_no = 0
+    columns = []
+    editions = []
+    for row in platform_families_reader:
+        if row_no is 0:
+            for column in row:
+                columns.append(column)
+            print(columns)
+        else:
+            row_data = {}
+            column_no = 0
+            for cell in row:
+                current_column = columns[column_no]
+                if cell is not '':
+                    if current_column in ['developer']:
+                        row_data[current_column] = cell.title()
+                    else:
+                        row_data[current_column] = cell
+                else:
+                    row_data[current_column] = None
+                column_no += 1
+            # FIXME: properly escape for SQL; ensure right columns present
+            # print(f"INSERT INTO platform_families (name, developer) VALUES('{row_data['name']}', '{row_data['developer']}');")
         row_no += 1
