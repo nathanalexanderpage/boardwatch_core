@@ -27,6 +27,9 @@ CREATE TABLE platform_editions (
 	id serial PRIMARY KEY,
 	name varchar(100) NULL,
 	official_color varchar(60) NULL,
+	has_matte boolean NULL,
+	has_transparency boolean NULL,
+	has_gloss boolean NULL,
 	note text NULL,
 	image_url text NULL
 );
@@ -39,10 +42,7 @@ CREATE TABLE colors (
 CREATE TABLE platform_editions_colors (
 	platform_edition_id int NOT NULL, --FK
 	color_id smallint NOT NULL, --FK
-	PRIMARY KEY (platform_edition_id, color_id),
-	has_matte boolean NULL DEFAULT false,
-	has_transparency boolean NULL DEFAULT false,
-	has_gloss boolean NULL DEFAULT false
+	PRIMARY KEY (platform_edition_id, color_id)
 );
 
 CREATE TABLE games (
