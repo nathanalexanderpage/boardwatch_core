@@ -1,0 +1,83 @@
+console	developer	ref	name	is_brand_missing	model no	storage	desc	alt names	notes	estimated relevance
+3ds	nintendo	50	3DS	y			original		the original 3DS	10
+3ds	nintendo	52	3DS XL	y			original		larger form factor 3DS	9
+3ds	nintendo	65	2DS	y			2ds		3DS game compatibility, no 3D functionality	9
+3ds	nintendo	51	New Nintendo 3DS	n			original		suped up 3DS with exclusive library of games	9
+3ds	nintendo	53	New Nintendo 3DS XL	n			original		larger form factor New 3DS	10
+ds	nintendo	31	DS	y			original		the original DS	10
+ds	nintendo	57	DS Lite	y			lite		lighter, brighter, smaller form factor DS	9
+dsi	nintendo	32	DSi	y			original		camera-enabled DS, no GBA slot	10
+dsi	nintendo	64	DSi XL	y			xl		larger form factor DSi	9
+gamecube	nintendo	1	Panasonic Q	n			pq		combination GameCube & DVD player	4
+gamecube	nintendo	2	TDEV	n			tdev		developers' GameCube console	1
+gamecube	nintendo	5	GameCube	y	DOL-001	n/a	original		the original GameCube	10
+gamecube	nintendo	6	GameCube	y	DOL-101	n/a	101		no Digital AV Out port	9
+gb	nintendo	33	Game Boy	y			original		the original Game Boy	10
+gb	nintendo	58	Game Boy Pocket	y			pocket		a smaller form factor Game Boy	9
+gb	nintendo	59	Game Boy Light	y			light		lighted screen	8
+gba	nintendo	34	Game Boy Advance	y			original		the original Game Boy Advance	10
+gba	nintendo	59	Game Boy Advance SP	y			sp		a rechargable, backlit, foldable Game Boy Advance	10
+gba	nintendo	63	Game Boy Micro	y			micro		a rechargable, backlit, pocket-sized Game Boy Advance	6
+gbc	nintendo	35	Game Boy Color	y			original		the original Game Boy Color	10
+genesis	sega	36	Genesis	y			original		the original Genesis	10
+genesis	sega	61	Genesis	y	MK-1601		2		second iteration of the Genesis, different power supply	9
+genesis	sega	62	Genesis	y	MK-1631		3		smallest form factor Genesis, not compatible with 32X	8
+gg	sega	37	Game Gear	y			original		the original Game Gear	10
+gg	sega	54	Game Gear	y			repro		Majesco reproduction	7
+mastersys	sega	38	Master System	y			original		the original Master System	10
+mastersys	sega	83	Master System II	y			2		compact cost reduction model	9
+n64	nintendo	40	Nintendo 64	n			original		the original Nintendo 64	10
+nes	nintendo	41	Nintendo Entertainment System	n	NES-001		original		the original NES	10
+nes	nintendo	66	Nintendo Entertainment System	n	NES-101		101		smaller form factor, top-loading NES variant	9
+ps	sony	19	PlayStation	y			original		the original PlayStation	10
+ps	sony	20	PS One	y			one		compact redesign of original PlayStation	7
+ps	sony	21	Debugging Station PlayStation	y			debug		original PlayStation's debugger console	1
+ps	sony	22	PlayStation Net Yaroze	y			net		region-unlocked, custom-game-enabling variant	4
+ps2	sony	15	PlayStation 2	y			original		the original PS2	10
+ps2	sony	16	PlayStation 2 Slimline	y			slim	PS2 Slim	slim form factor redesign of PS2	10
+ps2	sony	17	PSX	y			original		PS2 with built-in digital video recorder, DVD burner	5
+ps2	sony	18	Sony BRAVIA KDL22PX300	y			bravia		TV with built-in PS2	1
+ps3	sony	12	PlayStation 3	y	CECHxxx	20GB-160GB	original		the original PS3	10
+ps3	sony	13	PlayStation 3 Slim	y	CECH-2xxxx, CECH-3xxxx	120GB-320GB	slim		slim form factor redesign of PS3	9
+ps3	sony	14	PlayStation 3 Super Slim	y	CECH-4xxxx	12GB-500GB	superslim		super slim redesign of PS3	8
+ps4	sony	23	PlayStation 4	y			original		the original PS4	10
+ps4	sony	24	PlayStation 4 Slim	y		500GB-1TB	slim		slim form factor redesign of PS4	9
+ps4	sony	30	PlayStation 4 Pro	y		1TB-2TB	pro		thick form factor, performance-enhanced PS4	9
+psp	sony	42	PlayStation Portable	y	PSP-1000		1000		the original PSP	10
+psp	sony	79	PlayStation Portable	y	PSP-2000		2000		video out	8
+psp	sony	80	PlayStation Portable	y	PSP-3000		3000		video out, microphone	9
+psp	sony	81	PlayStation Portable Go	y	PSP-N1000		go		video out, microphone, bluetooth, sidekick-style	6
+psp	sony	82	PlayStation Portable Street	y	PSP-E1000		street		video out, microphone, bluetooth, no Wi-Fi	4
+saturn	sega	43	Saturn	y	HST-00xx		original		the original Saturn	10
+saturn	sega	55	V-Saturn	y	RG-JX1, RG-JX2, RG-JX2S		v		JVC's console release	8
+saturn	sega	56	Hi-Saturn	y	MMP-1, MMP-11		hi		Hitachi's console release	9
+saturn	sega	57	Game & Car Navi Hi-Saturn	y	MMP-1000NV		hinav		small form factor with car navigation function	5
+sg1000	sega	44	SG-1000	y			original		the original SG-1000	10
+sg1000	sega	68	SG-1000 II	y			2			9
+sg1000	sega	69	SC-3000	y			3000	Personal Computer SC-3000	combination gaming console & personal computer	8
+sg1000	sega	70	Mark III	y			mark3			7
+snes	nintendo	7	Super Famicom	y	SHVC-001, SNSP-001A, SNSN-001	n/a	sfc		the original SFC	5
+snes	nintendo	8	Super Nintendo Entertainment System	n	SNS-001	n/a	snes		the original SNES	10
+snes	nintendo	9	Super Famicom	y	SHVC-101, SNS-102	n/a	sfc-101	Super Famicom Jr.	smaller form factor SFC	3
+snes	nintendo	10	Super Nintendo Entertainment System	n	SNS-101, SNS-102	n/a	snes-101	New-Style Super NES, SNS-101, Super NES Control Deck	smaller form factor SNES	9
+switch	nintendo	45	Switch	y			original		the original Switch	10
+switch	nintendo	67	Switch Lite	y			lite		no TV compatibility	9
+virtual boy	nintendo	46	Virtual Boy	y			original		the original Virtual Boy	10
+vita	sony	79	PlayStation Vita	y			original	Vita	the original PS Vita	10
+vita	sony	3	PlayStation TV	y			tv		PS Vita's home console variant	4
+vita	sony	4	PlayStation Vita Slim	y	PCH-200x		slim	Vita Slim	slim form factor PS Vita	9
+wii	nintendo	25	Wii	y	RVL-001		original		the original Wii	10
+wii	nintendo	26	Wii Family Edition	y	RVL-101		family		no backwards compatibility	9
+wii	nintendo	27	Wii Mini	y	RVL-201		mini		no backwards compatibility, no internet connectivity	5
+wiiu	nintendo	28	Wii U Basic	y		8GB	basic		8GB model	9
+wiiu	nintendo	29	Wii U Deluxe	y		32GB	deluxe		32GB model	10
+xb360	microsoft	48	Xbox 360 Core	y			core		the original Xbox 360 (no HDMI out)	10
+xb360	microsoft	76	Xbox 360 Pro	y			pro		Xbox 360 (some w/, some w/o HDMI)	9
+xb360	microsoft	77	Xbox 360 Arcade	y		256MB-512MB	arcade			8
+xb360	microsoft	78	Xbox 360 Elite	y		120GB-250GB	elite	Xbox 360 Super Elite		9
+xb360	microsoft	79	Xbox 360 S	y		4GB-320GB	s	Xbox 360 Slim	slim form factor Xbox 360	10
+xbone	microsoft	49	Xbox One	y		500GB-1TB	original		the original Xbox One	10
+xbone	microsoft	73	Xbox One S	y		500GB-2TB	s		slim form factor Xbox One	10
+xbone	microsoft	75	Xbox One S All-Digital	y		500GB-2TB	sad		slim form factor Xbox One w/o disc drive	8
+xbone	microsoft	74	Xbox One X	y		1TB	x		more powerful Xbox One with 4K game compatibility	9
+xbox	microsoft	47	Xbox	y			original		the original Xbox	10
