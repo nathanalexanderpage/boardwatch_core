@@ -38,7 +38,7 @@ INSERT INTO platform_name_groups (name, description) VALUES('Xbox', 'started by 
 
 -- INSERT INTO table (column, column, column, column, column, column, column) VALUES('pink', 'pink', 'pink', 'pink', 'pink', 'pink', 'pink');
 
--- INSERT INTO platforms (name, platform_family, name_group, model_no, storage_capacity, description, disambiguation, estimated_relevance) VALUES('GameCube', 'FK', 'FK', 'DOL-001', 'pink', 'Nintendo''s ______th home console, debuted in', 'the original GameCube', 10);
+-- INSERT INTO platforms (name, platform_family, name_group, model_no, storage_capacity, description, disambiguation, relevance) VALUES('GameCube', 'FK', 'FK', 'DOL-001', 'pink', 'Nintendo''s ______th home console, debuted in', 'the original GameCube', 10);
 
 -- INSERT INTO platform_editions (name, official_color, has_matte, has_transparency, has_gloss, note, image_url_filename) VALUES(NULL, 'Indigo', false, false, false, NULL, NULL);
 

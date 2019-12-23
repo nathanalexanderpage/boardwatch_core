@@ -20,7 +20,7 @@ CREATE TABLE platforms (
 	storage_capacity varchar(100) NULL,
 	description text NULL,
 	disambiguation varchar(100) NULL,
-	estimated_relevance smallint NULL --#/10
+	relevance smallint NULL --#/10
 );
 
 CREATE TABLE platform_editions (
