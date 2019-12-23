@@ -11,6 +11,7 @@ bs4 = "*"
 requests = "*"
 mongoengine = "*"
 pymongo = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.7"
