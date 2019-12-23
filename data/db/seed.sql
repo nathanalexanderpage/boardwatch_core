@@ -1,8 +1,5 @@
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Nintendo Entertainment System', 3, 'NES', 'Nintendo');
--- INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Family Computer', 3, 'famicom', 'Nintendo');
--- INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Family Computer Disk System', 3, 'fds', 'Nintendo');
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Super Nintendo Entertainment System', 4, 'SNES', 'Nintendo');
--- INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Super Famicom', 4, 'SFC', 'Nintendo');
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Game Boy', 4, 'GB', 'Nintendo');
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Nintendo 64', 5, 'N64', 'Nintendo');
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Virtual Boy', 5, NULL, 'Nintendo');
@@ -17,8 +14,6 @@ INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Switch', 8, NULL, 'Nintendo');
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('SG-1000', 3, NULL, 'Sega');
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Sega Game Gear', 4, 'Game Gear', 'Sega');
-INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Sega 32X', 4, 'Sega32', 'Sega');
-INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Sega CD', 4, NULL, 'Sega');
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Genesis', 4, NULL, 'Sega');
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Saturn', 5, NULL, 'Sega');
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('Sega Master System', 3, 'SMS', 'Sega');
@@ -34,6 +29,7 @@ INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES
 INSERT INTO platform_families (name, generation, abbreviation, developer) VALUES('PlayStation 5', NULL, 'PS5', 'Sony');
 
 INSERT INTO platform_name_groups (name, description) VALUES('Nintendo Entertainment System', 'started by the Nintendo Entertainment System (NES)');
+INSERT INTO platform_name_groups (name, description) VALUES('Famicom', 'started by the Family Computer, abbreviated as "Famicom", or "FC"');
 INSERT INTO platform_name_groups (name, description) VALUES('Game Boy', 'started by the Game Boy');
 INSERT INTO platform_name_groups (name, description) VALUES('Wii', 'started by the Wii');
 INSERT INTO platform_name_groups (name, description) VALUES('DS', 'started by the Nintendo DS');
@@ -44,7 +40,7 @@ INSERT INTO platform_name_groups (name, description) VALUES('Xbox', 'started by 
 
 -- INSERT INTO platforms (name, platform_family, name_group, model_no, storage_capacity, description, disambiguation, estimated_relevance) VALUES('GameCube', 'FK', 'FK', 'DOL-001', 'pink', 'Nintendo''s ______th home console, debuted in', 'the original GameCube', 10);
 
--- INSERT INTO platform_editions (name, official_color, note, image_url_filename) VALUES(NULL, 'Indigo', NULL, NULL);
+-- INSERT INTO platform_editions (name, official_color, has_matte, has_transparency, has_gloss, note, image_url_filename) VALUES(NULL, 'Indigo', false, false, false, NULL, NULL);
 
 INSERT INTO colors (name) VALUES('pink');
 INSERT INTO colors (name) VALUES('red');
@@ -62,8 +58,10 @@ INSERT INTO colors (name) VALUES('brown');
 INSERT INTO colors (name) VALUES('grey');
 INSERT INTO colors (name) VALUES('gold');
 INSERT INTO colors (name) VALUES('silver');
+INSERT INTO colors (name) VALUES('copper');
+INSERT INTO colors (name) VALUES('rainbow');
 
--- INSERT INTO platform_editions_colors (platform_edition_id, color_id, has_matte, has_transparency, has_gloss) VALUES(1, 1, false, false, false);
+-- INSERT INTO platform_editions_colors (platform_edition_id, color_id) VALUES(1, 1);
 
 -- INSERT INTO games (name, year_first_release, is_bootleg) VALUES('Super Mario Bros.', 1980, false);
 
@@ -106,12 +104,5 @@ INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Charizard'
 INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Squirtle', NULL, 'Pokemon franchise');
 INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Wartortle', NULL, 'Pokemon franchise');
 INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Blastoise', NULL, 'Pokemon franchise');
-INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Caterpie', NULL, 'Pokemon franchise');
-INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Metapod', NULL, 'Pokemon franchise');
-INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Butterfree', NULL, 'Pokemon franchise');
-INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Weedle', NULL, 'Pokemon franchise');
-INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Kakuna', NULL, 'Pokemon franchise');
-INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Beedril', NULL, 'Pokemon franchise');
-INSERT INTO characters (name, name_disambiguation, from_what) VALUES('Pikachu', NULL, 'Pokemon franchise');
 
--- INSERT INTO characters_in_games (character_id, game_id, is_playable, playability_extent) VALUES(1, 2, true, 'through fourth act when point of view switches to');
+-- INSERT INTO characters_in_games (character_id, game_id, is_playable, playability_extent) VALUES(1, 2, true, 'through fourth act when point of view switches to first person');
