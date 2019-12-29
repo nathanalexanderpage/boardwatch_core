@@ -1,8 +1,12 @@
+CREATE DATABASE boardwatch
+    WITH
+    ENCODING = 'UTF8';
+
 CREATE TABLE platform_families (
 	id serial PRIMARY KEY,
 	name varchar(100) NULL,
 	abbreviation varchar(20) NULL,
-	developer varchar(100) NULL,
+	developer varchar(100) NULL
 );
 
 CREATE TABLE platform_name_groups (
@@ -14,13 +18,13 @@ CREATE TABLE platform_name_groups (
 CREATE TABLE platforms (
 	id serial PRIMARY KEY,
 	name varchar(100) NULL,
-	platform_family smallint NULL, --FK
-	name_group smallint NULL, --FK
+	platform_family_id smallint NULL REFERENCES platform_families(id),
+	name_group_id smallint NULL REFERENCES platform_name_groups(id),
 	model_no varchar(50) NULL,
 	storage_capacity varchar(100) NULL,
 	description text NULL,
 	disambiguation varchar(100) NULL,
-	relevance smallint NULL --#/10
+	relevance smallint NULL -- (#/10)
 );
 
 CREATE TABLE platform_editions (
@@ -39,9 +43,9 @@ CREATE TABLE colors (
 	name varchar(50) UNIQUE NOT NULL
 );
 
-CREATE TABLE platform_editions_colors (
-	platform_edition_id int NOT NULL, --FK
-	color_id smallint NOT NULL, --FK
+CREATE TABLE colors_platform_editions (
+	platform_edition_id int NOT NULL REFERENCES platform_editions(id),
+	color_id smallint NOT NULL REFERENCES colors(id),
 	PRIMARY KEY (platform_edition_id, color_id)
 );
 
@@ -52,59 +56,60 @@ CREATE TABLE games (
 	is_bootleg boolean NOT NULL
 );
 
-CREATE TABLE platforms_games_compatibility (
-	platform_id int NOT NULL,
-	game_id int NOT NULL,
+CREATE TABLE games_platforms_compatibility (
+	platform_id int NOT NULL REFERENCES platforms(id),
+	game_id int NOT NULL REFERENCES games(id),
 	PRIMARY KEY (platform_id, game_id)
 );
 
 CREATE TABLE accessory_types (
 	id serial PRIMARY KEY,
 	name varchar(100) NOT NULL,
-	description varchar(255) NULL,
+	description varchar(255) NULL
 );
 
 CREATE TABLE accessories (
 	id serial PRIMARY KEY,
 	name varchar(255) NOT NULL,
-	type smallint NOT NULL, --FK
+	type smallint NOT NULL REFERENCES accessory_types(id),
 	year_first_release smallint NULL,
 	is_first_party boolean NOT NULL,
 	description text
 );
 
-CREATE TABLE games_accessories_compatibility (
-	game_id int NOT NULL,
-	accessory_id int NOT NULL,
+CREATE TABLE accessories_games_compatibility (
+	game_id int NOT NULL REFERENCES games(id),
+	accessory_id int NOT NULL REFERENCES accessories(id),
 	PRIMARY KEY (game_id, accessory_id)
 );
 
-CREATE TABLE platforms_accessories_compatibility (
-	platform_id int NOT NULL,
-	accessory_id int NOT NULL,
+CREATE TABLE accessories_platforms_compatibility (
+	platform_id int NOT NULL REFERENCES platforms(id),
+	accessory_id int NOT NULL REFERENCES accessories(id),
 	PRIMARY KEY (platform_id, accessory_id)
 );
 
 CREATE TABLE accessory_variations (
-	accessory_id int NOT NULL, --FK
+	id serial PRIMARY KEY,
+	accessory_id int NOT NULL REFERENCES accessories(id),
 	description varchar(255) NOT NULL
 );
 
 CREATE TABLE accessory_variations_colors (
-	accessory_variation_id int NOT NULL, --FK
-	color_id int NOT NULL --FK
+	accessory_variation_id int NOT NULL REFERENCES accessory_variations(id),
+	color_id int NOT NULL REFERENCES colors(id)
 );
 
 CREATE TABLE characters (
 	id serial PRIMARY KEY,
 	name varchar(150) NOT NULL,
 	name_disambiguation varchar(150) NULL,
-	from_what varchar(255) NOT NULL,
+	from_what varchar(255) NOT NULL
 );
 
 CREATE TABLE characters_in_games (
-	character_id int NOT NULL,
-	game_id int NOT NULL,
+	character_id int NOT NULL REFERENCES characters(id),
+	game_id int NOT NULL REFERENCES games(id),
 	PRIMARY KEY (character_id, game_id),
 	is_playable boolean NOT NULL,
 	playability_extent text NULL
