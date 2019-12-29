@@ -5,14 +5,14 @@ CREATE DATABASE boardwatch
 CREATE TABLE platform_families (
 	id serial PRIMARY KEY,
 	name varchar(100) NULL,
-	abbreviation varchar(20) NULL,
+	generation smallint NULL,
 	developer varchar(100) NULL
 );
 
 CREATE TABLE platform_name_groups (
 	id serial PRIMARY KEY,
 	name varchar(50) NULL,
-	abbr varchar(30) NULL
+	description varchar(100) NULL
 );
 
 CREATE TABLE platforms (
