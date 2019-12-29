@@ -1,7 +1,32 @@
 import csv
 import pprint as pp
+import psycopg2 as db
+import os
+
+from dotenv import load_dotenv
 
 pprint = pp.PrettyPrinter()
+
+colors = [
+    'pink',
+    'red',
+    'orange',
+    'yellow',
+    'green',
+    'mint',
+    'blue',
+    'navy',
+    'purple',
+    'black',
+    'white',
+    'off-white',
+    'brown',
+    'grey',
+    'gold',
+    'silver',
+    'copper',
+    'rainbow'
+]
 
 console_families = list()
 with open('console_families.tsv', newline='') as csv_platform_families:
@@ -102,6 +127,7 @@ with open('console_editions.tsv', newline='') as csv_editions:
         row_no += 1
 pprint.pprint(editions)
 
+# visual confirmation of data to be inserted
 for family in console_families:
     print(family['name'])
     for console in consoles:
@@ -117,3 +143,25 @@ for family in console_families:
                     if edition['colors'] is not None:
                         printable += ', '.join(edition['colors'])
                     print(printable)
+
+# generate SQL seed INSERT statements
+print('-------------------- enter SQL section --------------------')
+
+load_dotenv(dotenv_path='../../.env')
+POSTGRESQL_USERNAME = os.getenv('POSTGRESQL_USERNAME')
+POSTGRESQL_PASSWORD = os.getenv('POSTGRESQL_PASSWORD')
+POSTGRESQL_PORT = os.getenv('POSTGRESQL_PORT')
+POSTGRESQL_HOST = os.getenv('POSTGRESQL_HOST')
+POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
+
+conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
+cur = conn.cursor()
+
+cur.execute("SELECT * FROM mytable;")
+all = (cur.fetchall())
+print(len(all[0]))
+
+conn.commit()
+cur.close()
+conn.close()
+print('-------------------- exit SQL section --------------------')
