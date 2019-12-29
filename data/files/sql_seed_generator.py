@@ -7,26 +7,7 @@ from dotenv import load_dotenv
 
 pprint = pp.PrettyPrinter()
 
-colors = [
-    'pink',
-    'red',
-    'orange',
-    'yellow',
-    'green',
-    'mint',
-    'blue',
-    'navy',
-    'purple',
-    'black',
-    'white',
-    'off-white',
-    'brown',
-    'grey',
-    'gold',
-    'silver',
-    'copper',
-    'rainbow'
-]
+colors = []
 
 console_families = list()
 with open('console_families.tsv', newline='') as csv_platform_families:
@@ -52,10 +33,32 @@ with open('console_families.tsv', newline='') as csv_platform_families:
                     row_data[current_column] = None
                 column_no += 1
             console_families.append(row_data)
-            # FIXME: properly escape for SQL; ensure right columns present
-            # print(f"INSERT INTO platform_families (name, developer) VALUES('{row_data['name']}', '{row_data['developer']}');")
         row_no += 1
-pprint.pprint(console_families)
+# pprint.pprint(console_families)
+
+name_groups = list()
+with open('name_groups.tsv', newline='') as csv_name_groups:
+    name_groups_reader = csv.reader(csv_name_groups, delimiter='\t')
+    row_no = 0
+    columns = []
+    for row in name_groups_reader:
+        if row_no is 0:
+            for column in row:
+                columns.append(column)
+            # print(columns)
+        else:
+            row_data = {}
+            column_no = 0
+            for cell in row:
+                current_column = columns[column_no]
+                if cell is not '':
+                    row_data[current_column] = cell
+                else:
+                    row_data[current_column] = None
+                column_no += 1
+            name_groups.append(row_data)
+        row_no += 1
+# pprint.pprint(name_groups)
 
 consoles = list()
 with open('consoles.tsv', newline='') as csv_platforms:
@@ -83,10 +86,8 @@ with open('consoles.tsv', newline='') as csv_platforms:
                     row_data[current_column] = None
                 column_no += 1
             consoles.append(row_data)
-            # FIXME: properly escape for SQL; ensure right columns present
-            # print(f"INSERT INTO platforms (name, platform_family, name_group, model_no, storage_capacity, disambiguation, relevance) VALUES('{row_data['name']}', 'FK', 'FK', '{row_data['model no']}', '{row_data['storage']}', '{row_data['notes']}', {row_data['relevance']});")
         row_no += 1
-pprint.pprint(consoles)
+# pprint.pprint(consoles)
 
 with open('console_editions.tsv', newline='') as csv_editions:
     editions_reader = csv.reader(csv_editions, delimiter='\t')
@@ -111,7 +112,11 @@ with open('console_editions.tsv', newline='') as csv_editions:
                     elif current_column == 'color':
                         row_data[current_column] = cell.title()
                     elif current_column == 'colors':
-                        row_data[current_column] = cell.split(', ')
+                        cell_colors = cell.split(', ')
+                        for color in cell_colors:
+                            if color not in colors:
+                                colors.append(color)
+                        row_data[current_column] = cell_colors
                     elif current_column == 'edition':
                         row_data[current_column] = cell.replace('Pokemon', 'Pokémon')
                     elif current_column == 'design note':
@@ -122,17 +127,16 @@ with open('console_editions.tsv', newline='') as csv_editions:
                     row_data[current_column] = None
                 column_no += 1
             editions.append(row_data)
-            # FIXME: properly escape for SQL; ensure right columns present
-            # print(f"INSERT INTO platform_editions (name, official_color, has_matte, has_transparency, has_gloss, note) VALUES('{row_data['edition']}', '{row_data['color']}', {row_data['matte']}, {row_data['gloss']}, {row_data['transparency']}, {row_data['design note']});")
         row_no += 1
-pprint.pprint(editions)
+# pprint.pprint(editions)
+# print(colors)
 
 # visual confirmation of data to be inserted
 for family in console_families:
     print(family['name'])
     for console in consoles:
         if console['console'] == family['console']:
-            print('\t' + console['name'])
+            # print('\t' + console['name'])
             for edition in editions:
                 if edition['console'] == console['console'] and edition['variation ref'] == console['desc']:
                     printable = '\t\t'
@@ -142,9 +146,9 @@ for family in console_families:
                         printable += edition['color'] + ' - '
                     if edition['colors'] is not None:
                         printable += ', '.join(edition['colors'])
-                    print(printable)
+                    # print(printable)
 
-# generate SQL seed INSERT statements
+# execute SQL seed statements
 print('-------------------- enter SQL section --------------------')
 
 load_dotenv(dotenv_path='../../.env')
@@ -157,9 +161,35 @@ POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 cur = conn.cursor()
 
-cur.execute("SELECT * FROM mytable;")
+# cur.execute("SELECT * FROM table;")
+# all = (cur.fetchall())
+# print(len(all[0]))
+
+# for family in console_families:
+#     print(family['name'])
+#     for console in consoles:
+#         if console['console'] == family['console']:
+#             print('\t' + console['name'])
+#             for edition in editions:
+#                 if edition['console'] == console['console'] and edition['variation ref'] == console['desc']:
+#                     printable = '\t\t'
+#                     if edition['edition'] is not None:
+#                         printable += edition['edition'] + ' - '
+#                     if edition['color'] is not None:
+#                         printable += edition['color'] + ' - '
+#                     if edition['colors'] is not None:
+#                         printable += ', '.join(edition['colors'])
+#                     print(printable)
+
+cur.execute("SELECT id FROM colors WHERE name = 'black';")
 all = (cur.fetchall())
-print(len(all[0]))
+pprint.pprint(len(all))
+
+# for color in colors:
+#     cur.execute('INSERT INTO colors (name) VALUES(%s);', [color])
+
+for family in console_families:
+    cur.execute('INSERT INTO platform_families (name, generation, developer) VALUES(%s);', (family['name'], family['generation'], family['developer']))
 
 conn.commit()
 cur.close()
