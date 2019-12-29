@@ -1,29 +1,30 @@
-console	name	developer
-3ds	3DS	nintendo
-ds	DS	nintendo
-dsi	DSi	nintendo
-gamecube	GameCube	nintendo
-gb	Game Boy	nintendo
-gba	Game Boy Advance	nintendo
-gbc	Game Boy Color	nintendo
-genesis	Genesis	sega
-gg	Game Gear	sega
-mastersys	Master System	sega
-n64	Nintendo 64	nintendo
-nes	Nintendo Entertainment System	nintendo
-ps	PlayStation	sony
-ps2	PlayStation 2	sony
-ps3	PlayStation 3	sony
-ps4	PlayStation 4	sony
-psp	PlayStation Portable	sony
-saturn	Saturn	sega
-sg1000	SG-1000	sega
-snes	Super Nintendo Entertainment System	nintendo
-switch	Switch	nintendo
-virtual boy	Virtual Boy	nintendo
-vita	Vita	sony
-wii	Wii	nintendo
-wiiu	Wii U	nintendo
-xb360	Xbox 360	microsoft
-xbone	Xbox One	microsoft
-xbox	Xbox	microsoft
+console	name	generation	developer
+3ds	3DS	8	nintendo
+new 3ds	New 3DS	8	nintendo
+ds	DS	7	nintendo
+dsi	DSi	7	nintendo
+gamecube	GameCube	6	nintendo
+gb	Game Boy	4	nintendo
+gba	Game Boy Advance	6	nintendo
+gbc	Game Boy Color	5	nintendo
+genesis	Genesis	4	sega
+gg	Game Gear	4	sega
+mastersys	Master System	3	sega
+n64	Nintendo 64	5	nintendo
+nes	Nintendo Entertainment System	3	nintendo
+ps	PlayStation	5	sony
+ps2	PlayStation 2	6	sony
+ps3	PlayStation 3	7	sony
+ps4	PlayStation 4	8	sony
+psp	PlayStation Portable	7	sony
+saturn	Saturn	5	sega
+sg1000	SG-1000	3	sega
+snes	Super Nintendo Entertainment System	4	nintendo
+switch	Switch	8	nintendo
+virtual boy	Virtual Boy	5	nintendo
+vita	Vita	8	sony
+wii	Wii	7	nintendo
+wiiu	Wii U	8	nintendo
+xb360	Xbox 360	7	microsoft
+xbone	Xbox One	8	microsoft
+xbox	Xbox	6	microsoft
