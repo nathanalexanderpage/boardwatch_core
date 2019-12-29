@@ -191,6 +191,12 @@ pprint.pprint(len(all))
 for family in console_families:
     cur.execute('INSERT INTO platform_families (name, generation, developer) VALUES(%s);', (family['name'], family['generation'], family['developer']))
 
+for name_group in name_groups:
+    cur.execute('INSERT INTO name_groups (name, generation, developer) VALUES(%s);', (name_group['name'], name_group['generation'], name_group['developer']))
+
+for console in consoles:
+    cur.execute('INSERT INTO name_groups (name, is_brand_missing, model_no, storage_capacity, description, disambiguation, relevance) VALUES(%s);', (console['name'], console['is_brand_missing'], console['model_no'], console['storage_capacity'], console['description'], console['disambiguation'], console['relevance']))
+
 conn.commit()
 cur.close()
 conn.close()
