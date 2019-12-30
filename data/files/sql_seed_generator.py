@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 pprint = pp.PrettyPrinter()
 
-colors = []
+colors = {}
 
 console_families = list()
 with open('console_families.tsv', newline='') as csv_platform_families:
@@ -91,11 +91,11 @@ with open('consoles.tsv', newline='') as csv_platforms:
         row_no += 1
 # pprint.pprint(consoles)
 
+console_editions = list()
 with open('console_editions.tsv', newline='') as csv_editions:
     editions_reader = csv.reader(csv_editions, delimiter='\t')
     row_no = 0
     columns = []
-    editions = list()
     for row in editions_reader:
         if row_no is 0:
             for column in row:
@@ -116,10 +116,14 @@ with open('console_editions.tsv', newline='') as csv_editions:
                     elif current_column == 'colors':
                         cell_colors = cell.split(', ')
                         for color in cell_colors:
-                            if color not in colors:
-                                colors.append(color)
+                            if color not in colors.keys():
+                                print('color')
+                                print(color)
+                                print('not in')
+                                print(colors.keys())
+                                colors[color] = None
                         row_data[current_column] = cell_colors
-                    elif current_column == 'edition':
+                    elif current_column == 'name':
                         row_data[current_column] = cell.replace('Pokemon', 'Pokémon')
                     elif current_column == 'design note':
                         row_data[current_column] = cell.replace('pokemon', 'Pokémon')
@@ -128,10 +132,9 @@ with open('console_editions.tsv', newline='') as csv_editions:
                 else:
                     row_data[current_column] = None
                 column_no += 1
-            editions.append(row_data)
+            console_editions.append(row_data)
         row_no += 1
-# pprint.pprint(editions)
-# print(colors)
+# pprint.pprint(console_editions)
 
 # visual confirmation of data to be inserted
 for family in console_families:
@@ -139,11 +142,11 @@ for family in console_families:
     for console in consoles:
         if console['console'] == family['console']:
             # print('\t' + console['name'])
-            for edition in editions:
+            for edition in console_editions:
                 if edition['console'] == console['console'] and edition['variation ref'] == console['desc']:
                     printable = '\t\t'
-                    if edition['edition'] is not None:
-                        printable += edition['edition'] + ' - '
+                    if edition['name'] is not None:
+                        printable += edition['name'] + ' - '
                     if edition['color'] is not None:
                         printable += edition['color'] + ' - '
                     if edition['colors'] is not None:
@@ -183,41 +186,56 @@ cur = conn.cursor()
 #                         printable += ', '.join(edition['colors'])
 #                     print(printable)
 
-cur.execute("SELECT id FROM colors WHERE name = 'black';")
-all = (cur.fetchall())
-pprint.pprint(len(all))
-
-for color in colors:
-    cur.execute('INSERT INTO colors (name) VALUES(%s);', (color,))
-    conn.commit()
-    cur.execute('SELECT * FROM colors WHERE name = %s;', (color,))
-    all = (cur.fetchall())
-    pprint.pprint(all[0])
-
 for family in console_families:
     pprint.pprint(family)
-    cur.execute('INSERT INTO platform_families (name, generation, developer) VALUES(%s, %s, %s);', (family['name'], family['generation'], family['developer']))
+    cur.execute('INSERT INTO platform_families (name, generation, developer) VALUES(%s, %s, %s) RETURNING id, name, generation, developer;', (family['name'], family['generation'], family['developer']))
     conn.commit()
-    cur.execute('SELECT * FROM platform_families WHERE name = %s;', (family['name'],))
-    all = (cur.fetchall())
-    pprint.pprint(all[0])
+
+    query_result = cur.fetchone()
+    pprint.pprint(query_result)
+    family['id'] = query_result[0]
 
 for name_group in name_groups:
     pprint.pprint(name_group)
-    cur.execute('INSERT INTO platform_name_groups (name, description) VALUES(%s, %s);', (name_group['name'], name_group['description']))
+    cur.execute('INSERT INTO platform_name_groups (name, description) VALUES(%s, %s) RETURNING id, name, description;', (name_group['name'], name_group['description']))
     conn.commit()
-    cur.execute('SELECT * FROM platform_name_groups WHERE name = %s;', (name_group['name'],))
-    all = (cur.fetchall())
-    pprint.pprint(all[0])
+
+    query_result = cur.fetchone()
+    pprint.pprint(query_result)
+    name_group['id'] = query_result[0]
 
 for console in consoles:
     values = (console['name'], console['is_brand_missing'], console['model_no'], console['storage'], console['description'], console['notes'], console['relevance'])
 
-    cur.execute('INSERT INTO platforms (name, is_brand_missing, model_no, storage_capacity, description, disambiguation, relevance) VALUES(%s, %s, %s, %s, %s, %s, %s);', values)
+    cur.execute('INSERT INTO platforms (name, is_brand_missing, model_no, storage_capacity, description, disambiguation, relevance) VALUES(%s, %s, %s, %s, %s, %s, %s) RETURNING id, name, is_brand_missing, model_no, storage_capacity, description, disambiguation, relevance;', values)
     conn.commit()
-    cur.execute('SELECT * FROM platforms WHERE name = %s;', (console['name'],))
-    all = (cur.fetchall())
-    pprint.pprint(all[0])
+
+    query_result = cur.fetchone()
+    pprint.pprint(query_result)
+    console['id'] = query_result[0]
+
+for color in colors.keys():
+    cur.execute('INSERT INTO colors (name) VALUES(%s) RETURNING id, name;', (color,))
+    conn.commit()
+
+    query_result = cur.fetchone()
+    pprint.pprint(query_result)
+    colors[color] = query_result[0]
+
+for edition in console_editions:
+    values = (edition['name'], edition['color'], edition['matte'], edition['transparency'], edition['gloss'], edition['design note'], edition['image_url'])
+
+    cur.execute('INSERT INTO platform_editions (name, official_color, has_matte, has_transparency, has_gloss, note, image_url) VALUES(%s, %s, %s, %s, %s, %s, %s) RETURNING id, name, official_color, has_matte, has_transparency, has_gloss, note, image_url;', values)
+    conn.commit()
+
+    query_result = cur.fetchone()
+    pprint.pprint(query_result)
+    edition['id'] = query_result[0]
+
+    for color in colors.keys():
+        if color in edition['colors']:
+            cur.execute('INSERT INTO colors_platform_editions (platform_edition_id, color_id) VALUES(%s, %s)', (edition['id'], colors[color]))
+    conn.commit()
 
 cur.close()
 conn.close()
