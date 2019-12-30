@@ -1,4 +1,4 @@
-console	name	desc	is_brand_missing	model no	storage	alt names	description	notes	relevance
+console	name	desc	is_brand_missing	model_no	storage	alt names	description	notes	relevance
 3ds	3DS	original	y					the original 3DS	10
 3ds	3DS XL	xl	y					larger form factor 3DS	9
 3ds	2DS	2ds	y					3DS game compatibility, no 3D functionality	9
