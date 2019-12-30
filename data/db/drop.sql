@@ -1,9 +1,9 @@
 DELETE FROM platform_families where id > 0;
 DELETE FROM platform_name_groups where id > 0;
+DELETE FROM colors_platform_editions where color_id > 0;
 DELETE FROM colors where id > 0;
 DELETE FROM platforms where id > 0;
 DELETE FROM platform_editions where id > 0;
-DELETE FROM colors_platform_editions where id > 0;
 DELETE FROM games where id > 0;
 DELETE FROM games_platforms_compatibility where id > 0;
 DELETE FROM accessory_types where id > 0;
