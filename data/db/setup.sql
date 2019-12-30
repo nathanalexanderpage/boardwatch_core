@@ -20,6 +20,7 @@ CREATE TABLE platforms (
 	name varchar(100) NULL,
 	platform_family_id smallint NULL REFERENCES platform_families(id),
 	name_group_id smallint NULL REFERENCES platform_name_groups(id),
+	is_brand_missing boolean NOT NULL,
 	model_no varchar(50) NULL,
 	storage_capacity varchar(100) NULL,
 	description text NULL,
