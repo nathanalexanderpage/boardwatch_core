@@ -28,6 +28,11 @@ CREATE TABLE platforms (
 	relevance smallint NULL -- (#/10)
 );
 
+CREATE TABLE colors (
+	id serial PRIMARY KEY,
+	name varchar(50) UNIQUE NOT NULL
+);
+
 CREATE TABLE platform_editions (
 	id serial PRIMARY KEY,
 	name varchar(100) NULL,
@@ -37,11 +42,6 @@ CREATE TABLE platform_editions (
 	has_gloss boolean NULL,
 	note text NULL,
 	image_url text NULL
-);
-
-CREATE TABLE colors (
-	id serial PRIMARY KEY,
-	name varchar(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE colors_platform_editions (
