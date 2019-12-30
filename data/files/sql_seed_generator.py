@@ -27,6 +27,8 @@ with open('console_families.tsv', newline='') as csv_platform_families:
                 if cell is not '':
                     if current_column in ['developer']:
                         row_data[current_column] = cell.title()
+                    elif current_column in ['generation']:
+                        row_data[current_column] = int(cell)
                     else:
                         row_data[current_column] = cell
                 else:
@@ -185,19 +187,38 @@ cur.execute("SELECT id FROM colors WHERE name = 'black';")
 all = (cur.fetchall())
 pprint.pprint(len(all))
 
-# for color in colors:
-#     cur.execute('INSERT INTO colors (name) VALUES(%s);', [color])
+for color in colors:
+    cur.execute('INSERT INTO colors (name) VALUES(%s);', (color,))
+    conn.commit()
+    cur.execute('SELECT * FROM colors WHERE name = %s;', (color,))
+    all = (cur.fetchall())
+    pprint.pprint(all[0])
 
 for family in console_families:
-    cur.execute('INSERT INTO platform_families (name, generation, developer) VALUES(%s);', (family['name'], family['generation'], family['developer']))
+    pprint.pprint(family)
+    cur.execute('INSERT INTO platform_families (name, generation, developer) VALUES(%s, %s, %s);', (family['name'], family['generation'], family['developer']))
+    conn.commit()
+    cur.execute('SELECT * FROM platform_families WHERE name = %s;', (family['name'],))
+    all = (cur.fetchall())
+    pprint.pprint(all[0])
 
 for name_group in name_groups:
-    cur.execute('INSERT INTO name_groups (name, generation, developer) VALUES(%s);', (name_group['name'], name_group['generation'], name_group['developer']))
+    pprint.pprint(name_group)
+    cur.execute('INSERT INTO platform_name_groups (name, description) VALUES(%s, %s);', (name_group['name'], name_group['description']))
+    conn.commit()
+    cur.execute('SELECT * FROM platform_name_groups WHERE name = %s;', (name_group['name'],))
+    all = (cur.fetchall())
+    pprint.pprint(all[0])
 
 for console in consoles:
-    cur.execute('INSERT INTO name_groups (name, is_brand_missing, model_no, storage_capacity, description, disambiguation, relevance) VALUES(%s);', (console['name'], console['is_brand_missing'], console['model_no'], console['storage_capacity'], console['description'], console['disambiguation'], console['relevance']))
+    values = (console['name'], console['is_brand_missing'], console['model_no'], console['storage'], console['description'], console['notes'], console['relevance'])
 
-conn.commit()
+    cur.execute('INSERT INTO platforms (name, is_brand_missing, model_no, storage_capacity, description, disambiguation, relevance) VALUES(%s, %s, %s, %s, %s, %s, %s);', values)
+    conn.commit()
+    cur.execute('SELECT * FROM platforms WHERE name = %s;', (console['name'],))
+    all = (cur.fetchall())
+    pprint.pprint(all[0])
+
 cur.close()
 conn.close()
 print('-------------------- exit SQL section --------------------')
