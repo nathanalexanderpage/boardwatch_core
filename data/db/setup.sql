@@ -36,6 +36,7 @@ CREATE TABLE colors (
 CREATE TABLE platform_editions (
 	id serial PRIMARY KEY,
 	name varchar(100) NULL,
+	platform_id smallint NULL REFERENCES platforms(id),
 	official_color varchar(60) NULL,
 	has_matte boolean NULL,
 	has_transparency boolean NULL,
