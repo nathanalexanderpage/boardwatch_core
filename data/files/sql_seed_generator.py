@@ -141,7 +141,7 @@ for family in console_families:
 	print(family['name'])
 	for console in consoles:
 		if console['console'] == family['console']:
-			# print('\t' + console['name'])
+			print('\t' + console['name'])
 			for edition in console_editions:
 				if edition['console'] == console['console'] and edition['variation ref'] == console['desc']:
 					printable = '\t\t'
@@ -151,7 +151,7 @@ for family in console_families:
 						printable += edition['color'] + ' - '
 					if edition['colors'] is not None:
 						printable += ', '.join(edition['colors'])
-					# print(printable)
+					print(printable)
 
 # execute SQL seed statements
 print('-------------------- enter SQL section --------------------')
@@ -165,26 +165,6 @@ POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 
 conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 cur = conn.cursor()
-
-# cur.execute("SELECT * FROM table;")
-# all = (cur.fetchall())
-# print(len(all[0]))
-
-# for family in console_families:
-#     print(family['name'])
-#     for console in consoles:
-#         if console['console'] == family['console']:
-#             print('\t' + console['name'])
-#             for edition in editions:
-#                 if edition['console'] == console['console'] and edition['variation ref'] == console['desc']:
-#                     printable = '\t\t'
-#                     if edition['edition'] is not None:
-#                         printable += edition['edition'] + ' - '
-#                     if edition['color'] is not None:
-#                         printable += edition['color'] + ' - '
-#                     if edition['colors'] is not None:
-#                         printable += ', '.join(edition['colors'])
-#                     print(printable)
 
 for family in console_families:
 	pprint.pprint(family)
@@ -234,21 +214,8 @@ for color in colors.keys():
 
 for edition in console_editions:
 	for console in consoles:
-		if edition['console'] == 'nes':
-			print(edition['console'], console['console'], edition['variation ref'], console['desc'], console['id'])
 		if edition['console'] == console['console'] and edition['variation ref'] == console['desc']:
-			# print(edition['console'], console['console'], edition['variation ref'], console['desc'], console['id'])
-			print('inside')
 			edition['platform_id'] = console['id']
-			print('platform_id', edition['platform_id'])
-			# print(True)
-	print(edition['platform_id'], edition['variation ref'], console['desc'])
-	if edition['platform_id'] is None:
-		# print(False, edition['platform_id'], edition['console'], edition['variation ref'], edition['color'])
-		pass
-	if edition['platform_id'] is not None:
-		# print(True, edition['platform_id'], edition['console'], edition['variation ref'], edition['color'])
-		pass
 
 	values = (edition['name'], edition['platform_id'], edition['color'], edition['matte'], edition['transparency'], edition['gloss'], edition['design note'], edition['image_url'])
 
@@ -256,7 +223,6 @@ for edition in console_editions:
 	conn.commit()
 
 	query_result = cur.fetchone()
-	# pprint.pprint(query_result)
 	edition['id'] = query_result[0]
 
 	for color in colors.keys():
