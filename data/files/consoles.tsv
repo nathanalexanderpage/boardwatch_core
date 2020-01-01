@@ -29,17 +29,19 @@ mastersys	Master System II	2	y					compact cost reduction model	9
 n64	Nintendo 64	original	n					the original Nintendo 64	10
 nes	Nintendo Entertainment System	original	n	NES-001				the original NES	10
 nes	Nintendo Entertainment System	101	n	NES-101				smaller form factor, top-loading NES variant	9
+nes	Family Computer	famicom	y					the original Famicom	8
+nes	Family Computer	fc101	y					simple redesign of Famicom	7
 ps	PlayStation	original	y					the original PlayStation	10
 ps	PS One	one	y					compact redesign of original PlayStation	7
 ps	Debugging Station PlayStation	debug	y					original PlayStation's debugger console	1
 ps	PlayStation Net Yaroze	net	y					region-unlocked, custom-game-enabling variant	4
 ps2	PlayStation 2	original	y			PS2		the original PS2	10
 ps2	PlayStation 2 Slimline	slim	y			PS2 Slim		slim form factor redesign of PS2	10
-ps2	PSX	original	y					PS2 with built-in digital video recorder, DVD burner	5
+ps2	PSX	psx	y					PS2 with built-in digital video recorder, DVD burner	5
 ps2	Sony BRAVIA KDL22PX300	bravia	y					TV with built-in PS2	1
 ps3	PlayStation 3	original	y	CECHxxx	20GB-160GB			the original PS3	10
 ps3	PlayStation 3 Slim	slim	y	CECH-2xxxx, CECH-3xxxx	120GB-320GB			slim form factor redesign of PS3	9
-ps3	PlayStation 3 Super Slim	superslim	y	CECH-4xxxx	12GB-500GB			super slim redesign of PS3	8
+ps3	PlayStation 3 Super Slim	super slim	y	CECH-4xxxx	12GB-500GB			super slim redesign of PS3	8
 ps4	PlayStation 4	original	y					the original PS4	10
 ps4	PlayStation 4 Slim	slim	y		500GB-1TB			slim form factor redesign of PS4	9
 ps4	PlayStation 4 Pro	pro	y		1TB-2TB			thick form factor, performance-enhanced PS4	9
@@ -77,6 +79,7 @@ xb360	Xbox 360 Arcade	arcade	y		256MB-512MB				8
 xb360	Xbox 360 Elite	elite	y		120GB-250GB	Xbox 360 Super Elite			9
 xb360	Xbox 360 S	s	y		4GB-320GB	Xbox 360 Slim		slim form factor Xbox 360	10
 xbone	Xbox One	original	y		500GB-1TB			the original Xbox One	10
+xbone	Xbox One Elite	elite	y		1TB			Xbox One with 1TB solid state hybrid drive	8
 xbone	Xbox One S	s	y		500GB-2TB			slim form factor Xbox One	10
 xbone	Xbox One S All-Digital	sad	y		500GB-2TB			slim form factor Xbox One w/o disc drive	8
 xbone	Xbox One X	x	y		1TB			more powerful Xbox One with 4K game compatibility	9

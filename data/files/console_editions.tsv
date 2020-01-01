@@ -1,40 +1,10 @@
 console	color	name	colors	transparency	gloss	matte	design note	image_url	variation ref
-3ds		Heroes of Ruin	black						original
-3ds		Charizard	black						xl
-3ds		Pokemon Battle Trozei	black						xl
-3ds		Super Robot Taisen UX	black						xl
-3ds		Theatrhythm Final Fantasy: Curtain Call	black, gold						xl
-3ds		Mario & Luigi: Dream Team	black, silver						xl
 3ds		Doraemon	blue				w/ artwork		original
 3ds		Fire Emblem: Awakening	blue				w/ artwork		original
-3ds		Monster Hunter 4	blue				w/ artwork		original
-3ds		Fire Emblem: Awakening	blue, black						xl
-3ds		Persona Q: Shadow of the Labyrinth	blue, black						xl
-3ds		Pokemon X & Y: Xerneas and Yveltal Blue	blue, black						xl
-3ds		Super Smash Bros.	blue, black, grey						xl
-3ds		Monster Hunter 4 Gore Magala Black	gold, black						xl
-3ds		Pokemon X & Y: Premium Gold	gold, black						xl
-3ds		The Legend of Zelda: A Link Between Worlds	gold, black						xl
-3ds		NES Edition	grey						xl
-3ds		One Piece: Unlimited World: Chopper Pink	pink						xl
-3ds		SD Gundam G Generation 3D	red						original
-3ds		One Piece: Unlimited World: Luffy Red	red, black						xl
-3ds		Pokemon X & Y: Xerneas and Yveltal Red	red, black						xl
-3ds		Super Smash Bros.	red, black, grey						xl
+3ds		Heroes of Ruin	black						original
 3ds		Monster Hunter 3G	white						original
-3ds		Pokemon Battle Trozei	white						xl
-3ds		Youkai Watch	white						xl
-3ds		Shin Megami Tensei IV	white, black						xl
-3ds		New LovePlus+ Manaka Deluxe	white, blue						xl
-3ds		Disney Magic Castle: My Happy Life	white, brown						xl
-3ds		Eevee	white, brown						xl
-3ds		New LovePlus+ Rinko Deluxe	white, green						xl
-3ds		Tomodachi Collection	white, green						xl
-3ds		Yoshi	white, green						xl
-3ds		Dragon Quest Monsters 2: Iru and Luca's Marvelous Mysterious Key	white, grey						xl
-3ds		The Year of Luigi	white, off-white, green						xl
-3ds		New LovePlus+ Nene Deluxe	white, red						xl
-3ds		Pikachu	yellow						xl
+3ds		Monster Hunter 4	blue				w/ artwork		original
+3ds		SD Gundam G Generation 3D	red						original
 3ds	cosmo black	The Legend of Zelda 25th Anniversary	black						original
 3ds	aqua blue		blue						original
 3ds	cerulean blue		blue						original
@@ -45,16 +15,44 @@ console	color	name	colors	transparency	gloss	matte	design note	image_url	variati
 3ds	ice white		white						original
 3ds	metallic red		red						original
 3ds	midnight purple		purple						original
-3ds	new black		black						original
-3ds	new white		white						ll
-3ds	pearl pink		pink						ll
-3ds	pure white		white						ll
-3ds	shimmer pink		pink						ll
+3ds	pearl pink		pink						original
+3ds	pure white		white						original
+3ds	shimmer pink		pink						original
 3ds	white	Animal Crossing	white						xl
+3ds		Charizard	black						xl
 3ds	silver & black	Culdcept	silver, black						xl
+3ds		Disney Magic Castle: My Happy Life	white, brown						xl
+3ds		Dragon Quest Monsters 2: Iru and Luca's Marvelous Mysterious Key	white, grey						xl
+3ds		Eevee	white, brown						xl
+3ds		Fire Emblem: Awakening	blue, black						xl
+3ds		Mario & Luigi: Dream Team	black, silver						xl
 3ds		Monster Hunter 4 Felyne White	white						xl
+3ds		Monster Hunter 4 Gore Magala Black	gold, black						xl
 3ds		Monster Hunter 4 Rajang Gold	gold						xl
+3ds		NES Edition	grey						xl
+3ds		New LovePlus+ Manaka Deluxe	white, blue						xl
+3ds		New LovePlus+ Nene Deluxe	white, red						xl
+3ds		New LovePlus+ Rinko Deluxe	white, green						xl
+3ds		One Piece: Unlimited World: Chopper Pink	pink						xl
+3ds		One Piece: Unlimited World: Luffy Red	red, black						xl
+3ds		Persona Q: Shadow of the Labyrinth	blue, black						xl
+3ds		Pikachu	yellow						xl
+3ds		Pokemon Battle Trozei	black						xl
+3ds		Pokemon Battle Trozei	white						xl
+3ds		Pokemon X & Y: Premium Gold	gold, black						xl
+3ds		Pokemon X & Y: Xerneas and Yveltal Blue	blue, black						xl
+3ds		Pokemon X & Y: Xerneas and Yveltal Red	red, black						xl
+3ds		Shin Megami Tensei IV	white, black						xl
 3ds	red & black	Super Mario Bros. 2	red, black						xl
+3ds		Super Robot Taisen UX	black						xl
+3ds		Super Smash Bros.	blue, black, grey						xl
+3ds		Super Smash Bros.	red, black, grey						xl
+3ds		The Legend of Zelda: A Link Between Worlds	gold, black						xl
+3ds		The Year of Luigi	white, off-white, green						xl
+3ds		Theatrhythm Final Fantasy: Curtain Call	black, gold						xl
+3ds		Tomodachi Collection	white, green						xl
+3ds		Yoshi	white, green						xl
+3ds		Youkai Watch	white						xl
 3ds	black		black						xl
 3ds	blue & black		blue, black						xl
 3ds	metallic blue		blue						xl
@@ -66,25 +64,6 @@ console	color	name	colors	transparency	gloss	matte	design note	image_url	variati
 3ds	silver & black		silver, black						xl
 3ds	turquoise & black		blue, black						xl
 3ds	white		white						xl
-new 3ds		Animal Crossing: Happy Home Designer	green, white	n			Animal Crossing artwork (houses & furniture)		ll
-new 3ds		Animal Crossing: Happy Home Designer	green, white, yellow	n			Animal Crossing artwork (Isabelle & plaid)		ll
-new 3ds		Animal Crossing: Happy Home Designer	green, white	n			Animal Crossing artwork (house design)		ll
-new 3ds		Ambassador Edition	white	n					ll
-new 3ds		Dragon Ball Z Extreme Butoden	orange	n					ll
-new 3ds		Fire Emblem	black, white	n					ll
-new 3ds		Madras Check	pink	n			plaid		ll
-new 3ds		Magic Castle 2	white, off-white	n					ll
-new 3ds		Mario 30th Anniversary	yellow	n					ll
-new 3ds		Mario Black Friday Black	black, grey	n					ll
-new 3ds		Monster Hunter X	red	n					ll
-new 3ds		Pokemon Red & Blue	red, blue	n					ll
-new 3ds		Super Mario 3D Land	red, white, blue	n					ll
-new 3ds	black		black	n					ll
-new 3ds	new black		black	n					xl
-new 3ds		Pokemon Omega Ruby & Alpha Sapphire: Primal Kyogre Edition	blue, white	n					xl
-new 3ds		Pokemon Omega Ruby & Alpha Sapphire: Primal Groudon Edition	red, black	n					xl
-new 3ds		Super Smash Bros.	red, black, grey	n					xl
-new 3ds		Monster Hunter 4 Ultimate	silver	n					xl
 ds	cobalt & black		blue						lite
 ds	coral pink		pink						lite
 ds	crimson & black		red, black						lite
@@ -120,33 +99,32 @@ dsi	matte red		red			y			original
 dsi	metallic blue		blue						original
 dsi	pink		pink						original
 dsi	white		white						original
-famicom			red, off-white						original
-famicom			black, blue						disk system
-famicom			red, black						disk system
 gamecube	platinum	Donkey Konga	silver	n			faceplate art		101
-gamecube	platinum	Metal Gear Solid	silver	n			faceplate art		101
-gamecube	platinum	Metroid Prime	silver	n			faceplate art		101
-gamecube	platinum	Resident Evil 4	silver	n			faceplate art		101
-gamecube	symphonic green	Tales of Symphonia	mint, green	n			faceplate art		101
 gamecube		Final Fantasy Crystal Chronicles	white	n			glossy white		101
-gamecube		MTV Paul Smith	rainbow	n			rainbow striped		101
 gamecube		Gundam Char	red, black	n			red & black		101
 gamecube		Hanshin Tigers	white	n			white w/ black stripes & logo		101
-gamecube		MTV Canadian Maple	brown	n			wood grain design		101
+gamecube	platinum	Metal Gear Solid	silver	n			faceplate art		101
+gamecube	platinum	Metroid Prime	silver	n			faceplate art		101
 gamecube		Metroid Prime 2: Echoes	black	n			faceplate art		101
 gamecube	snow white	MTV	white	n	y				101
 gamecube		MTV Camouflage	green	n					101
+gamecube		MTV Canadian Maple	brown	n			wood grain design		101
+gamecube		MTV Paul Smith	rainbow	n			rainbow striped		101
 gamecube		MTV Tom Ford	red	n	y				101
 gamecube	platinum	Pokemon XD	silver	n					101
-gamecube	indigo		purple	n					original
+gamecube	platinum	Resident Evil 4	silver	n			faceplate art		101
+gamecube	symphonic green	Tales of Symphonia	mint, green	n			faceplate art		101
 gamecube	indigo		purple	n					101
-gamecube	jet black		black	n					original
 gamecube	jet black		black	n					101
 gamecube	pearl white		white	n					101
-gamecube	platinum		silver	n					original
 gamecube	platinum		silver	n					101
 gamecube	spice orange		orange	n					101
 gamecube	startlight gold		gold	n					101
+gamecube	indigo		purple	n					original
+gamecube	jet black		black	n					original
+gamecube	platinum		silver	n					original
+gb	gold		gold						light
+gb	silver		silver						light
 gb	cool blue		blue						original
 gb	deep black		black						original
 gb	gorgeous green		green						original
@@ -173,23 +151,29 @@ gb	silver		silver						pocket
 gb	silver, black		silver, black						pocket
 gb	silver, grey		silver, grey						pocket
 gb	yellow		yellow						pocket
-gb	gold		gold						light
-gb	silver		silver						light
-gba		Rockman Custom	blue				blue		original
-gba		Pokemon Center - Suicune	blue				blue w/ artwork		original
-gba		Pokemon Center - Latios & Latias	blue, red				blue w/ red buttons		original
-gba		King of Fighters	black	y			clear black w/ logo		original
+gba	black		black						micro
+gba	blue		blue						micro
+gba	green		green						micro
+gba	pearl blue		blue						micro
+gba	pink		pink						micro
+gba	purple		purple						micro
+gba	red		red						micro
+gba	silver		silver						micro
 gba		Chobits	blue	y			clear blue w/ logo		original
-gba		Yomiuri Giants	purple	y			clear purple w/ artwork		original
-gba		Pokemon Center NY	gold				gold w/ artwork		original
-gba		Pokemon Center - Celebi	green				green w/ artwork		original
 gba		Daiei	orange, black				orange & black		original
 gba		Hello Kitty	pink				pink w/ logo		original
+gba	glacier	Jusco	purple	y			w/ Mario artwork		original
+gba		King of Fighters	black	y			clear black w/ logo		original
+gba		Pokemon Center - Celebi	green				green w/ artwork		original
+gba		Pokemon Center - Latios & Latias	blue, red				blue w/ red buttons		original
+gba		Pokemon Center - Suicune	blue				blue w/ artwork		original
+gba		Pokemon Center NY	gold				gold w/ artwork		original
+gba		Rockman Custom	blue				blue		original
 gba	grape	Target	purple				w/ logo		original
 gba	red	Target	red				w/ logo		original
 gba	solid midnight blue	Toys 'R' Us	blue				w/ logo		original
 gba	transparent midnight blue	Toys 'R' Us	blue				w/ logo		original
-gba	glacier	Jusco	purple	y			w/ Mario artwork		original
+gba		Yomiuri Giants	purple	y			clear purple w/ artwork		original
 gba	arctic		white	n					original
 gba	black		black	n					original
 gba	fuchsia		purple, red, pink						original
@@ -216,15 +200,6 @@ gba	pearl pink		pink	n					sp
 gba	pearl white		white	n					sp
 gba	platinum		silver	n					sp
 gba	white		white	n					sp
-gba	black		black						micro
-gba	blue		blue						micro
-gba	green		green						micro
-gba	pearl blue		blue						micro
-gba	pink		pink						micro
-gba	purple		purple						micro
-gba	red		red						micro
-gba	silver		silver						micro
-gbc	kiwi		green	n	n				original
 gbc		Pokemon	blue, white	y	n		clear blue & white w/ artwork		original
 gbc		Pokemon	green, white	y	n		clear green & white w/ artwork		original
 gbc		Pokemon	orange, blue		n		orange & blue w/ artwork & logo		original
@@ -241,19 +216,19 @@ gbc	clear orange		orange	y	n				original
 gbc	dandelion		yellow		n				original
 gbc	grape		purple		n				original
 gbc	ice blue		blue		n				original
+gbc	kiwi		green	n	n				original
 gbc	midnight blue		blue		n				original
 gbc	neotones ice		blue		n				original
 gbc	solid black		black		n				original
 gbc	teal		blue, green		n				original
-genesis	black		black		n				original
 genesis	black		black		n				2
 genesis	black		black		n				3
+genesis	black		black		n				original
 gg			black						original
 gg			black						repro
 mastersys	black		black						original
 mastersys	grey		grey						original
 mastersys	white		white						original
-n64	pokemaniac		blue, yellow				blue & yellow w/ pokemon decals		original
 n64		Daiei Hawks	orange, black				orange & black		original
 n64	charcoal grey		grey	y	n				original
 n64	fire orange		orange	y	n				original
@@ -264,128 +239,151 @@ n64	jungle green		green	y	n				original
 n64	pikachu dark blue		blue		n				original
 n64	pikachu light blue		blue		n				original
 n64	pikachu orange		orange		n				original
+n64	pokemaniac		blue, yellow				blue & yellow w/ pokemon decals		original
 n64	smoke black		black		n				original
 n64	watermelon red		red	y	n				original
+nes			red, off-white	n	n				famicom
+nes			red, off-white	n	n				fc101
 nes			grey, black	n	n				original
-ps			grey	n					original
-ps			white	n					one
+new 3ds		Ambassador Edition	white	n					ll
+new 3ds		Animal Crossing: Happy Home Designer	green, white	n			Animal Crossing artwork (houses & furniture)		ll
+new 3ds		Animal Crossing: Happy Home Designer	green, white, yellow	n			Animal Crossing artwork (Isabelle & plaid)		ll
+new 3ds		Animal Crossing: Happy Home Designer	green, white	n			Animal Crossing artwork (house design)		ll
+new 3ds		Dragon Ball Z Extreme Butoden	orange	n					ll
+new 3ds		Fire Emblem	black, white	n					ll
+new 3ds			pink	n			plaid		ll
+new 3ds		Magic Castle 2	white, off-white	n					ll
+new 3ds		Mario 30th Anniversary	yellow	n					ll
+new 3ds		Mario Black Friday Black	black, grey	n					ll
+new 3ds		Monster Hunter X	red	n					ll
+new 3ds		Pokemon Red & Blue	red, blue	n					ll
+new 3ds		Super Mario 3D Land	red, white, blue	n					ll
+new 3ds	black		black	n					ll
+new 3ds	new white		white						ll
+new 3ds		Monster Hunter 4 Ultimate	silver	n					xl
+new 3ds		Pokemon Omega Ruby & Alpha Sapphire: Primal Groudon Edition	red, black	n					xl
+new 3ds		Pokemon Omega Ruby & Alpha Sapphire: Primal Kyogre Edition	blue, white	n					xl
+new 3ds		Super Smash Bros.	red, black, grey	n					xl
+new 3ds	new black		black	n					xl
 ps			green, blue	n					debug
 ps			black	n					net
-ps2	ocean blue		blue	y			clear blue		original
+ps			white	n					one
+ps			grey	n					original
 ps2	aqua		blue	n			metallic blue		original
-ps2	star blue		blue, navy	n			navy		original
+ps2	astral blue		blue	n					original
 ps2	ceramic white		white	n					original
 ps2	light yellow		yellow	n					original
 ps2	matte black		black	n		y			original
 ps2	metallic silver		silver	n					original
+ps2	ocean blue		blue	y			clear blue		original
 ps2	opaque black		black	n					original
-ps2	astral blue		blue	n					original
 ps2	pearl white		white	n					original
 ps2	pink		pink	n					original
 ps2	sakura purple		purple	n					original
 ps2	satin gold		gold	n					original
 ps2	satin silver		silver	n					original
 ps2	snow white		white	n					original
+ps2	star blue		blue, navy	n			navy		original
 ps2	super red		red	n					original
-ps2	white		white	n					psx
-ps2	silver		silver	n					psx
-ps2	yellow		yellow	n					psx
-ps2	red		red	n					psx
 ps2	blue		blue	n					psx
-ps3	azurite blue		blue	n					super slim
-ps3	black & blue		blue, black	n					super slim
-ps3	black & gold		black, gold	n					super slim
-ps3	black & pink		black, pink	n					slim
-ps3	black & white		black, white	n					super slim
+ps2	red		red	n					psx
+ps2	silver		silver	n					psx
+ps2	white		white	n					psx
+ps2	yellow		yellow	n					psx
 ps3	ceramic white		white	n					original
-ps3	charcoal black		black	n					slim
-ps3	charcoal black		black	n					super slim
-ps3	classic white		white	n					slim
-ps3	classic white		white	n					super slim
 ps3	cloud black		black	n					original
-ps3	garnet red		red	n					super slim
-ps3	gold		gold	n					slim
 ps3	gun-metal grey		grey	n					original
-ps3	magical gold		gold	n					slim
 ps3	piano black		black	n					original
 ps3	satin silver		silver	n					original
+ps3	black & pink		black, pink	n					slim
+ps3	charcoal black		black	n					slim
+ps3	classic white		white	n					slim
+ps3	gold		gold	n					slim
+ps3	magical gold		gold	n					slim
 ps3	satin silver		silver	n					slim
 ps3	splash blue & scarlet red		blue, red	n					slim
 ps3	titanium blue		blue	n					slim
 ps3	white & pink		white, pink	n					slim
+ps3	azurite blue		blue	n					super slim
+ps3	black & blue		blue, black	n					super slim
+ps3	black & gold		black, gold	n					super slim
+ps3	black & white		black, white	n					super slim
+ps3	charcoal black		black	n					super slim
+ps3	classic white		white	n					super slim
+ps3	garnet red		red	n					super slim
 ps4	original grey	20th Anniversary Edition	grey	n					original
 ps4	steel grey	Batman: Arkham Knight Limited Edition	grey	n					original
 ps4	black	Bloodborne Limited Edition	black	n					original
 ps4	jet black	Call of Duty: Black Ops III Limited Edition	black	n			w/ orange decals		original
-ps4	jet black	Champion's League	black	n					original
 ps4	glacier white	Champion's League	white	n					original
-ps4	jet black	Destiny Limited Edition	black	n					original
+ps4	jet black	Champion's League	black	n					original
 ps4	glacier white	Destiny Limited Edition	white	n					original
+ps4	jet black	Destiny Limited Edition	black	n					original
 ps4	glacier white	Destiny: The Taken King Limited Edition	white	n					original
 ps4		Dragon Quest Metal Slime Edition	silver	n			decal		original
 ps4		Final Fantasy Type-0 HD Suzaku Edition	red	n			decal		original
 ps4	jet black	Frozen Limited Edition	black	n			HDD cover etching		original
+ps4	glacier white	Hatsune Miku Limited Edition	white	n			HDD cover design		original
+ps4	jet black	Hatsune Miku Limited Edition	black	n			HDD cover design		original
 ps4	glacier white	Hyperdimension Neptunia VII Limited Edition	white	n			HDD cover etching		original
 ps4	black, maroon	Metal Gear Solid V: The Phantom Pain Limited Edition	black, red	n					original
-ps4	jet black	Psycho Break	black	n			HDD cover etching		original
+ps4	glacier white	Miku Expo Limited Edition	white	n			HDD cover design		original
 ps4	glacier white	Psycho Break	white	n			HDD cover etching		original
+ps4	jet black	Psycho Break	black	n			HDD cover etching		original
 ps4	jet black	Star Wars Battlefront Limited Edition	black	n			decal		original
-ps4	jet black	Street Fighter V Limited Edition	black	n			HDD cover decal		original
 ps4	glacier white	Street Fighter V Limited Edition	white	n			HDD cover decal		original
+ps4	jet black	Street Fighter V Limited Edition	black	n			HDD cover decal		original
 ps4	jet black	The Last of Us Remastered	black	n			HDD cover etching		original
 ps4	gray-blue	Uncharted 4: A Thief's End Limited Edition	blue	n			decal		original
-ps4	jet black	Yakuza Zero	black	n			HDD cover design		original
 ps4	glacier white	Yakuza Zero	white	n			HDD cover design		original
-ps4	jet black	Hatsune Miku Limited Edition	black	n			HDD cover design		original
-ps4	glacier white	Hatsune Miku Limited Edition	white	n			HDD cover design		original
-ps4	glacier white	Miku Expo Limited Edition	white	n			HDD cover design		original
-ps4	jet black		black	n					slim
-ps4	jet black	Final Fantasy XV Luna Edition	black				decal		slim
-ps4		Gold Limited Edition	gold						slim
-ps4		Silver Limited Edition	silver						slim
-ps4		GT Sport Limited Edition	black, silver				logo		slim
-ps4		Call of Duty World War II Edition	green						slim
-ps4	days of play blue	Days of Play Limited Edition	blue				decal		slim
-ps4		Star Wars Limited Edition	grey				insignia		slim
-ps4	jet black		black						pro
-ps4	glacier white		white						pro
-ps4	jet black	Star Wars Battlefront II Limited Edition Pro 8K	black	n			reflective decal		pro
-ps4	jet black	Monster Hunter World Limited Edition Pro 4K	black	n			reflective decal		pro
+ps4	jet black	Yakuza Zero	black	n			HDD cover design		original
 ps4		God of War Limited Edition Pro 4K	grey	n			decal		pro
 ps4		Kingdom Hearts III Limited Edition	grey				leather-like texture		pro
-ps4		Marvel's Spider-Man PS4 Limited Edition	red, white				logo		pro
-ps4		PS4 Pro "500 Million Limited Edition"	blue	y			gold PS logo, copper plate with unique number		pro
 ps4		Limited Edition Death Stranding PS4 Pro	white, black	n	y	y	black handprints decal		pro
-psp	ceramic white		white	n					original
-psp	champagne gold		gold	n					original
-psp	deep red		red	n					original
-psp	felicia blue		blue	n					original
-psp	ice silver		silver	n					original
-psp	lavender purple		purple	n					original
-psp	metallic blue		blue	n					original
-psp	mint green		green, mint	n					original
-psp	mystic silver		silver	n					original
-psp	piano black		black	n					original
-psp	rose pink		pink	n					original
-saturn	black		black	n					original
-saturn	grey		grey	n					original
-saturn			grey	n					v
-saturn			grey, black	n			smooth black panel around buttons		v
+ps4		Marvel's Spider-Man PS4 Limited Edition	red, white				logo		pro
+ps4	jet black	Monster Hunter World Limited Edition Pro 4K	black	n			reflective decal		pro
+ps4		PS4 Pro "500 Million Limited Edition"	blue	y			gold PS logo, copper plate with unique number		pro
+ps4	jet black	Star Wars Battlefront II Limited Edition Pro 8K	black	n			reflective decal		pro
+ps4	glacier white		white						pro
+ps4	jet black		black						pro
+ps4		Call of Duty World War II Edition	green						slim
+ps4	days of play blue	Days of Play Limited Edition	blue				decal		slim
+ps4	jet black	Final Fantasy XV Luna Edition	black				decal		slim
+ps4		Gold Limited Edition	gold						slim
+ps4		GT Sport Limited Edition	black, silver				logo		slim
+ps4		Silver Limited Edition	silver						slim
+ps4		Star Wars Limited Edition	grey				insignia		slim
+ps4	jet black		black	n					slim
+psp	ceramic white		white	n					1000
+psp	champagne gold		gold	n					1000
+psp	deep red		red	n					1000
+psp	felicia blue		blue	n					1000
+psp	ice silver		silver	n					1000
+psp	lavender purple		purple	n					1000
+psp	metallic blue		blue	n					1000
+psp	mint green		green, mint	n					1000
+psp	mystic silver		silver	n					1000
+psp	piano black		black	n					1000
+psp	rose pink		pink	n					1000
 saturn			grey, black	n			smooth black panel around buttons		hi
 saturn			grey	n					hi
 saturn			grey	n					hinav
-saturn	white		white	n					original
+saturn	black		black	n					original
+saturn	grey		grey	n					original
 saturn	skeleton		grey, black	y					original
+saturn	white		white	n					original
+saturn			grey	n					v
+saturn			grey, black	n			smooth black panel around buttons		v
 sg1000	white		white	n					original
-snes			grey, purple	n					snes
-snes			grey, purple	n					snes-101
 snes			grey, off-white	n					sfc
 snes			grey	n					sfc-101
-switch			grey	n					original
+snes			grey, purple	n					snes
+snes			grey, purple	n					snes-101
+switch		Zacian and Zamazenta Edition	grey, blue, pink	n					lite
 switch	grey		grey	n					lite
 switch	turquoise		blue	n					lite
 switch	yellow		yellow	n					lite
-switch		Zacian and Zamazenta Edition	grey, blue, pink	n					lite
+switch			grey	n					original
 virtual boy	red, black		red, black	n					original
 vita	black		black	n					original
 vita	khaki		brown	n					original
@@ -393,57 +391,57 @@ vita	light blue		blue	n					original
 vita	lime green		green	n					original
 vita	pink		pink	n					original
 vita	white		white	n					original
-wii	black & red		black, red	n	n				mini
-wii	white		white	n	y	n			original
-wii	black		black	n	y	n			original
 wii	black		black	n	y	n			family
 wii	blue		blue	n	y	n			family
+wii	black & red		black, red	n	n				mini
 wii	red	Super Mario Bros. 25th Anniversary	red	n	y	n			original
+wii	black		black	n	y	n			original
+wii	white		white	n	y	n			original
+wiiu	white		white	n	y	n			basic
 wiiu		Legend of Zelda Windwaker HD Deluxe	black	n	y	n	black w/ gold trim		deluxe
 wiiu	black		black	n	y	n			deluxe
-wiiu	white		white	n	y	n			basic
-xb360		Star Wars	blue, white	n			blue & white R2-D2 artwork		s
-xb360		Modern Warfare 3	grey	n			grey		s
-xb360		Halo 4	grey, blue, white	n			grey w/ blue & white artwork		s
-xb360		Gears of War 3	red, black	n			red w/ black art		s
-xb360	matte white	FFXIII	white	n		y			elite
-xb360	glossy black		black	n	y				s
-xb360	glossy black		black	n	y				s
-xb360	matte black		black	n		y			s
-xb360	glossy white		white	n	y				s
 xb360	matte white		white	n		y			arcade
-xb360	matte white		white	n		y			pro
 xb360	matte white		white	n		y			core
-xbone		Project Scorpio Edition	black	n			black		x
-xbone		Day One Limited Edition	black	n			black		original
-xbone	matte black		black	n		y	black w/ matte black panels		original
-xbone		Forza Motorsport 6	blue	n					original
-xbone		Launch Team Edition	white	n	y	n	"I Made This, Launch Team 2013" printed		original
-xbone		Minecraft	green, brown	n					s
-xbone		Call of Duty: Advanced Warfare	grey, black	n			grey, black w/ artwork		original
-xbone		Battlefield V Gold Rush	gold, black	n			metallic gold & black gradient		x
-xbone		Halo 5: Guardians	grey, blue	n			metallic grey & blue		original
-xbone		Gears of War 4	red	n					s
-xbone	military green	Battlefield 1	green	n					s
-xbone	deep blue		blue	n					s
-xbone	matte black		black	n	n	y			original
-xbone	storm grey		grey	n					s
-xbone	white		white	n					s
-xbone	robot white		white	n					x
-xbone	black		black	n					x
+xb360	matte white	FFXIII	white	n		y			elite
+xb360	matte white		white	n		y			pro
+xb360		Gears of War 3	red, black	n			red w/ black art		s
+xb360		Halo 4	grey, blue, white	n			grey w/ blue & white artwork		s
+xb360		Modern Warfare 3	grey	n			grey		s
+xb360		Star Wars	blue, white	n			blue & white R2-D2 artwork		s
+xb360	glossy black		black	n	y				s
+xb360	glossy black		black	n	y				s
+xb360	glossy white		white	n	y				s
+xb360	matte black		black	n		y			s
 xbone	black		black	n					elite
+xbone		Call of Duty: Advanced Warfare	grey, black	n			grey, black w/ artwork		original
+xbone		Day One Limited Edition	black	n			black		original
+xbone		Forza Motorsport 6	blue	n					original
+xbone		Halo 5: Guardians	grey, blue	n			metallic grey & blue		original
+xbone		Launch Team Edition	white	n	y	n	"I Made This, Launch Team 2013" printed		original
 xbone	white	Special Edition	white	n					original
 xbone	black		black	n					original
+xbone	matte black		black	n		y	black w/ matte black panels		original
+xbone	matte black		black	n	n	y			original
+xbone	military green	Battlefield 1	green	n					s
+xbone		Gears of War 4	red	n					s
+xbone		Minecraft	green, brown	n					s
+xbone	deep blue		blue	n					s
+xbone	storm grey		grey	n					s
+xbone	white		white	n					s
+xbone		Battlefield V Gold Rush	gold, black	n			metallic gold & black gradient		x
+xbone		Project Scorpio Edition	black	n			black		x
+xbone	black		black	n					x
+xbone	robot white		white	n					x
+xbox	translucent green	Debug Kit	green	y					original
+xbox	translucent green	Halo	green	y			w/ logo		original
+xbox	ice blue	Halo 2	blue	y			w/ jewel whose color depends on release region		original
+xbox	translucent blue	Kasumi-chan Blue	blue	y					original
+xbox		Mountain Dew	green	n					original
+xbox		Panzer Dragoon Orta	white	n			logo		original
 xbox	smoke	Skeleton	black, grey	y					original
 xbox		Xbox 2001 Launch Team Edition	green	y					original
 xbox		Xbox Partner Edition	green	y					original
-xbox	crystal		white	y					original
-xbox	ice blue	Halo 2	blue	y			w/ jewel whose color depends on release region		original
-xbox	translucent green	Halo	green	y			w/ logo		original
-xbox		Panzer Dragoon Orta	white	n			logo		original
-xbox	translucent green	Debug Kit	green	y					original
-xbox	translucent blue	Kasumi-chan Blue	blue	y					original
-xbox		Mountain Dew	green	n					original
 xbox	black		black	n					original
+xbox	crystal		white	y					original
 xbox	pure white		white	n					original
 xbox	translucent green		green	y					original
