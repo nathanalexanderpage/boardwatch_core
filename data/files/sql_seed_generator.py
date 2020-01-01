@@ -233,13 +233,30 @@ for color in colors.keys():
 	colors[color] = query_result[0]
 
 for edition in console_editions:
-	values = (edition['name'], edition['color'], edition['matte'], edition['transparency'], edition['gloss'], edition['design note'], edition['image_url'])
+	for console in consoles:
+		if edition['console'] == 'nes':
+			print(edition['console'], console['console'], edition['variation ref'], console['desc'], console['id'])
+		if edition['console'] == console['console'] and edition['variation ref'] == console['desc']:
+			# print(edition['console'], console['console'], edition['variation ref'], console['desc'], console['id'])
+			print('inside')
+			edition['platform_id'] = console['id']
+			print('platform_id', edition['platform_id'])
+			# print(True)
+	print(edition['platform_id'], edition['variation ref'], console['desc'])
+	if edition['platform_id'] is None:
+		# print(False, edition['platform_id'], edition['console'], edition['variation ref'], edition['color'])
+		pass
+	if edition['platform_id'] is not None:
+		# print(True, edition['platform_id'], edition['console'], edition['variation ref'], edition['color'])
+		pass
 
-	cur.execute('INSERT INTO platform_editions (name, official_color, has_matte, has_transparency, has_gloss, note, image_url) VALUES(%s, %s, %s, %s, %s, %s, %s) RETURNING id, name, official_color, has_matte, has_transparency, has_gloss, note, image_url;', values)
+	values = (edition['name'], edition['platform_id'], edition['color'], edition['matte'], edition['transparency'], edition['gloss'], edition['design note'], edition['image_url'])
+
+	cur.execute('INSERT INTO platform_editions (name, platform_id, official_color, has_matte, has_transparency, has_gloss, note, image_url) VALUES(%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id, name, platform_id, official_color, has_matte, has_transparency, has_gloss, note, image_url;', values)
 	conn.commit()
 
 	query_result = cur.fetchone()
-	pprint.pprint(query_result)
+	# pprint.pprint(query_result)
 	edition['id'] = query_result[0]
 
 	for color in colors.keys():
@@ -250,3 +267,4 @@ for edition in console_editions:
 cur.close()
 conn.close()
 print('-------------------- exit SQL section --------------------')
+pprint.pprint(console_editions)
