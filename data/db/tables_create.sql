@@ -51,6 +51,12 @@ CREATE TABLE colors_platform_editions (
 	PRIMARY KEY (platform_edition_id, color_id)
 );
 
+CREATE TABLE game_series (
+	id serial PRIMARY KEY,
+	name varchar(150),
+	description varchar(255)
+)
+
 CREATE TABLE game_families (
 	id serial PRIMARY KEY,
 	name varchar(255) NOT NULL
@@ -66,6 +72,11 @@ CREATE TABLE games (
 CREATE TABLE game_families_games (
 	game_id integer NOT NULL REFERENCES games(id),
 	game_family_id integer NOT NULL REFERENCES game_families(id)
+)
+
+CREATE TABLE game_series_games (
+	game_id integer NOT NULL REFERENCES games(id),
+	game_series_id integer NOT NULL REFERENCES game_series(id)
 )
 
 CREATE TABLE games_platforms_compatibility (
