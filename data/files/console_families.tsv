@@ -1,30 +1,39 @@
-console	name	generation	developer
-3ds	3DS	8	nintendo
-new 3ds	New 3DS	8	nintendo
-ds	DS	7	nintendo
-dsi	DSi	7	nintendo
-gamecube	GameCube	6	nintendo
-gb	Game Boy	4	nintendo
-gba	Game Boy Advance	6	nintendo
-gbc	Game Boy Color	5	nintendo
-genesis	Genesis	4	sega
-gg	Game Gear	4	sega
-mastersys	Master System	3	sega
-n64	Nintendo 64	5	nintendo
-nes	Nintendo Entertainment System	3	nintendo
-ps	PlayStation	5	sony
-ps2	PlayStation 2	6	sony
-ps3	PlayStation 3	7	sony
-ps4	PlayStation 4	8	sony
-psp	PlayStation Portable	7	sony
-saturn	Saturn	5	sega
-sg1000	SG-1000	3	sega
-snes	Super Nintendo Entertainment System	4	nintendo
-switch	Switch	8	nintendo
-virtual boy	Virtual Boy	5	nintendo
-vita	Vita	8	sony
-wii	Wii	7	nintendo
-wiiu	Wii U	8	nintendo
-xb360	Xbox 360	7	microsoft
-xbone	Xbox One	8	microsoft
-xbox	Xbox	6	microsoft
+console	name	generation	addon	developer
+3ds	3DS	8	n	nintendo
+atari2600	Atari 2600	2	n	atari
+atari5200	Atari 5200	2	n	atari
+atari7800	Atari 7800	3	n	atari
+commodore64	Commodore 64	3	n	commodore
+dreamcast	Dreamcast	6	n	sega
+ds	DS	7	n	nintendo
+dsi	DSi	7	n	nintendo
+gb	Game Boy	4	n	nintendo
+gba	Game Boy Advance	6	n	nintendo
+gbc	Game Boy Color	5	n	nintendo
+gamegear	Game Gear	4	n	sega
+gamecube	GameCube	6	n	nintendo
+genesis	Genesis	4	n	sega
+ique	iQue Player	6	n	nintendo
+mastersys	Master System	3	n	sega
+new-3ds	New 3DS	8	n	nintendo
+n64	Nintendo 64	5	n	nintendo
+neogeo-aes	Neo-Geo AES	4	n	snk
+nes	Nintendo Entertainment System	3	n	nintendo
+ps1	PlayStation	5	n	sony
+ps2	PlayStation 2	6	n	sony
+ps3	PlayStation 3	7	n	sony
+ps4	PlayStation 4	8	n	sony
+psp	PlayStation Portable	7	n	sony
+saturn	Saturn	5	n	sega
+sg1000	SG-1000	3	n	sega
+snes	Super Nintendo Entertainment System	4	n	nintendo
+switch	Switch	8	n	nintendo
+turbografx16	TurboGrafx-16	4	n	hudson
+virtualboy	Virtual Boy	5	n	nintendo
+vita	Vita	8	n	sony
+wii	Wii	7	n	nintendo
+wii-u	Wii U	8	n	nintendo
+xbox	Xbox	6	n	microsoft
+xb360	Xbox 360	7	n	microsoft
+xbone	Xbox One	8	n	microsoft
+32x	32X	5	y	sega
