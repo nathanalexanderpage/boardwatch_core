@@ -15,9 +15,9 @@ gamecube	GameCube	6	n	nintendo
 genesis	Genesis	4	n	sega
 ique	iQue Player	6	n	nintendo
 mastersys	Master System	3	n	sega
-new-3ds	New 3DS	8	n	nintendo
+new3ds	New 3DS	8	n	nintendo
 n64	Nintendo 64	5	n	nintendo
-neogeo-aes	Neo-Geo AES	4	n	snk
+neogeo_aes	Neo-Geo AES	4	n	snk
 nes	Nintendo Entertainment System	3	n	nintendo
 ps1	PlayStation	5	n	sony
 ps2	PlayStation 2	6	n	sony
@@ -32,7 +32,7 @@ turbografx16	TurboGrafx-16	4	n	hudson
 virtualboy	Virtual Boy	5	n	nintendo
 vita	Vita	8	n	sony
 wii	Wii	7	n	nintendo
-wii-u	Wii U	8	n	nintendo
+wiiu	Wii U	8	n	nintendo
 xbox	Xbox	6	n	microsoft
 xb360	Xbox 360	7	n	microsoft
 xbone	Xbox One	8	n	microsoft

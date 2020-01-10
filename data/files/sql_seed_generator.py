@@ -9,6 +9,75 @@ pprint = pp.PrettyPrinter()
 
 colors = {}
 
+company_roles = list()
+with open('company_roles.tsv', newline='') as csv_company_roles:
+	company_roles_reader = csv.reader(csv_company_roles, delimiter='\t')
+	row_no = 0
+	columns = []
+	for row in company_roles_reader:
+		if row_no is 0:
+			for column in row:
+				columns.append(column)
+			# print(columns)
+		else:
+			row_data = {}
+			column_no = 0
+			for cell in row:
+				current_column = columns[column_no]
+				if cell is not '':
+					row_data[current_column] = cell
+				else:
+					row_data[current_column] = None
+				column_no += 1
+			company_roles.append(row_data)
+		row_no += 1
+
+companies = list()
+with open('companies.tsv', newline='') as csv_companies:
+	companies_reader = csv.reader(csv_companies, delimiter='\t')
+	row_no = 0
+	columns = []
+	for row in companies_reader:
+		if row_no is 0:
+			for column in row:
+				columns.append(column)
+			# print(columns)
+		else:
+			row_data = {}
+			column_no = 0
+			for cell in row:
+				current_column = columns[column_no]
+				if cell is not '':
+					row_data[current_column] = cell
+				else:
+					row_data[current_column] = None
+				column_no += 1
+			companies.append(row_data)
+		row_no += 1
+
+generations = list()
+with open('generations.tsv', newline='') as csv_generations:
+	generations_reader = csv.reader(csv_generations, delimiter='\t')
+	row_no = 0
+	columns = []
+	for row in generations_reader:
+		if row_no is 0:
+			for column in row:
+				columns.append(column)
+			# print(columns)
+		else:
+			row_data = {}
+			column_no = 0
+			for cell in row:
+				current_column = columns[column_no]
+				if cell is not '':
+					row_data[current_column] = int(cell)
+				else:
+					row_data[current_column] = None
+				column_no += 1
+			generations.append(row_data)
+		row_no += 1
+
 console_families = list()
 with open('console_families.tsv', newline='') as csv_platform_families:
 	platform_families_reader = csv.reader(csv_platform_families, delimiter='\t')
@@ -117,10 +186,6 @@ with open('console_editions.tsv', newline='') as csv_editions:
 						cell_colors = cell.split(', ')
 						for color in cell_colors:
 							if color not in colors.keys():
-								print('color')
-								print(color)
-								print('not in')
-								print(colors.keys())
 								colors[color] = None
 						row_data[current_column] = cell_colors
 					elif current_column == 'name':
@@ -135,6 +200,85 @@ with open('console_editions.tsv', newline='') as csv_editions:
 			console_editions.append(row_data)
 		row_no += 1
 # pprint.pprint(console_editions)
+
+addon_platforms = list()
+with open('addon_platforms.tsv', newline='') as csv_addon_platforms:
+	addon_platforms_reader = csv.reader(csv_addon_platforms, delimiter='\t')
+	row_no = 0
+	columns = []
+	for row in addon_platforms_reader:
+		if row_no is 0:
+			for column in row:
+				columns.append(column)
+			# print(columns)
+		else:
+			row_data = {}
+			column_no = 0
+			for cell in row:
+				current_column = columns[column_no]
+				if cell is not '':
+					row_data[current_column] = cell
+				else:
+					row_data[current_column] = None
+				column_no += 1
+			addon_platforms.append(row_data)
+		row_no += 1
+# pprint.pprint(addon_platforms)
+
+game_families = list()
+with open('game_families.tsv', newline='') as csv_game_families:
+	game_families_reader = csv.reader(csv_game_families, delimiter='\t')
+	row_no = 0
+	columns = []
+	for row in game_families_reader:
+		if row_no is 0:
+			for column in row:
+				columns.append(column)
+			# print(columns)
+		else:
+			row_data = {}
+			column_no = 0
+			for cell in row:
+				current_column = columns[column_no]
+				if cell is not '':
+					row_data[current_column] = cell
+				else:
+					row_data[current_column] = None
+				column_no += 1
+			game_families.append(row_data)
+		row_no += 1
+# pprint.pprint(game_families)
+
+games = list()
+with open('games.tsv', newline='') as csv_games:
+	games_reader = csv.reader(csv_games, delimiter='\t')
+	row_no = 0
+	columns = []
+	for row in games_reader:
+		if row_no is 0:
+			for column in row:
+				columns.append(column)
+			# print(columns)
+		else:
+			row_data = {}
+			column_no = 0
+			for cell in row:
+				current_column = columns[column_no]
+				if cell is not '':
+					if current_column in ['year_release']:
+						row_data[current_column] = int(cell)
+					elif cell == 'y' and current_column in ['is_bootleg']:
+						row_data[current_column] = True
+					elif cell == 'n' and current_column in ['is_bootleg']:
+						row_data[current_column] = False
+					else:
+						row_data[current_column] = cell
+				else:
+					row_data[current_column] = None
+				column_no += 1
+			games.append(row_data)
+		row_no += 1
+# pprint.pprint(games)
 
 # visual confirmation of data to be inserted
 for family in console_families:
@@ -153,6 +297,13 @@ for family in console_families:
 						printable += ', '.join(edition['colors'])
 					print(printable)
 
+pprint.pprint(company_roles)
+pprint.pprint(companies)
+pprint.pprint(generations)
+pprint.pprint(addon_platforms)
+pprint.pprint(game_families)
+pprint.pprint(games)
+
 # execute SQL seed statements
 print('-------------------- enter SQL section --------------------')
 
@@ -168,7 +319,7 @@ cur = conn.cursor()
 
 for family in console_families:
 	pprint.pprint(family)
-	cur.execute('INSERT INTO platform_families (name, generation, developer) VALUES(%s, %s, %s) RETURNING id, name, generation, developer;', (family['name'], family['generation'], family['developer']))
+	cur.execute('INSERT INTO platform_families (name, generation) VALUES(%s, %s) RETURNING id, name, generation, developer;', (family['name'], family['generation']))
 	conn.commit()
 
 	query_result = cur.fetchone()

@@ -29,8 +29,8 @@ nes	Nintendo Entertainment System	original	n	nes	NES-001				the original NES	10
 nes	Nintendo Entertainment System	101	n	nes	NES-101				smaller form factor, top-loading NES variant	9
 nes	Family Computer	famicom	y	fc					the original Famicom	8
 nes	Family Computer	fc101	y	fc					simple redesign of Famicom	7
-new-3ds	New Nintendo 3DS LL	ll	n	new-3ds, 3ds, dsi, ds			New 3DS LL		suped up 3DS with exclusive library of games	9
-new-3ds	New Nintendo 3DS XL	xl	n	new-3ds, 3ds, dsi, ds			New 3DS XL		larger form factor New 3DS	10
+new3ds	New Nintendo 3DS LL	ll	n	new-3ds, 3ds, dsi, ds			New 3DS LL		suped up 3DS with exclusive library of games	9
+new3ds	New Nintendo 3DS XL	xl	n	new-3ds, 3ds, dsi, ds			New 3DS XL		larger form factor New 3DS	10
 ps1	PlayStation	original	y	ps1					the original PlayStation	10
 ps1	PS One	one	y	ps1					compact redesign of original PlayStation	7
 ps1	Debugging Station PlayStation	debug	y	ps1					original PlayStation's debugger console	1
@@ -71,8 +71,8 @@ vita	PlayStation Vita Slim	slim	y	vita	PCH-200x		Vita Slim		slim form factor PS 
 wii	Wii	original	y	wii, gamecube	RVL-001				the original Wii	10
 wii	Wii Family Edition	family	y	wii	RVL-101				no backwards compatibility	9
 wii	Wii Mini	mini	y	wii	RVL-201				no backwards compatibility, no internet connectivity	5
-wii-u	Wii U Basic	basic	y	wii-u, wii		8GB			8GB model	9
-wii-u	Wii U Deluxe	deluxe	y	wii-u, wii		32GB			32GB model	10
+wiiu	Wii U Basic	basic	y	wii-u, wii		8GB			8GB model	9
+wiiu	Wii U Deluxe	deluxe	y	wii-u, wii		32GB			32GB model	10
 xb360	Xbox 360 Core	core	y	xb360, xbox					the original Xbox 360 (no HDMI out)	10
 xb360	Xbox 360 Pro	pro	y	xb360, xbox					Xbox 360 (some w/, some w/o HDMI)	9
 xb360	Xbox 360 Arcade	arcade	y	xb360, xbox		256MB-512MB				8
@@ -90,7 +90,7 @@ gba	Game Boy Player	gbplayerq	y	gba, gbc, gb					attachment for Panasonic Q allo
 nes	Family Computer Disk System	fcdisk	y	fcdisk			Famicom Disk System, Disk System, FCDS, FCD, FDS			4
 nes	Twin Famicom	fctwin	y	fcdisk, fc						2
 n64	64DD	64dd	y	64dd						4
-neogeo-aes	Neo Geo CD	cdfront	y	neogeocd					front-loading CD-compatible Neo Geo	8
-neogeo-aes	Neo Geo	original	y	neogeo					the original cartridge-compatible Neo Geo	10
-neogeo-aes	Neo Geo CD	cdtop	y	neogeocd					top-loading CD-compatible Neo Geo	9
-neogeo-aes	Neo Geo CDZ	cdz	y	neogeocd					faster top-loading CD-compatible Neo Geo	7
+neogeo_aes	Neo Geo CD	cdfront	y	neogeocd					front-loading CD-compatible Neo Geo	8
+neogeo_aes	Neo Geo	original	y	neogeo					the original cartridge-compatible Neo Geo	10
+neogeo_aes	Neo Geo CD	cdtop	y	neogeocd					top-loading CD-compatible Neo Geo	9
+neogeo_aes	Neo Geo CDZ	cdz	y	neogeocd					faster top-loading CD-compatible Neo Geo	7
