@@ -2,7 +2,7 @@ import requests
 from result_parser import *
 from bs4 import BeautifulSoup
 
-class Scraper():
+class SoupMaker():
 	def __init__(self):
 		self.finished = False
 		self.error = {
@@ -12,7 +12,7 @@ class Scraper():
 		self.def_self_attr()
 	
 	def __str__(self):
-		string = '<Scraper Object (Generic)>'
+		string = '<SoupMaker Object (Generic)>'
 		if self.url and len(self.url) > 0:
 			string = string + ' ' + self.url
 		return string
@@ -40,7 +40,7 @@ class Scraper():
 		return requests.get(self.build_search_url())
 
 	def request_response(self):
-		print('requesting response...')
+		print('requesting response... from ' + self.build_search_url())
 		return requests.get(self.build_search_url())
 
 	def parse_search_response(self, soup):
@@ -58,7 +58,7 @@ class Scraper():
 	def get_soup(self, html_response):
 		return BeautifulSoup(html_response, 'html.parser')
 
-	def scrape(self):
+	def make_soup(self):
 		if not self.build_search_url():
 			print('No scrape URL.')
 			raise Exception('No URL to use in scraping. Terminating program.')
@@ -66,9 +66,9 @@ class Scraper():
 			print('scraping...')
 			return self.process_response(self.request_response())
 
-class CraigslistSoupMaker(Scraper):
+class CraigslistSoupMaker(SoupMaker):
 	def def_self_attr(self):
-		self.site = 'craigslist'
+		self.site = 'Craigslist'
 		self.url_base = 'https://seattle.craigslist.org/'
 		self.url_search_base = 'search/'
 		self.url_search_extensions = {
@@ -90,10 +90,13 @@ class CraigslistSoupMaker(Scraper):
 		print(results_data)
 		return results_data
 
-class CraigslistPostSoupMaker(Scraper):
+class CraigslistPostSoupMaker(SoupMaker):
 	def def_self_attr(self):
-		self.site = None
+		self.site = 'Craigslist'
 		self.url = None
+
+	def parse_search_response(self, soup):
+		return soup.find(class_='body')
 	
 if __name__ == '__main__':
 	print('running ' + __file__)
@@ -106,9 +109,9 @@ if __name__ == '__main__':
 	# test_parsed_results = cl_scraper.parse_search_response(test_response)
 	# pp.pprint(test_parsed_results)
 
-	single_post_scraper = Scraper()
+	single_post_scraper = SoupMaker()
 	no_img_url = 'https://seattle.craigslist.org/see/vgm/d/woodinville-game-boy-and-games/7011448918.html'
 	single_img_url = 'https://seattle.craigslist.org/see/vgm/d/seattle-3ds-fire-emblem-echoes-limited/6992105694.html'
 	multi_img_url = 'https://seattle.craigslist.org/see/vgm/d/seattle-nintendo-switch-lot/7011771234.html'
 	single_post_scraper.set_url(single_img_url)
-	data = single_post_scraper.scrape()
+	data = single_post_scraper.make_soup()

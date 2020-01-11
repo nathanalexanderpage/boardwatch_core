@@ -7,7 +7,7 @@ import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
 cl_results_scraper = CraigslistSoupMaker()
-results = cl_results_scraper.scrape()
+results = cl_results_scraper.make_soup()
 
 pp.pprint(results)
 
@@ -28,5 +28,21 @@ for board in boards:
 	board_id = cur.fetchone()
 
 	for result in results:
-		post_data = CraigslistResultScraper(result)
-		cur.execute('INSERT INTO listings (board_id, native_id, url, title, body, seller_email, seller_phone, date_posted) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)', (board_id, result['id'], result['url'], result['title_massaged'], result['body'], result['seller_email'], result['seller_phone'], result['datetime']))
+		cur.execute('SELECT id, native_id, title FROM listings WHERE native_id = %s', (result['id'],))
+		existing_post_id = cur.fetchone()
+		if existing_post_id is None:
+			post_soup_maker = CraigslistPostSoupMaker()
+			post_soup_maker.set_url(result['url'])
+			post_soup = post_soup_maker.make_soup()
+			post_data = CraigslistPostScraper(post_soup)
+
+			print('printing post_data:')
+			print(post_data.data)
+
+			cur.execute('INSERT INTO listings (board_id, native_id, url, title, body, seller_email, seller_phone, date_posted) VALUES(%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id, title', (board_id, result['id'], result['url'], result['title_massaged'], post_data.data['body'], post_data.data['seller_email'], post_data.data['seller_phone'], result['datetime']))
+			conn.commit()
+			insert_response = cur.fetchone()
+			print(insert_response)
+		else:
+			print('listing already in database; skipping')
+			print(existing_post_id)

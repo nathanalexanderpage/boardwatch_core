@@ -8,7 +8,7 @@ pp = pprint.PrettyPrinter(indent=2)
 console_to_test = ps4
 
 cl_results_scraper = CraigslistSoupMaker()
-test_parsed_results = cl_results_scraper.scrape()
+test_parsed_results = cl_results_scraper.make_soup()
 
 pp.pprint(test_parsed_results)
 pp.pprint(console_to_test)

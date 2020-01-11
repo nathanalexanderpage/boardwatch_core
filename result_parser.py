@@ -53,53 +53,52 @@ class CraigslistResultScraper(ResultScraper):
 			self.data['neighborhood'] = None
 
 class CraigslistPostScraper(ResultScraper):
-	def parse_search_response(self, soup):
-		mapbox = soup.find(id='map')
-		map_longitude = mapbox['data-longitude']
-		print(map_longitude)
-		map_latitude = mapbox['data-latitude']
-		print(map_latitude)
-		map_data_accuracy_score = mapbox['data-accuracy']
-		print(map_data_accuracy_score)
+	def scrape_data(self):
+		self.data['seller_email'] = None
+		self.data['seller_phone'] = None
+		self.data['map_longitude'] = None
+		self.data['map_latitude'] = None
+		mapbox = self.soup.find(id='map')
+		if mapbox is not None:
+			self.data['map_longitude'] = mapbox['data-longitude']
+			self.data['map_latitude'] = mapbox['data-latitude']
+			self.data['map_data_accuracy_score'] = mapbox['data-accuracy']
 		pics = []
-		main_section = soup.find(class_='userbody')
+		main_section = self.soup.find(class_='userbody')
 		figure = main_section.find('figure')
 		if figure:
-			pix_quantity = int(soup.find(class_='slider-info').text.split(' ')[3])
+			pix_quantity = int(self.soup.find(class_='slider-info').text.split(' ')[3])
 			if pix_quantity > 1:
-				pix = soup.find_all(class_='thumb')
+				pix = self.soup.find_all(class_='thumb')
 				for pic in pix:
 					pics.append(pic['href'])
 			else:
 				pics.append(figure.find('img')['src'])
 		print(pics)
-		attrs = soup.find(class_='attrgroup').find_all('span')
-		condition = None
-		manufacturer = None
-		model = None
-		for attr in attrs:
-			if attr.name == 'span':
-				if 'condition:' in attr.text:
-					condition = attr.find('b').text.strip()
-					print(condition)
-				if 'make / manufacturer:' in attr.text:
-					manufacturer = attr.find('b').text.strip()
-					print(manufacturer)
-				if 'model name / number:' in attr.text:
-					model = attr.find('b').text.strip()
-					print(model)
-		posting_body = soup.find(id='postingbody')
+		self.data['condition'] = None
+		self.data['manufacturer'] = None
+		self.data['model'] = None
+		attrs_group = self.soup.find(class_='attrgroup')
+		if attrs_group:
+			attrs = attrs_group.find_all('span')
+			for attr in attrs:
+				if attr.name == 'span':
+					if 'condition:' in attr.text:
+						self.data['condition'] = attr.find('b').text.strip()
+					if 'make / manufacturer:' in attr.text:
+						self.data['manufacturer'] = attr.find('b').text.strip()
+					if 'model name / number:' in attr.text:
+						self.data['model'] = attr.find('b').text.strip()
+		posting_body = self.soup.find(id='postingbody')
 		qr_code_text = posting_body.find(class_='print-information print-qrcode-container').text
-		post_text = posting_body.text[len(qr_code_text):].strip()
-		print(post_text)
-		post_info_tags = soup.find_all(class_='postinginfo')
-		post_id = None
+		self.data['body'] = posting_body.text[len(qr_code_text):].strip()
+		post_info_tags = self.soup.find_all(class_='postinginfo')
+		self.data['native_id'] = None
 		for tag in post_info_tags:
 			if tag.name == 'p':
 				if 'post id:' in tag.text:
-					post_id = tag.text[len('post id:'):].strip()
-		print(post_id)
-		return post_id
+					self.data['native_id'] = tag.text[len('post id:'):].strip()
+		pp.pprint(self.data)
 
 
 if __name__ == '__main__':
