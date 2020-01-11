@@ -1,19 +1,20 @@
-name	ref	street_address	web_address	description
-Nintendo	nintendo		https://www.nintendo.com/	
-Sega	sega		https://www.sega.com/	
-Sony	sony		https://www.sony.com/	
-Microsoft	microsoft		https://www.microsoft.com/	
-Atari	atari		https://www.atari.com/	
-Commodore	commodore			
-SNK	snk		https://www.snk-corp.co.jp/us/	
-Hudson Soft	hudson			
-Taito	taito			
-Jaleco	jaleco			
-Konami	konami			
-Electronic Arts	ea			
-Capcom	capcom			
-Activision Blizzard	blizzard			
-Square Enix	squareenix			
-Ubisoft	ubisoft			
-Bandai Namco	bandai			
-Sharp	sharp			
+name	ref	street_address	is_defunct	web_address	description
+Nintendo	nintendo		n	https://www.nintendo.com/	
+Sega	sega		n	https://www.sega.com/	
+Sony	sony		n	https://www.sony.com/	
+Microsoft	microsoft		n	https://www.microsoft.com/	
+Atari	atari			https://www.atari.com/	
+Commodore	commodore		y		
+SNK	snk			https://www.snk-corp.co.jp/us/	
+Hudson Soft	hudson		y		
+Taito	taito				
+Jaleco	jaleco				
+Konami	konami		n		
+Electronic Arts	ea		n		
+Capcom	capcom		n		
+Activision Blizzard	blizzard		n		
+Square Enix	squareenix		n		
+Ubisoft	ubisoft		n		
+Bandai Namco	bandai				
+Sharp	sharp				
+Craigslist	craigslist		n	https://www.craigslist.org	
