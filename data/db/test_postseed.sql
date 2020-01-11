@@ -1,3 +1,23 @@
-SELECT platforms.id, platform_name_groups.name, platform_families.name, platforms.name, platforms.platform_family_id, platforms.is_brand_missing, platforms.model_no, platforms.storage_capacity, platforms.description, platforms.disambiguation, platforms.relevance FROM platforms JOIN platform_name_groups ON platforms.name_group_id = platform_name_groups.id JOIN platform_families ON platforms.platform_family_id = platform_families.id;
+SELECT
+    p.name as platform,
+    pf.name as platform_family,
+    png.name as name_group,
+    gen.id as gen
+    FROM platforms as p
+    JOIN platform_families as pf ON pf.id = p.platform_family_id
+    LEFT JOIN platform_name_groups as png ON png.id = p.name_group_id
+    JOIN generations as gen ON gen.id = pf.generation;
 
-SELECT platform_editions.id, platform_name_groups.name, platform_families.name, platforms.name, platform_editions.name, platform_editions.official_color FROM platform_editions JOIN platforms ON platforms.id = platform_editions.platform_id JOIN platform_families ON platform_families.id = platforms.platform_family_id JOIN platform_name_groups ON platforms.name_group_id = platform_name_groups.id;
+SELECT
+    png.name as name_group,
+    pf.name as platform_family,
+    p.name as platform,
+    gen.id as gen,
+    pe.name as edition,
+    pe.official_color as official_color
+    FROM platforms as p
+    JOIN platform_families as pf ON pf.id = p.platform_family_id
+    LEFT JOIN platform_name_groups as png ON png.id = p.name_group_id
+    JOIN generations as gen ON gen.id = pf.generation
+    JOIN platform_editions as pe ON pe.platform_id = p.id
+    ORDER BY gen, name_group, platform_family, platform;
