@@ -317,9 +317,33 @@ POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 cur = conn.cursor()
 
+for role in company_roles:
+	pprint.pprint(role)
+	cur.execute('INSERT INTO company_roles (name, description) VALUES(%s, %s) RETURNING name, description;', (role['name'], role['description']))
+	conn.commit()
+
+	query_result = cur.fetchone()
+	pprint.pprint(query_result)
+
+for company in companies:
+	pprint.pprint(company)
+	cur.execute('INSERT INTO companies (name, street_address, web_address, description) VALUES(%s, %s, %s, %s) RETURNING id, name, street_address, web_address, description;', (company['name'], company['street_address'], company['web_address'], company['description']))
+	conn.commit()
+
+	query_result = cur.fetchone()
+	pprint.pprint(query_result)
+
+for gen in generations:
+	pprint.pprint(gen)
+	cur.execute('INSERT INTO generations (id, year_begin, year_end) VALUES(%s, %s, %s) RETURNING id, year_begin, year_end;', (gen['number'], gen['year_begin'], gen['year_end']))
+	conn.commit()
+
+	query_result = cur.fetchone()
+	pprint.pprint(query_result)
+
 for family in console_families:
 	pprint.pprint(family)
-	cur.execute('INSERT INTO platform_families (name, generation) VALUES(%s, %s) RETURNING id, name, generation, developer;', (family['name'], family['generation']))
+	cur.execute('INSERT INTO platform_families (name, generation) VALUES(%s, %s) RETURNING id, name, generation;', (family['name'], family['generation']))
 	conn.commit()
 
 	query_result = cur.fetchone()
