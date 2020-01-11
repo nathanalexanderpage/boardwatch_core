@@ -22,31 +22,37 @@ class CraigslistResultScraper(ResultScraper):
 		title_tag_cleaned = re.sub(',', ', ', title_tag.text).strip()
 		title_tag_cleaned = re.sub(' {2,}', ' ', title_tag_cleaned)
 		self.data['title'] = title_tag_cleaned
+
 		duplicate_remove_chars = [
-			'\\?'
-			'\\*'
+			'\?'
+			'\*'
 			'!',
 			'-',
 			',',
 			'~',
 			'&'
 		]
+
 		for char in duplicate_remove_chars:
 			str_to_replace_command = char + '{2,}'
 			title_tag_cleaned = re.sub(str_to_replace_command, char, title_tag_cleaned)
+
 		if 'data-repost-of' in self.soup.attrs:
 			self.data['id'] = self.soup.get('data-repost-of')
 		else:
 			self.data['id'] = self.soup.get('data-pid')
+
 		self.data['title_massaged'] = title_tag_cleaned
 		self.data['url'] = title_tag['href'].strip()
 		self.data['datetime'] = self.soup.p.time['datetime'].strip()
 		self.data['seller_email'] = None
 		self.data['seller_phone'] = None
+
 		if self.soup.find(class_='result-price'):
 			self.data['price'] = int(self.soup.find(class_='result-price').text.strip()[1:])
 		else:
 			self.data['price'] = None
+
 		if self.soup.find(class_='result-hood'):
 			self.data['neighborhood'] = self.soup.find(class_='result-hood').text.strip()
 		else:
@@ -58,14 +64,19 @@ class CraigslistPostScraper(ResultScraper):
 		self.data['seller_phone'] = None
 		self.data['map_longitude'] = None
 		self.data['map_latitude'] = None
+
 		mapbox = self.soup.find(id='map')
+
 		if mapbox is not None:
 			self.data['map_longitude'] = mapbox['data-longitude']
 			self.data['map_latitude'] = mapbox['data-latitude']
 			self.data['map_data_accuracy_score'] = mapbox['data-accuracy']
-		pics = []
+
 		main_section = self.soup.find(class_='userbody')
 		figure = main_section.find('figure')
+
+		pics = []
+
 		if figure:
 			pix_quantity = int(self.soup.find(class_='slider-info').text.split(' ')[3])
 			if pix_quantity > 1:
@@ -74,11 +85,14 @@ class CraigslistPostScraper(ResultScraper):
 					pics.append(pic['href'])
 			else:
 				pics.append(figure.find('img')['src'])
+
 		print(pics)
+
 		self.data['condition'] = None
 		self.data['manufacturer'] = None
 		self.data['model'] = None
 		attrs_group = self.soup.find(class_='attrgroup')
+
 		if attrs_group:
 			attrs = attrs_group.find_all('span')
 			for attr in attrs:
@@ -89,11 +103,13 @@ class CraigslistPostScraper(ResultScraper):
 						self.data['manufacturer'] = attr.find('b').text.strip()
 					if 'model name / number:' in attr.text:
 						self.data['model'] = attr.find('b').text.strip()
+
 		posting_body = self.soup.find(id='postingbody')
 		qr_code_text = posting_body.find(class_='print-information print-qrcode-container').text
 		self.data['body'] = posting_body.text[len(qr_code_text):].strip()
 		post_info_tags = self.soup.find_all(class_='postinginfo')
 		self.data['native_id'] = None
+		
 		for tag in post_info_tags:
 			if tag.name == 'p':
 				if 'post id:' in tag.text:
