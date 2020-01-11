@@ -6,13 +6,13 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 # from email.MIMEImage import MIMEImage
 from match_finder import *
-from scraper import *
+from soup_maker import *
 from string import Template
 
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
-cl_results_scraper = CraigslistScraper()
+cl_results_scraper = CraigslistSoupMaker()
 test_parsed_results = cl_results_scraper.scrape()
 
 pp.pprint(test_parsed_results)
@@ -33,10 +33,10 @@ sites = [
 def generate_message_text(listings):
 	message_text_matches = ''
 	for site in sites:
-		site_message = '\n\nListings from ' + site["name"] + ' (' + site["url"] + '):'
+		site_message = '\n\nListings from ' + site['name'] + ' (' + site['url'] + '):'
 		listing_ct = 1
 		for listing in listings:
-			site_message = site_message + '\n' + str(listing_ct) + '. ' + listing["title"] + '\n' + listing["url"]
+			site_message = site_message + '\n' + str(listing_ct) + '. ' + listing['title'] + '\n' + listing['url']
 			listing_ct += 1
 		message_text_matches = message_text_matches + site_message
 	return message_text_matches
@@ -45,16 +45,16 @@ def generate_message_html(listings):
 	message_text_matches = ''
 
 	for site in sites:
-		site_name = site["name"]
-		site_url = site["url"]
+		site_name = site['name']
+		site_url = site['url']
 		site_message = '<h2>Listings from ' + site_name + ' (' + site_url + '):</h2>\n<ul style="padding: 0; list-style: none;">'
 		listing_ct = 1
 		for listing in listings:
 			listing_no = str(listing_ct)
-			listing_title = listing["title"]
-			listing_url = listing["url"]
-			listing_datetime = listing["datetime"]
-			listing_price = '$' + str(listing["price"])
+			listing_title = listing['title']
+			listing_url = listing['url']
+			listing_datetime = listing['datetime']
+			listing_price = '$' + str(listing['price'])
 			site_message = site_message + '\n<li style="margin: 2px 0;border: 3px solid lightgrey;padding: 1em;background-color: #f4f4f4;">\n<span style="font-size: 1.15em;">' + listing_no + '. <a href="' + listing_url + '" style="color: black;">' + listing_title + '</a>' + ' – <span style="color: green; font-weight: bold;">' + listing_price + '</span>\n</span>\n<p><span style="color: #563900;"><time>' + listing_datetime + '</time></span></p>\n</li>'
 			listing_ct += 1
 		site_message = site_message + '\n</ul>'
@@ -66,10 +66,10 @@ message_listings_text = generate_message_text(matches)
 message_listings_html = generate_message_html(matches)
 
 load_dotenv()
-GMAIL_ADDRESS = os.getenv("GMAIL_ADDRESS")
-GMAIL_PASSWORD = os.getenv("GMAIL_PASSWORD")
-HOST_ADDRESS = os.getenv("HOST_ADDRESS")
-TLS_PORT = os.getenv("TLS_PORT")
+GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
+GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
+HOST_ADDRESS = os.getenv('HOST_ADDRESS')
+TLS_PORT = os.getenv('TLS_PORT')
 
 def get_contacts(filename):
 	names = []

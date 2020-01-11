@@ -66,7 +66,7 @@ class Scraper():
 			print('scraping...')
 			return self.process_response(self.request_response())
 
-class CraigslistScraper(Scraper):
+class CraigslistSoupMaker(Scraper):
 	def def_self_attr(self):
 		self.site = 'craigslist'
 		self.url_base = 'https://seattle.craigslist.org/'
@@ -90,7 +90,7 @@ class CraigslistScraper(Scraper):
 		print(results_data)
 		return results_data
 
-class CraigslistPostScraper(Scraper):
+class CraigslistPostSoupMaker(Scraper):
 	def def_self_attr(self):
 		self.site = None
 		self.url = None
@@ -101,7 +101,7 @@ if __name__ == '__main__':
 	import pprint
 	pp = pprint.PrettyPrinter(indent=2)
 
-	# cl_scraper = CraigslistScraper()
+	# cl_scraper = CraigslistSoupMaker()
 	# test_response = cl_scraper.request_get().content
 	# test_parsed_results = cl_scraper.parse_search_response(test_response)
 	# pp.pprint(test_parsed_results)

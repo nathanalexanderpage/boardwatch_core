@@ -36,7 +36,7 @@ class MatchFinder():
 		print('use child class\'s')
 
 	def check_if_weed_out(self, title_compare):
-		for check in self.avoid['anywhere']:
+		for check in self.antimatch_factors['anywhere']:
 			if check in title_compare: return True
 		return False
 
@@ -44,17 +44,17 @@ class MatchFinder():
 		print('CHECKING if \'' + positive_match_string + '\' truly matches with \'' + title_compare + '\'')
 		if self.check_if_weed_out(title_compare): return True
 		if title_compare.find(positive_match_string) > 0:
-			for check in self.avoid['before']['space_separated_yes']:
+			for check in self.antimatch_factors['before']['space_separated_yes']:
 				print('CHECKING IF \'' + check.lower() + ' ' + positive_match_string + '\' in \'' + title_compare + '\'')
 				if check.lower() + ' ' + positive_match_string in title_compare: return True
-			for check in self.avoid['before']['space_separated_no']:
+			for check in self.antimatch_factors['before']['space_separated_no']:
 				print('CHECKING IF \'' + check.lower() + positive_match_string + '\' in \'' + title_compare + '\'')
 				if check.lower() + positive_match_string in title_compare: return True
 		if title_compare.find(positive_match_string) + len(positive_match_string) < len(title_compare) - 1:
-			for check in self.avoid['after']['space_separated_yes']:
+			for check in self.antimatch_factors['after']['space_separated_yes']:
 				print('CHECKING IF \'' + positive_match_string + ' ' + check.lower() + '\' in \'' + title_compare + '\'')
 				if positive_match_string + ' ' + check.lower() in title_compare: return True
-			for check in self.avoid['after']['space_separated_no']:
+			for check in self.antimatch_factors['after']['space_separated_no']:
 				print('CHECKING IF \'' + positive_match_string + check.lower() + '\' in \'' + title_compare + '\'')
 				if positive_match_string + check.lower() in title_compare: return True
 		print(positive_match_string)
@@ -119,7 +119,7 @@ class ConsoleMatchFinder(MatchFinder):
 		return 'MatchFinder instance for finding ' + self.want['developer'] + ' ' + self.want['name']
 	
 	def def_self_attr(self):
-		self.avoid = {
+		self.antimatch_factors = {
 			'anywhere': [
 				'I will',
 				'wanted:',
@@ -272,7 +272,7 @@ class ConsoleMatchFinder(MatchFinder):
 		self.match_factors['positive']['minor'] = pos_minor
 
 		# negative matches
-		avoid = {
+		antimatch_factors = {
 			'anywhere': [],
 			'before': {
 				'space_separated_yes': [],
@@ -286,35 +286,35 @@ class ConsoleMatchFinder(MatchFinder):
 
 		for system in self.name_group_members:
 			# if system['name'] not in self.want['name']:
-			# 	avoid['anywhere'].append(system['name'])
+			# 	antimatch_factors['anywhere'].append(system['name'])
 			if self.want['name'] in system['name']:
 				if system['name_prefix']:
-					avoid['before']['space_separated_yes'].append(system['name_prefix'])
-					avoid['before']['space_separated_no'].append(system['name_prefix'])
+					antimatch_factors['before']['space_separated_yes'].append(system['name_prefix'])
+					antimatch_factors['before']['space_separated_no'].append(system['name_prefix'])
 				if system['name_suffix']:
-					avoid['after']['space_separated_yes'].append(system['name_suffix'])
-					avoid['after']['space_separated_no'].append(system['name_suffix'])
+					antimatch_factors['after']['space_separated_yes'].append(system['name_suffix'])
+					antimatch_factors['after']['space_separated_no'].append(system['name_suffix'])
 
 
-		for neg_match in avoid['anywhere']:
-			self.avoid['anywhere'].append(neg_match)
-		for neg_match in avoid['before']['space_separated_yes']:
-			self.avoid['before']['space_separated_yes'].append(neg_match)
-		for neg_match in avoid['before']['space_separated_no']:
-			self.avoid['before']['space_separated_no'].append(neg_match)
-		for neg_match in avoid['after']['space_separated_yes']:
-			self.avoid['after']['space_separated_yes'].append(neg_match)
-		for neg_match in avoid['after']['space_separated_no']:
-			self.avoid['after']['space_separated_no'].append(neg_match)
+		for neg_match in antimatch_factors['anywhere']:
+			self.antimatch_factors['anywhere'].append(neg_match)
+		for neg_match in antimatch_factors['before']['space_separated_yes']:
+			self.antimatch_factors['before']['space_separated_yes'].append(neg_match)
+		for neg_match in antimatch_factors['before']['space_separated_no']:
+			self.antimatch_factors['before']['space_separated_no'].append(neg_match)
+		for neg_match in antimatch_factors['after']['space_separated_yes']:
+			self.antimatch_factors['after']['space_separated_yes'].append(neg_match)
+		for neg_match in antimatch_factors['after']['space_separated_no']:
+			self.antimatch_factors['after']['space_separated_no'].append(neg_match)
 		
 	def parentheses_judger(self, comp_title):
 		pass
 		if self.want['abbreviation_official']:
-			avoid.append('(' + self.want['abbreviation_official'] + ')')
-		avoid.append('(' + self.want['name'] + ')')
-		avoid.append('(' + self.want['name_group'] + ')')
+			antimatch_factors.append('(' + self.want['abbreviation_official'] + ')')
+		antimatch_factors.append('(' + self.want['name'] + ')')
+		antimatch_factors.append('(' + self.want['name_group'] + ')')
 		for name in self.want['names_other']:
-			avoid.append('(' + self.want['name_group'] + ')')
+			antimatch_factors.append('(' + self.want['name_group'] + ')')
 
 if __name__ == '__main__':
 	print('running ' + __file__)
@@ -338,7 +338,7 @@ if __name__ == '__main__':
 	pp.pprint(consoles)
 	matcher = ConsoleMatchFinder(wii, {})
 	pp.pprint(matcher.match_factors)
-	pp.pprint(matcher.avoid)
+	pp.pprint(matcher.antimatch_factors)
 	match_score = matcher.match_score_calculate(result)
 	print(match_score)
 	# matches = [x for x in lst if fulfills_some_condition(x)]

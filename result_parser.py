@@ -34,9 +34,15 @@ class CraigslistResultScraper(ResultScraper):
 		for char in duplicate_remove_chars:
 			str_to_replace_command = char + '{2,}'
 			title_tag_cleaned = re.sub(str_to_replace_command, char, title_tag_cleaned)
+		if 'data-repost-of' in self.soup.attrs:
+			self.data['id'] = self.soup.get('data-repost-of')
+		else:
+			self.data['id'] = self.soup.get('data-pid')
 		self.data['title_massaged'] = title_tag_cleaned
 		self.data['url'] = title_tag['href'].strip()
 		self.data['datetime'] = self.soup.p.time['datetime'].strip()
+		self.data['seller_email'] = None
+		self.data['seller_phone'] = None
 		if self.soup.find(class_='result-price'):
 			self.data['price'] = int(self.soup.find(class_='result-price').text.strip()[1:])
 		else:

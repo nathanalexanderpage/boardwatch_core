@@ -1,13 +1,13 @@
 import pprint
 from console_data_resource import *
 from match_finder import *
-from scraper import *
+from soup_maker import *
 
 pp = pprint.PrettyPrinter(indent=2)
 
 console_to_test = ps4
 
-cl_results_scraper = CraigslistScraper()
+cl_results_scraper = CraigslistSoupMaker()
 test_parsed_results = cl_results_scraper.scrape()
 
 pp.pprint(test_parsed_results)
