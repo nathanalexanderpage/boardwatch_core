@@ -1,6 +1,7 @@
 # TEMPORARY
 contacts.txt
 resources/
+data/db/seed_users.sql
 
 # PERMANENT
 .env
