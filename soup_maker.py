@@ -1,5 +1,5 @@
 import requests
-from result_parser import *
+from scraper import *
 from bs4 import BeautifulSoup
 
 class SoupMaker():
