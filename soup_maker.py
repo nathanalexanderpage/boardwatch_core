@@ -87,7 +87,7 @@ class CraigslistSoupMaker(SoupMaker):
 		for result in results:
 			result_data = CraigslistResultScraper(result)
 			results_data.append(result_data.data)
-		print(results_data)
+		# print(results_data)
 		return results_data
 
 class CraigslistPostSoupMaker(SoupMaker):

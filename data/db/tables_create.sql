@@ -240,6 +240,7 @@ CREATE TABLE listings (
 	native_id text NULL,
 	url text NOT NULL,
 	title text NOT NULL,
+	price int NULL,
 	body text NULL,
 	seller_email text NULL,
 	seller_phone text NULL,

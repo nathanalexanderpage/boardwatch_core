@@ -1,5 +1,6 @@
 import os
 import smtplib
+from board_sites import board_sites
 from console_data_resource import *
 from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
@@ -21,18 +22,13 @@ pp.pprint(ps1)
 matcher = ConsoleMatchFinder(ps1, {})
 matches = [result for result in test_parsed_results if matcher.assess_match(result)]
 
-pp.pprint(matches)
+usable_sites = [site for site in board_sites if site['is_supported']]
 
-sites = [
-	{
-		'name': 'Craigslist',
-		'url': 'https://seattle.craigslist.org/'
-	}
-]
+pp.pprint(matches)
 
 def generate_message_text(listings):
 	message_text_matches = ''
-	for site in sites:
+	for site in usable_sites:
 		site_message = '\n\nListings from ' + site['name'] + ' (' + site['url'] + '):'
 		listing_ct = 1
 		for listing in listings:
@@ -44,10 +40,8 @@ def generate_message_text(listings):
 def generate_message_html(listings):
 	message_text_matches = ''
 
-	for site in sites:
-		site_name = site['name']
-		site_url = site['url']
-		site_message = '<h2>Listings from ' + site_name + ' (' + site_url + '):</h2>\n<ul style="padding: 0; list-style: none;">'
+	for site in usable_sites:
+		site_message = '<h2>Listings from ' + site['name'] + ' (' + site['url'] + '):</h2>\n<ul style="padding: 0; list-style: none;">'
 		listing_ct = 1
 		for listing in listings:
 			listing_no = str(listing_ct)
