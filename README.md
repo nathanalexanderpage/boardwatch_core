@@ -17,7 +17,7 @@ Structure	|Overview, Database
 
 Scourable platforms:
 - [x] [Craigslist](https://seattle.craigslist.org/)
-- [ ] [eBay](https://www.ebay.com/)
+- [ ] [eBay](https://www.ebay.com/) ([API](https://developer.ebay.com/Devzone/finding/Concepts/FindingAPIGuide.html))
 - [ ] [LetGo](https://us.letgo.com/en)
 - [ ] [OfferUp](https://offerup.com/)
 
