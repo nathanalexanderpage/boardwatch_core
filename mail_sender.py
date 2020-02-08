@@ -19,7 +19,7 @@ test_parsed_results = cl_results_scraper.make_soup()
 pp.pprint(test_parsed_results)
 pp.pprint(ps1)
 
-matcher = ConsoleMatchFinder(ps1, {})
+matcher = PlatformMatchFinder(ps1, {})
 matches = [result for result in test_parsed_results if matcher.assess_match(result)]
 
 usable_sites = [site for site in board_sites if site['is_supported']]

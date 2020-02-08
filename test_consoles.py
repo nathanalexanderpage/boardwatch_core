@@ -29,7 +29,7 @@ title_tests = {
 def match_pos_neg(console_names):
 	test_consoles = list(filter(lambda console: console['name'] == console_names, consoles))
 	for console in test_consoles:
-		matcher = ConsoleMatchFinder(console, {})
+		matcher = PlatformMatchFinder(console, {})
 		for title in title_tests[console['name']]['passes']:
 			result = FakeResult(title)
 			print(title)

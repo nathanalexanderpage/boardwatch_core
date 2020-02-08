@@ -13,7 +13,7 @@ test_parsed_results = cl_results_scraper.make_soup()
 pp.pprint(test_parsed_results)
 pp.pprint(console_to_test)
 
-matcher = ConsoleMatchFinder(console_to_test, {})
+matcher = PlatformMatchFinder(console_to_test, {})
 matches = []
 for result in test_parsed_results:
 	pprint.pprint(result['title'])

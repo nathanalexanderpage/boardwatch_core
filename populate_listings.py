@@ -2,6 +2,7 @@ import os
 import psycopg2 as db
 from dotenv import load_dotenv
 from soup_maker import *
+from board_sites import board_sites
 
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
@@ -11,7 +12,7 @@ results = cl_results_scraper.make_soup()
 
 # pp.pprint(results)
 
-load_dotenv(dotenv_path='../../.env')
+load_dotenv(dotenv_path='./.env')
 POSTGRESQL_USERNAME = os.getenv('POSTGRESQL_USERNAME')
 POSTGRESQL_PASSWORD = os.getenv('POSTGRESQL_PASSWORD')
 POSTGRESQL_PORT = os.getenv('POSTGRESQL_PORT')
@@ -21,10 +22,8 @@ POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 cur = conn.cursor()
 
-boards = ['Craigslist']
-
-for board in boards:
-	cur.execute('SELECT id FROM boards WHERE name = %s', (board,))
+for board in [board for board in board_sites if board['is_supported'] == True]:
+	cur.execute('SELECT id FROM boards WHERE name = %s', (board['name'],))
 	board_id = cur.fetchone()
 
 	for result in results:

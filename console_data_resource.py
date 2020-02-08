@@ -11,7 +11,7 @@ ps4 = {
 	'generation': 8,
 	'names_other': [
 	],
-	'variations': [
+	'platforms': [
 		{
 			'id': '01',
 			'name': None,
@@ -65,7 +65,7 @@ ps1 = {
 		'PS1',
 		'PSX'
 	],
-	'variations': [
+	'platforms': [
 		{
 			'id': '01',
 			'name': None,
@@ -105,7 +105,7 @@ wii_u = {
 	'generation': 8,
 	'names_other': [
 	],
-	'variations': [
+	'platforms': [
 		{
 			'id': '01',
 			'name': 'Basic',
@@ -150,7 +150,7 @@ wii = {
 	'names_other': [
 		'Revolution'
 	],
-	'variations': [
+	'platforms': [
 		{
 			'id': '01',
 			'name': None,
@@ -205,4 +205,5 @@ wii = {
 		}
 	]
 }
-consoles = [ps1, ps4, wii, wii_u]
+
+platforms = [ps1, ps4, wii, wii_u]
