@@ -1,5 +1,5 @@
 import requests
-from scraper import *
+from boardwatch.scrape import scraper
 from bs4 import BeautifulSoup
 
 class SoupMaker():
@@ -85,7 +85,7 @@ class CraigslistSoupMaker(SoupMaker):
 		
 		results_data = []
 		for result in results:
-			result_data = CraigslistResultScraper(result)
+			result_data = scraper.CraigslistResultScraper(result)
 			results_data.append(result_data.data)
 		# print(results_data)
 		return results_data

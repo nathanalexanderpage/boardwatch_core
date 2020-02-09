@@ -1,113 +1,114 @@
 import os
 import smtplib
-from board_sites import board_sites
-from console_data_resource import *
+from boardwatch.common import board_site_enums
 from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 # from email.MIMEImage import MIMEImage
-from match_finder import *
-from soup_maker import *
+from boardwatch.match import match_finder
+from boardwatch.scrape.soup_maker import CraigslistSoupMaker
 from string import Template
 
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
-cl_results_scraper = CraigslistSoupMaker()
-test_parsed_results = cl_results_scraper.make_soup()
+# cl_results_scraper = CraigslistSoupMaker()
+# test_parsed_results = cl_results_scraper.make_soup()
 
-pp.pprint(test_parsed_results)
-pp.pprint(ps1)
+# pp.pprint(test_parsed_results)
 
-matcher = PlatformMatchFinder(ps1, {})
-matches = [result for result in test_parsed_results if matcher.assess_match(result)]
+# matcher = PlatformMatchFinder(ps1, {})
+# matches = [result for result in test_parsed_results if matcher.assess_match(result)]
 
-usable_sites = [site for site in board_sites if site['is_supported']]
+# usable_sites = [site for site in board_sites if site['is_supported']]
 
-pp.pprint(matches)
+# pp.pprint(matches)
 
-def generate_message_text(listings):
-	message_text_matches = ''
-	for site in usable_sites:
-		site_message = '\n\nListings from ' + site['name'] + ' (' + site['url'] + '):'
-		listing_ct = 1
-		for listing in listings:
-			site_message = site_message + '\n' + str(listing_ct) + '. ' + listing['title'] + '\n' + listing['url']
-			listing_ct += 1
-		message_text_matches = message_text_matches + site_message
-	return message_text_matches
+class Mailer():
+	def __init__(self):
+		pass
 
-def generate_message_html(listings):
-	message_text_matches = ''
+	def generate_message_text(listings):
+		message_text_matches = ''
+		for site in usable_sites:
+			site_message = '\n\nListings from ' + site['name'] + ' (' + site['url'] + '):'
+			listing_ct = 1
+			for listing in listings:
+				site_message = site_message + '\n' + str(listing_ct) + '. ' + listing['title'] + '\n' + listing['url']
+				listing_ct += 1
+			message_text_matches = message_text_matches + site_message
+		return message_text_matches
 
-	for site in usable_sites:
-		site_message = '<h2>Listings from ' + site['name'] + ' (' + site['url'] + '):</h2>\n<ul style="padding: 0; list-style: none;">'
-		listing_ct = 1
-		for listing in listings:
-			listing_no = str(listing_ct)
-			listing_title = listing['title']
-			listing_url = listing['url']
-			listing_datetime = listing['datetime']
-			listing_price = '$' + str(listing['price'])
-			site_message = site_message + '\n<li style="margin: 2px 0;border: 3px solid lightgrey;padding: 1em;background-color: #f4f4f4;">\n<span style="font-size: 1.15em;">' + listing_no + '. <a href="' + listing_url + '" style="color: black;">' + listing_title + '</a>' + ' – <span style="color: green; font-weight: bold;">' + listing_price + '</span>\n</span>\n<p><span style="color: #563900;"><time>' + listing_datetime + '</time></span></p>\n</li>'
-			listing_ct += 1
-		site_message = site_message + '\n</ul>'
-		message_text_matches = message_text_matches + site_message
-	return message_text_matches
+	def generate_message_html(listings):
+		message_text_matches = ''
 
+		for site in usable_sites:
+			site_message = '<h2>Listings from ' + site['name'] + ' (' + site['url'] + '):</h2>\n<ul style="padding: 0; list-style: none;">'
+			listing_ct = 1
+			for listing in listings:
+				listing_no = str(listing_ct)
+				listing_title = listing['title']
+				listing_url = listing['url']
+				listing_datetime = listing['datetime']
+				listing_price = '$' + str(listing['price'])
+				site_message = site_message + '\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">\n<span style="font-size: 1.15em;">' + listing_no + '. <a href="' + listing_url + '" style="color: black;">' + listing_title + '</a>' + ' – <span style="color: green; font-weight: bold;">' + listing_price + '</span>\n</span>\n<p><span style="color: #563900;"><time>' + listing_datetime + '</time></span></p>\n</li>'
+				listing_ct += 1
+			site_message = site_message + '\n</ul>'
+			message_text_matches = message_text_matches + site_message
+		return message_text_matches
 
-message_listings_text = generate_message_text(matches)
-message_listings_html = generate_message_html(matches)
+	def get_contacts(filename):
+		names = []
+		emails = []
+		with open(filename, mode='r', encoding='utf-8') as contacts_file:
+			for contact in contacts_file:
+				names.append(contact.split()[0])
+				emails.append(contact.split()[1])
+		return names, emails
 
-load_dotenv()
-GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
-GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
-HOST_ADDRESS = os.getenv('HOST_ADDRESS')
-TLS_PORT = os.getenv('TLS_PORT')
+	def read_template(filename):
+		with open(filename, 'r', encoding='utf-8') as template_file:
+			template_file_content = template_file.read()
+		return Template(template_file_content)
 
-def get_contacts(filename):
-	names = []
-	emails = []
-	with open(filename, mode='r', encoding='utf-8') as contacts_file:
-		for contact in contacts_file:
-			names.append(contact.split()[0])
-			emails.append(contact.split()[1])
-	return names, emails
+	def send_mail():
+		load_dotenv()
+		GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
+		GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
+		HOST_ADDRESS = os.getenv('HOST_ADDRESS')
+		TLS_PORT = os.getenv('TLS_PORT')
 
-def read_template(filename):
-	with open(filename, 'r', encoding='utf-8') as template_file:
-		template_file_content = template_file.read()
-	return Template(template_file_content)
+		message_listings_text = generate_message_text(matches)
+		message_listings_html = generate_message_html(matches)
 
-def py_mail():
-	names, emails = get_contacts('contacts.txt')
-	message_html_template = read_template('mail_message.html')
-	message_text_template = read_template('mail_message.txt')
+		names, emails = get_contacts('contacts.txt')
+		message_html_template = read_template('mail_message.html')
+		message_text_template = read_template('mail_message.txt')
 
-	print(names)
-	print(emails)
+		print(names)
+		print(emails)
 
-	smtp = smtplib.SMTP(host=HOST_ADDRESS, port=TLS_PORT)
-	smtp.starttls()
-	smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
+		smtp = smtplib.SMTP(host=HOST_ADDRESS, port=TLS_PORT)
+		smtp.starttls()
+		smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
 
-	for name, email in zip(names, emails):
-		print('SENDING to ' + email)
-		msg = MIMEMultipart('alternative')
-		message_html = message_html_template.substitute(RECIPIENT=name, MATCHING_POSTS=message_listings_html)
-		message_text = message_text_template.substitute(RECIPIENT=name, MATCHING_POSTS=message_listings_text)
+		for name, email in zip(names, emails):
+			print('SENDING to ' + email)
+			msg = MIMEMultipart('alternative')
+			message_html = message_html_template.substitute(RECIPIENT=name, MATCHING_POSTS=message_listings_html)
+			message_text = message_text_template.substitute(RECIPIENT=name, MATCHING_POSTS=message_listings_text)
 
-		msg['From'] = GMAIL_ADDRESS
-		msg['To'] = email
-		msg['Subject'] = 'Craigswatch'
-		msg.preamble = message_text.encode('ascii', 'ignore').decode('unicode_escape')
+			msg['From'] = GMAIL_ADDRESS
+			msg['To'] = email
+			msg['Subject'] = 'Craigswatch'
+			msg.preamble = message_text.encode('ascii', 'ignore').decode('unicode_escape')
 
-		msg.attach(MIMEText(message_html.encode('utf-8'), _subtype='html', _charset='UTF-8'))
+			msg.attach(MIMEText(message_html.encode('utf-8'), _subtype='html', _charset='UTF-8'))
 
-		smtp.send_message(msg)
-		del msg
-		print('\t\tSENT')
-	smtp.quit()
+			smtp.send_message(msg)
+			del msg
+			print('\t\tSENT')
+		smtp.quit()
 
 if __name__ == '__main__':
 	message_articles_html_test = """
@@ -255,4 +256,4 @@ if __name__ == '__main__':
 	<p>-Nathan Mailbot</p>
 	"""
 
-	py_mail()
+	send_mail()
