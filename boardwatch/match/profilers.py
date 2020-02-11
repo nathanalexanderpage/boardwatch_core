@@ -1,6 +1,6 @@
 import pprint
 
-class MatchFinder():
+class Profiler():
 	"""parent match finder class -- mostly for rules inheritance; not to be used to find actual matches"""
 
 	def __init__(self, want, config={}):
@@ -22,7 +22,7 @@ class MatchFinder():
 		self.build_string_matches()
 
 	def __str__(self):
-		return 'MatchFinder parent class instance. To be used for testing purposes only.'
+		return 'Profiler parent class instance. To be used for testing purposes only.'
 
 	def build_string_matches(self):
 		print('use child class\'s')
@@ -102,7 +102,7 @@ class MatchFinder():
 		else:
 			return True
 
-class PlatformMatchFinder(MatchFinder):
+class PlatformProfiler(Profiler):
 	"""for finding consoles"""
 
 	def __init__(self, want, name_group_members=[], config={}):
@@ -178,7 +178,7 @@ class PlatformMatchFinder(MatchFinder):
 		self.name_group_members = name_group_members
 
 	def __str__(self):
-		return 'MatchFinder instance for finding ' + self.want['name']
+		return 'Profiler instance for finding ' + self.want['name']
 	
 	def build_string_matches(self):
 		print('building item match profile...')
@@ -224,36 +224,6 @@ class PlatformMatchFinder(MatchFinder):
 				edition['match_strings']['exact'].append(edition['official_color'] + ' ' + self.want['name'])
 				edition['match_strings']['exact'].append(self.want['name'] + ' ' + edition['official_color'])
 
-		# ORIGINAL
-		# for edition in self.want['editions']:
-		# 	pos_exact_edition = []
-		# 	pos_exact_edition.append(self.want['name'])
-		# 	pos_exact_edition.append(self.want['developer'] + ' ' + self.want['name'])
-		# 	if self.want['abbreviation_official']:
-		# 		pos_exact_edition.append(self.want['abbreviation_official'])
-		# 		pos_exact_edition.append(self.want['developer'] + ' ' + self.want['abbreviation_official'])
-		# 	for name in self.want['names_other']:
-		# 		pos_exact_edition.append(name)
-		# 		pos_exact_edition.append(self.want['developer'] + ' ' + name)
-		# 	for platform in self.want['platforms']:
-		# 		if platform['model_no']:
-		# 			pos_exact_edition.append(platform['model_no'])
-		# 		if platform['storage_capacity'] and self.want['abbreviation_official']:
-		# 			pos_exact_edition.append(self.want['abbreviation_official'] + ' ' + platform['storage_capacity'])
-		# 		if platform['name']:
-		# 			pos_exact_edition.append(self.want['name'] + ' ' + platform['name'])
-		# 			pos_exact_edition.append(self.want['developer'] + ' ' + self.want['name'] + ' ' + platform['name'])
-		# 			if platform['storage_capacity']:
-		# 				pos_exact_edition.append(self.want['name'] + ' ' + platform['name'] + ' ' + platform['storage_capacity'])
-		# 				pos_exact_edition.append(self.want['developer'] + ' ' + self.want['name'] + ' ' + platform['name'] + ' ' + platform['storage_capacity'])
-		# 				if self.want['abbreviation_official']:
-		# 					pos_exact_edition.append(self.want['abbreviation_official'] + ' ' + platform['name'] + ' ' + platform['storage_capacity'])
-		# 					pos_exact_edition.append(self.want['developer'] + ' ' + self.want['abbreviation_official'] + ' ' + platform['name'] + ' ' + platform['storage_capacity'])
-		# 			if self.want['abbreviation_official']:
-		# 				pos_exact_edition.append(self.want['abbreviation_official'] + ' ' + platform['name'])
-		# 				pos_exact_edition.append(self.want['developer'] + ' ' + self.want['abbreviation_official'] + ' ' + platform['name'])
-		# 	self.match_factors['edition']['positive']['exact'] = pos_exact_edition
-
 		# positive strong matches
 		# FIXME: check that platform name isn't the generic name contained within other similar platform names like "3DS" is in "New 3DS", "3DS XL", "New 3DS XL", etc.
 		if not is_platform_family_namesake:
@@ -274,54 +244,15 @@ class PlatformMatchFinder(MatchFinder):
 			if edition['official_color'] and not is_platform_family_namesake:
 				edition['match_strings']['strong'].append(edition['official_color'] + ' ' + self.want['family_name'])
 		
-		# ORIGINAL
-		# pos_strong.append(self.want['developer'] + ' ' + self.want['name'] + ' console')
-		# pos_strong.append(self.want['developer'] + ' ' + self.want['name'] + ' system')
-		# if self.want['abbreviation_official']:
-		# 	pos_strong.append(self.want['developer'] + ' ' + self.want['abbreviation_official'] + ' console')
-		# 	pos_strong.append(self.want['developer'] + ' ' + self.want['abbreviation_official'] + ' system')
-		# for name in self.want['names_other']:
-		# 	pos_strong.append(self.want['developer'] + ' ' + name + ' console')
-		# 	pos_strong.append(self.want['developer'] + ' ' + name + ' system')
-		# for platform in self.want['platforms']:
-		# 	if platform['name']:
-		# 		pos_strong.append(self.want['name'] + ' ' + platform['name'])
-		# 	if platform['storage_capacity']:
-		# 		pos_strong.append(self.want['name'] + ' ' + platform['storage_capacity'])
-		# 	for edn in platform['editions']:
-		# 		if edn['name']:
-		# 			# if ':' in edn['name']:
-		# 			# 	split_edition_name = edn['name'].split(':')
-		# 			pos_strong.append(self.want['name'] + ' ' + edn['name'])
-		# 			pos_strong.append(edn['name'] + ' ' + self.want['name'])
-		# 			for color in edn['colors']:
-		# 				pos_strong.append(self.want['name'] + ' ' + edn['name'] + ' ' + color)
-		# 				pos_strong.append(color + ' ' + self.want['name'])
-		# 				if platform['name']:
-		# 					pos_strong.append(self.want['name'] + ' ' + platform['name'] + ' ' + edn['name'] + ' ' + color)
-		# 		for color in edn['colors']:
-		# 			pos_strong.append(self.want['name'] + ' ' + color)
-		# 			pos_strong.append(color + ' ' + self.want['name'])
-		# self.match_factors['positive']['strong'] = pos_strong
-
 		# positive weak matches
 		for edition in self.want['editions']:
 			for color in edition['colors']:
 				if edition['name'] and not is_platform_family_namesake:
 					edition['match_strings']['weak'].append(color + ' ' + self.want['family_name'])
 
-		# ORIGINAL
-		# pos_weak.append(self.want['name'])
-		# if self.want['abbreviation_official']:
-		# 	pos_weak.append(self.want['abbreviation_official'])
-		# for name in self.want['names_other']:
-		# 	pos_weak.append(name)
-
 		# positive minor matches
 		if not is_platform_family_namesake:
 			self.want['match_strings']['minor'].append(self.want['family_name'])
-
-		# pos_minor.append(self.want['developer'])
 
 		# negative matches
 		antimatch_factors = {
@@ -336,29 +267,6 @@ class PlatformMatchFinder(MatchFinder):
 			}
 		}
 
-		# for system in self.name_group_members:
-		# 	# if system['name'] not in self.want['name']:
-		# 	# 	antimatch_factors['anywhere'].append(system['name'])
-		# 	if self.want['name'] in system['name']:
-		# 		if system['name_prefix']:
-		# 			antimatch_factors['before']['space_separated_yes'].append(system['name_prefix'])
-		# 			antimatch_factors['before']['space_separated_no'].append(system['name_prefix'])
-		# 		if system['name_suffix']:
-		# 			antimatch_factors['after']['space_separated_yes'].append(system['name_suffix'])
-		# 			antimatch_factors['after']['space_separated_no'].append(system['name_suffix'])
-
-
-		# for neg_match in antimatch_factors['anywhere']:
-		# 	self.antimatch_factors['anywhere'].append(neg_match)
-		# for neg_match in antimatch_factors['before']['space_separated_yes']:
-		# 	self.antimatch_factors['before']['space_separated_yes'].append(neg_match)
-		# for neg_match in antimatch_factors['before']['space_separated_no']:
-		# 	self.antimatch_factors['before']['space_separated_no'].append(neg_match)
-		# for neg_match in antimatch_factors['after']['space_separated_yes']:
-		# 	self.antimatch_factors['after']['space_separated_yes'].append(neg_match)
-		# for neg_match in antimatch_factors['after']['space_separated_no']:
-		# 	self.antimatch_factors['after']['space_separated_no'].append(neg_match)
-
 		pprint.pprint(self.want)
 		
 	def parentheses_judger(self, comp_title):
@@ -371,6 +279,7 @@ class PlatformMatchFinder(MatchFinder):
 			antimatch_factors.append('(' + self.want['name_group'] + ')')
 
 	# FIXME: account for possibility of platforms of different consoles with same names (PS2 slim, PS4 slim)
+	# FIXME: make sure platform names within the same family are distinguished between when generating matches. make sure a potential match with one is not any of the others
 	# FIXME: (efficiency) when preventing false matches for sibling consoles, ensure absence of foil strings using intra-string position instead of 'not in [entire str]'
 	def match_scores_calculate(self, result):
 		title_compare = result[1].lower()
@@ -463,7 +372,7 @@ if __name__ == '__main__':
 	}
 
 	pp.pprint(consoles)
-	matcher = PlatformMatchFinder(wii, {})
+	matcher = PlatformProfiler(wii, {})
 	pp.pprint(matcher.match_factors)
 	pp.pprint(matcher.antimatch_factors)
 	match_score = matcher.match_score_calculate(result)
