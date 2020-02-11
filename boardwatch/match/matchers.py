@@ -6,7 +6,7 @@ from .profilers import *
 from boardwatch.models.listing import Listing
 from boardwatch.models.platform_edition import PlatformEdition
 
-load_dotenv(dotenv_path='./.env')
+load_dotenv(dotenv_path='../../.env')
 POSTGRESQL_USERNAME = os.getenv('POSTGRESQL_USERNAME')
 POSTGRESQL_PASSWORD = os.getenv('POSTGRESQL_PASSWORD')
 POSTGRESQL_PORT = os.getenv('POSTGRESQL_PORT')
@@ -14,6 +14,11 @@ POSTGRESQL_HOST = os.getenv('POSTGRESQL_HOST')
 POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 
 class Prepper():
+	def go():
+		Prepper.prep_items()
+		Prepper.prep_listings()
+		Prepper.find_matches()
+
 	def prep_items():
 		conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 		cur = conn.cursor()
