@@ -9,7 +9,7 @@ import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
 class ListingPopulator():
-	def populate():
+	def populate(self):
 		cl_results_scraper = CraigslistSoupMaker()
 		results = cl_results_scraper.make_soup()
 
