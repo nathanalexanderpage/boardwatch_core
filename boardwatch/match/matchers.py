@@ -2,7 +2,7 @@ import os
 import pprint
 import psycopg2 as db
 from dotenv import load_dotenv
-from profilers import *
+from .profilers import *
 from boardwatch.models.listing import Listing
 from boardwatch.models.platform_edition import PlatformEdition
 
