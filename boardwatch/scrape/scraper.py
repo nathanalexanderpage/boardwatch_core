@@ -2,6 +2,8 @@ import pprint
 import re
 from bs4 import BeautifulSoup
 
+from boardwatch.models.listing import Listing
+
 pp = pprint.PrettyPrinter(indent=2)
 
 class ResultScraper():

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 # from email.MIMEImage import MIMEImage
-from boardwatch.match import match_finder
+from boardwatch.match import profilers
 from boardwatch.scrape.soup_maker import CraigslistSoupMaker
 from string import Template
 
@@ -17,7 +17,7 @@ pp = pprint.PrettyPrinter(indent=2)
 
 # pp.pprint(test_parsed_results)
 
-# matcher = PlatformMatchFinder(ps1, {})
+# matcher = PlatformProfiler(ps1, {})
 # matches = [result for result in test_parsed_results if matcher.assess_match(result)]
 
 # usable_sites = [site for site in board_sites if site['is_supported']]

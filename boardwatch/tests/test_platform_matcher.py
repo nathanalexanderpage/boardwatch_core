@@ -1,5 +1,5 @@
 from console_data_resource import *
-from match_finder import *
+from profilers import *
 from trial_result_generator import *
 
 title_tests = {
@@ -29,7 +29,7 @@ title_tests = {
 def match_pos_neg(console_names):
 	test_consoles = list(filter(lambda console: console['name'] == console_names, consoles))
 	for console in test_consoles:
-		matcher = PlatformMatchFinder(console, {})
+		matcher = PlatformProfiler(console, {})
 		for title in title_tests[console['name']]['passes']:
 			result = FakeResult(title)
 			print(title)
