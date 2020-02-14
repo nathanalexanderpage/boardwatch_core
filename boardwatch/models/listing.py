@@ -11,5 +11,5 @@ class Listing():
 		self.seller_phone = seller_phone
 		self.date_posted = date_posted
 		self.date_scraped = date_scraped
-		listings.append(self)
+		Listing.listings.append(self)
 		

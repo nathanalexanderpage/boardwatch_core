@@ -1,4 +1,5 @@
-import requests
+import pprint, requests
+from boardwatch.models.listing import Listing
 from boardwatch.scrape import scraper
 from bs4 import BeautifulSoup
 
@@ -86,6 +87,7 @@ class CraigslistSoupMaker(SoupMaker):
 		results_data = []
 		for result in results:
 			result_data = scraper.CraigslistResultScraper(result)
+			# listing = Listing(id=None, native_id=result_data.data['id'], title=result_data.data['title'], body=result_data.data['body'], url=result_data.data['url'], seller_email=result_data.data['seller_email'], seller_phone=result_data.data['seller_phone'], date_posted=result_data.data['datetime'], date_scraped=None)
 			results_data.append(result_data.data)
 		# print(results_data)
 		return results_data
