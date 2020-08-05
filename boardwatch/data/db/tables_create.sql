@@ -246,7 +246,7 @@ CREATE TABLE listings (
 	seller_phone text NULL,
 	is_scanned boolean DEFAULT false,
 	date_posted timestamptz NULL,
-	scraped_at timestamptz NOT NULL DEFAULT (now() AT TIME ZONE 'utc')
+	date_scraped timestamptz NOT NULL DEFAULT (now() AT TIME ZONE 'utc')
 );
 
 CREATE TABLE listings_platforms (

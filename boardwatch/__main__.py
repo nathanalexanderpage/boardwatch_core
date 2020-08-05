@@ -8,6 +8,8 @@ from boardwatch.match.matchers import Prepper
 from boardwatch.models.board import Board
 from boardwatch.scrape.populate_listings import ListingPopulator
 from boardwatch.scrape.listing_pop_maker import ListingPopulatorMaker
+from boardwatch.models.platform import Platform
+from boardwatch.models.platform_edition import PlatformEdition
 
 pp = pprint.PrettyPrinter()
 
@@ -31,9 +33,12 @@ for site in board_sites:
 
 pp.pprint(Board.boards)
 for board in Board.boards:
-	print(dir(board))
-
 	listing_pop_maker = ListingPopulatorMaker(board)
 
 	populator = listing_pop_maker.make_listing_populator()
 	populator.populate()
+
+Prepper.construct_items()
+Prepper.prep_items()
+for platform in Platform.editions:
+	print(edition.match_strings)
