@@ -14,6 +14,7 @@ DELETE FROM games_platforms_compatibility WHERE game_id > 0;
 DELETE FROM accessories_games_compatibility WHERE accessory_id > 0;
 DELETE FROM companies_platforms WHERE company_id > 0;
 DELETE FROM platform_editions WHERE id > 0;
+DELETE FROM addon_platforms WHERE id > 0;
 DELETE FROM platforms WHERE id > 0;
 DELETE FROM platform_families WHERE id > 0;
 DELETE FROM platform_name_groups WHERE id > 0;
