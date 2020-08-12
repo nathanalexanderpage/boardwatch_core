@@ -6,7 +6,19 @@ boardwatch/resources/
 boardwatch/data/db/seed_users.sql
 
 # PERMANENT
+*.pyc
 __pycache__/
+
+instance/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+dist/
+build/
+*.egg-info/
+
 .env
 *.env
 
