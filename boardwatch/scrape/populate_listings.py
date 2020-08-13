@@ -4,8 +4,7 @@ from dotenv import load_dotenv
 from .scraper import CraigslistPostScraper
 from .soup_maker import CraigslistPostSoupMaker, CraigslistSoupMaker
 from boardwatch.common import board_site_enums
-from boardwatch.models.board import Board
-from boardwatch.models.listing import Listing
+from boardwatch_models import Board, Listing
 
 import pprint
 pp = pprint.PrettyPrinter(indent=2)

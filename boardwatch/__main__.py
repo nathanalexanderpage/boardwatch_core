@@ -5,7 +5,7 @@ sys.path.append(path_to_root)
 from boardwatch.common.board_site_enums import board_sites
 from dotenv import load_dotenv
 from boardwatch.match.matchers import Prepper
-from boardwatch.models.board import Board
+from boardwatch_models import Board
 from boardwatch.scrape.populate_listings import ListingPopulator
 from boardwatch.scrape.listing_pop_maker import ListingPopulatorMaker
 

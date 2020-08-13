@@ -2,7 +2,7 @@ import pprint
 import re
 from bs4 import BeautifulSoup
 
-from boardwatch.models.listing import Listing
+from boardwatch_models import Listing
 
 pp = pprint.PrettyPrinter(indent=2)
 

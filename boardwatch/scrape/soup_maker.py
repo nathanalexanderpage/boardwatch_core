@@ -1,5 +1,5 @@
 import pprint, requests
-from boardwatch.models.listing import Listing
+from boardwatch_models import Listing
 from boardwatch.scrape import scraper
 from bs4 import BeautifulSoup
 
