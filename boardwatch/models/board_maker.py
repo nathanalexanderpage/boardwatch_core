@@ -1,4 +1,4 @@
-from boardwatch.models.board import Board
+from . import Board
 
 class BoardMaker():
 	def __init__(self):
