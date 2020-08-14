@@ -26,8 +26,8 @@ class CraigslistResultScraper(ResultScraper):
 		self.data['title'] = title_tag_cleaned
 
 		duplicate_remove_chars = [
-			'\?'
-			'\*'
+			r'\?',
+			r'\*',
 			'!',
 			'-',
 			',',

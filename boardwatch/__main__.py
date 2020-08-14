@@ -3,7 +3,7 @@ import psycopg2 as db
 path_to_root = str(pathlib.Path(__file__).resolve().parents[1].absolute())
 sys.path.append(path_to_root)
 from boardwatch.common.board_site_enums import board_sites
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from boardwatch.match.matchers import Prepper
 from boardwatch_models import Board
 from boardwatch.scrape.populate_listings import ListingPopulator
@@ -11,7 +11,7 @@ from boardwatch.scrape.listing_pop_maker import ListingPopulatorMaker
 
 pp = pprint.PrettyPrinter()
 
-load_dotenv(dotenv_path='../.env')
+load_dotenv(dotenv_path=find_dotenv())
 POSTGRESQL_USERNAME = os.getenv('POSTGRESQL_USERNAME')
 POSTGRESQL_PASSWORD = os.getenv('POSTGRESQL_PASSWORD')
 POSTGRESQL_PORT = os.getenv('POSTGRESQL_PORT')
@@ -26,10 +26,9 @@ boards = cur.fetchall()
 
 for site in board_sites:
 	for board in boards:
-		if site['name'] == board[1]:
+		if site['name'] == board[1] and site['is_supported'] == True:
 			Board(board[0], site['name'], site['url'], site['is_supported'])
 
-pp.pprint(Board.boards)
 for board in Board.boards:
 	print(dir(board))
 

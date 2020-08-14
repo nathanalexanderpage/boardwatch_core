@@ -1,6 +1,6 @@
 import os
 import psycopg2 as db
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from .scraper import CraigslistPostScraper
 from .soup_maker import CraigslistPostSoupMaker, CraigslistSoupMaker
 from boardwatch.common import board_site_enums
@@ -9,7 +9,7 @@ from boardwatch_models import Board, Listing
 import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
-load_dotenv(dotenv_path='../../.env')
+load_dotenv(dotenv_path=find_dotenv())
 POSTGRESQL_USERNAME = os.getenv('POSTGRESQL_USERNAME')
 POSTGRESQL_PASSWORD = os.getenv('POSTGRESQL_PASSWORD')
 POSTGRESQL_PORT = os.getenv('POSTGRESQL_PORT')
@@ -53,7 +53,7 @@ class CraigslistListingPopulator(ListingPopulator):
 					# TODO: move me to listing instance method
 					cur.execute('INSERT INTO listings (board_id, native_id, url, title, body, seller_email, seller_phone, date_posted) VALUES(%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id, title', (board_id, listing.native_id, listing.url, listing.title, listing.body, listing.seller_email, listing.seller_phone, listing.date_posted))
 					conn.commit()
-					insert_response = cur.fetchone()
+					cur.fetchone()
 				else:
 					print('listing already in database; skipping')
 					print(existing_post_id)
