@@ -2,9 +2,8 @@ import os
 import pprint
 import psycopg2 as db
 from dotenv import load_dotenv
-from .profilers import *
-from boardwatch.models.listing import Listing
-from boardwatch.models.platform_edition import PlatformEdition
+from .profilers import Profiler, PlatformProfiler
+from boardwatch_models import Listing, PlatformEdition
 
 load_dotenv(dotenv_path='../../.env')
 POSTGRESQL_USERNAME = os.getenv('POSTGRESQL_USERNAME')
