@@ -1,13 +1,16 @@
-import os, pathlib, pprint, sys
-import psycopg2 as db
-path_to_root = str(pathlib.Path(__file__).resolve().parents[1].absolute())
-sys.path.append(path_to_root)
-from boardwatch.common.board_site_enums import board_sites
-from dotenv import load_dotenv, find_dotenv
-from boardwatch.match.matchers import Prepper
+import os
+import pathlib
+import pprint
+import sys
+
 from boardwatch_models import Board
-from boardwatch.scrape.populate_listings import ListingPopulator
-from boardwatch.scrape.listing_pop_maker import ListingPopulatorMaker
+from dotenv import load_dotenv, find_dotenv
+import psycopg2 as db
+
+from common.board_site_enums import board_sites
+from match.matchers import Prepper
+from scrape.populate_listings import ListingPopulator
+from scrape.listing_pop_maker import ListingPopulatorMaker
 
 pp = pprint.PrettyPrinter()
 
