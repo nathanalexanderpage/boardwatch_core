@@ -51,7 +51,7 @@ class CraigslistResultScraper(ResultScraper):
 		self.data['seller_phone'] = None
 
 		if self.soup.find(class_='result-price'):
-			self.data['price'] = int(self.soup.find(class_='result-price').text.strip()[1:])
+			self.data['price'] = int(re.sub(',', '', self.soup.find(class_='result-price').text.strip())[1:])
 		else:
 			self.data['price'] = None
 
