@@ -80,13 +80,11 @@ class Prepper():
 		conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 		cur = conn.cursor()
 
-		cur.execute('SELECT id, native_id title, body, url, seller_email, seller_phone, date_posted, date_scraped FROM listings WHERE is_scanned = %s', (False,))
+		cur.execute('SELECT id, native_id, title, body, url, seller_email, seller_phone, date_posted, date_scraped FROM listings WHERE is_scanned = %s', (False,))
 		self.all_raw_listings = cur.fetchall()
 
-		all_listings = []
-
 		for raw_listing in self.all_raw_listings:
-			Listing(raw_listing)
+			Listing(raw_listing[0], raw_listing[1], raw_listing[2], raw_listing[3], raw_listing[4], raw_listing[5], raw_listing[6], raw_listing[7], raw_listing[8])
 
 		# for listing in all_listings:
 			# print('\n\n--------------------------------\n')
@@ -107,18 +105,19 @@ class Prepper():
 		conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 		cur = conn.cursor()
 
-		for listing in all_listings:
-			for matcher in platform_matchers:
-				matcher.match_scores_calculate(listing)
-				for match in matcher.want['matches']:
+		for listing in Listing.listings:
+			for profile in Profiler.profiles:
+				profile.match_scores_calculate(listing)
+				for match in profile.want['matches']:
 					print('inserting record...')
 					try:
 						if match['edition_id']:
 							cur.execute('INSERT INTO listings_platform_editions (listing_id, platform_edition_id) VALUES(%s, %s) RETURNING listing_id, platform_edition_id', (match['listing_id'], match['edition_id']))
 						else:
-							cur.execute('INSERT INTO listings_platforms (listing_id, platform_id) VALUES(%s, %s) RETURNING listing_id, platform_id', (match['listing_id'], matcher.want['id']))
+							cur.execute('INSERT INTO listings_platforms (listing_id, platform_id) VALUES(%s, %s) RETURNING listing_id, platform_id', (match['listing_id'], profile.want['id']))
 						conn.commit()
 						insert_response = cur.fetchone()
+						print(insert_response)
 					except Exception as error:
 						print('error during insert.')
 						print(error)
