@@ -2,7 +2,7 @@ import os
 import pprint
 import psycopg2 as db
 from dotenv import load_dotenv
-from .profilers import Profiler, PlatformProfiler
+from .profilers import Profiler
 from boardwatch_models import Listing, PlatformEdition
 
 load_dotenv(dotenv_path='../../.env')
@@ -13,16 +13,18 @@ POSTGRESQL_HOST = os.getenv('POSTGRESQL_HOST')
 POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 
 class Prepper():
-	def go():
-		Prepper.prep_items()
-		Prepper.prep_listings()
-		Prepper.find_matches()
+	def __init__(self):
+		self.platform_family_configs = []
 
-	def prep_items():
+	def go(self):
+		Prepper.prep_items(self)
+		Prepper.prep_listings(self)
+		Prepper.find_matches(self)
+
+	def prep_items(self):
 		conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 		cur = conn.cursor()
 
-		platform_family_configs = []
 
 		cur.execute('SELECT id, name, generation as gen FROM platform_families;')
 		platform_families = cur.fetchall()
@@ -72,28 +74,39 @@ class Prepper():
 				
 					current_platform['editions'].append(current_edition)
 				current_platform_family['platforms'].append(current_platform)
-			platform_family_configs.append(current_platform_family)
+			self.platform_family_configs.append(current_platform_family)
 
-	def prep_listings():
+	def prep_listings(self):
+		conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
+		cur = conn.cursor()
+
 		cur.execute('SELECT id, native_id title, body, url, seller_email, seller_phone, date_posted, date_scraped FROM listings WHERE is_scanned = %s', (False,))
-		all_raw_listings = cur.fetchall()
+		self.all_raw_listings = cur.fetchall()
+
+		all_listings = []
+
+		for raw_listing in self.all_raw_listings:
+			Listing(raw_listing)
 
 		# for listing in all_listings:
 			# print('\n\n--------------------------------\n')
 			# print(listing[0])
 			# print(listing[1])
 
-	def group_families():
+	def group_families(self):
 		platform_matchers = []
 
-		pprint.pprint(platform_family_configs)
-		for family_config in platform_family_configs:
+		pprint.pprint(self.platform_family_configs)
+		for family_config in self.platform_family_configs:
 			for platform_config in family_config['platforms']:
 				platform_config['family_id'] = family_config['id']
 				platform_config['family_name'] = family_config['name']
-				platform_matchers.append(PlatformProfiler(platform_config))
+				platform_matchers.append(Profiler(platform_config))
 
-	def find_matches():
+	def find_matches(self):
+		conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
+		cur = conn.cursor()
+
 		for listing in all_listings:
 			for matcher in platform_matchers:
 				matcher.match_scores_calculate(listing)
