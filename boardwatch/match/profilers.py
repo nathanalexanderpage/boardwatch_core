@@ -109,7 +109,7 @@ class Profiler():
 			self.name_group_members = kwargs['name_group_members']
 			
 		else:
-			raise Exception()
+			raise Exception('Wanted item is of type ' + type(want) + ', which has not been configured for profile creation in code.')
 
 		self.build_string_matches()
 		Profiler.profiles.append(self)
