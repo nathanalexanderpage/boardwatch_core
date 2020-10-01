@@ -46,7 +46,7 @@ class CraigslistResultScraper(ResultScraper):
 
 		self.data['title_massaged'] = title_tag_cleaned
 		self.data['url'] = title_tag['href'].strip()
-		self.data['datetime'] = self.soup.p.time['datetime'].strip()
+		self.data['datetime'] = self.soup.time['datetime'].strip()
 		self.data['seller_email'] = None
 		self.data['seller_phone'] = None
 
