@@ -15,7 +15,7 @@ with open('company_roles.tsv', newline='') as csv_company_roles:
 	row_no = 0
 	columns = []
 	for row in company_roles_reader:
-		if row_no is 0:
+		if row_no == 0:
 			for column in row:
 				columns.append(column)
 			# print(columns)
@@ -24,7 +24,7 @@ with open('company_roles.tsv', newline='') as csv_company_roles:
 			column_no = 0
 			for cell in row:
 				current_column = columns[column_no]
-				if cell is not '':
+				if cell != '':
 					row_data[current_column] = cell
 				else:
 					row_data[current_column] = None
@@ -38,7 +38,7 @@ with open('companies.tsv', newline='') as csv_companies:
 	row_no = 0
 	columns = []
 	for row in companies_reader:
-		if row_no is 0:
+		if row_no == 0:
 			for column in row:
 				columns.append(column)
 			# print(columns)
@@ -47,7 +47,7 @@ with open('companies.tsv', newline='') as csv_companies:
 			column_no = 0
 			for cell in row:
 				current_column = columns[column_no]
-				if cell is not '':
+				if cell != '':
 					row_data[current_column] = cell
 				else:
 					row_data[current_column] = None
@@ -61,7 +61,7 @@ with open('generations.tsv', newline='') as csv_generations:
 	row_no = 0
 	columns = []
 	for row in generations_reader:
-		if row_no is 0:
+		if row_no == 0:
 			for column in row:
 				columns.append(column)
 			# print(columns)
@@ -70,7 +70,7 @@ with open('generations.tsv', newline='') as csv_generations:
 			column_no = 0
 			for cell in row:
 				current_column = columns[column_no]
-				if cell is not '':
+				if cell != '':
 					row_data[current_column] = int(cell)
 				else:
 					row_data[current_column] = None
@@ -84,7 +84,7 @@ with open('console_families.tsv', newline='') as csv_platform_families:
 	row_no = 0
 	columns = []
 	for row in platform_families_reader:
-		if row_no is 0:
+		if row_no == 0:
 			for column in row:
 				columns.append(column)
 			# print(columns)
@@ -93,7 +93,7 @@ with open('console_families.tsv', newline='') as csv_platform_families:
 			column_no = 0
 			for cell in row:
 				current_column = columns[column_no]
-				if cell is not '':
+				if cell != '':
 					if current_column in ['developer']:
 						row_data[current_column] = cell.title()
 					elif current_column in ['generation']:
@@ -113,7 +113,7 @@ with open('name_groups.tsv', newline='') as csv_name_groups:
 	row_no = 0
 	columns = []
 	for row in name_groups_reader:
-		if row_no is 0:
+		if row_no == 0:
 			for column in row:
 				columns.append(column)
 			# print(columns)
@@ -122,7 +122,7 @@ with open('name_groups.tsv', newline='') as csv_name_groups:
 			column_no = 0
 			for cell in row:
 				current_column = columns[column_no]
-				if cell is not '':
+				if cell != '':
 					row_data[current_column] = cell
 				else:
 					row_data[current_column] = None
@@ -137,7 +137,7 @@ with open('consoles.tsv', newline='') as csv_platforms:
 	row_no = 0
 	columns = []
 	for row in platforms_reader:
-		if row_no is 0:
+		if row_no == 0:
 			for column in row:
 				columns.append(column)
 			# print(columns)
@@ -146,7 +146,7 @@ with open('consoles.tsv', newline='') as csv_platforms:
 			column_no = 0
 			for cell in row:
 				current_column = columns[column_no]
-				if cell is not '':
+				if cell != '':
 					if cell == 'y' and current_column in ['is_brand_missing']:
 						row_data[current_column] = True
 					elif cell == 'n' and current_column in ['is_brand_missing']:
@@ -166,7 +166,7 @@ with open('console_editions.tsv', newline='') as csv_editions:
 	row_no = 0
 	columns = []
 	for row in editions_reader:
-		if row_no is 0:
+		if row_no == 0:
 			for column in row:
 				columns.append(column)
 			# print(columns)
@@ -175,7 +175,7 @@ with open('console_editions.tsv', newline='') as csv_editions:
 			column_no = 0
 			for cell in row:
 				current_column = columns[column_no]
-				if cell is not '':
+				if cell != '':
 					if cell == 'y' and current_column in ['gloss', 'matte', 'transparency']:
 						row_data[current_column] = True
 					elif cell == 'n' and current_column in ['gloss', 'matte', 'transparency']:
@@ -207,7 +207,7 @@ with open('addon_platforms.tsv', newline='') as csv_addon_platforms:
 	row_no = 0
 	columns = []
 	for row in addon_platforms_reader:
-		if row_no is 0:
+		if row_no == 0:
 			for column in row:
 				columns.append(column)
 			# print(columns)
@@ -216,7 +216,7 @@ with open('addon_platforms.tsv', newline='') as csv_addon_platforms:
 			column_no = 0
 			for cell in row:
 				current_column = columns[column_no]
-				if cell is not '':
+				if cell != '':
 					row_data[current_column] = cell
 				else:
 					row_data[current_column] = None
@@ -225,13 +225,13 @@ with open('addon_platforms.tsv', newline='') as csv_addon_platforms:
 		row_no += 1
 # pprint.pprint(addon_platforms)
 
-game_families = list()
-with open('game_families.tsv', newline='') as csv_game_families:
-	game_families_reader = csv.reader(csv_game_families, delimiter='\t')
+accessory_types = list()
+with open('accessory_types.tsv', newline='') as csv_accessory_types:
+	accessory_types_reader = csv.reader(csv_accessory_types, delimiter='\t')
 	row_no = 0
 	columns = []
-	for row in game_families_reader:
-		if row_no is 0:
+	for row in accessory_types_reader:
+		if row_no == 0:
 			for column in row:
 				columns.append(column)
 			# print(columns)
@@ -240,7 +240,31 @@ with open('game_families.tsv', newline='') as csv_game_families:
 			column_no = 0
 			for cell in row:
 				current_column = columns[column_no]
-				if cell is not '':
+				if cell != '':
+					row_data[current_column] = cell
+				else:
+					row_data[current_column] = None
+				column_no += 1
+			accessory_types.append(row_data)
+		row_no += 1
+# pprint.pprint(accessory_types)
+
+game_families = list()
+with open('game_families.tsv', newline='') as csv_game_families:
+	game_families_reader = csv.reader(csv_game_families, delimiter='\t')
+	row_no = 0
+	columns = []
+	for row in game_families_reader:
+		if row_no == 0:
+			for column in row:
+				columns.append(column)
+			# print(columns)
+		else:
+			row_data = {}
+			column_no = 0
+			for cell in row:
+				current_column = columns[column_no]
+				if cell != '':
 					row_data[current_column] = cell
 				else:
 					row_data[current_column] = None
@@ -255,7 +279,7 @@ with open('games.tsv', newline='') as csv_games:
 	row_no = 0
 	columns = []
 	for row in games_reader:
-		if row_no is 0:
+		if row_no == 0:
 			for column in row:
 				columns.append(column)
 			# print(columns)
@@ -264,7 +288,7 @@ with open('games.tsv', newline='') as csv_games:
 			column_no = 0
 			for cell in row:
 				current_column = columns[column_no]
-				if cell is not '':
+				if cell != '':
 					if current_column in ['year_release']:
 						row_data[current_column] = int(cell)
 					elif cell == 'y' and current_column in ['is_bootleg']:
@@ -320,6 +344,14 @@ cur = conn.cursor()
 for role in company_roles:
 	pprint.pprint(role)
 	cur.execute('INSERT INTO company_roles (name, description) VALUES(%s, %s) RETURNING name, description;', (role['name'], role['description']))
+	conn.commit()
+
+	query_result = cur.fetchone()
+	pprint.pprint(query_result)
+	
+for acc_type in accessory_types:
+	pprint.pprint(acc_type)
+	cur.execute('INSERT INTO accessory_types (name, description) VALUES(%s, %s) RETURNING name, description;', (acc_type['name'], acc_type['description']))
 	conn.commit()
 
 	query_result = cur.fetchone()
