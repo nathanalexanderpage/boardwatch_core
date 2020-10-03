@@ -5,16 +5,16 @@ class Profiler():
 
 	profiles = []
 
+	MATCH_SCORE_THRESHOLD = 1.5
+	MATCH_SCORE_DEFAULT = 1
+
+	MATCH_MULTIPLIER_EXACT = 5
+	MATCH_MULTIPLIER_STRONG = 2
+	MATCH_MULTIPLIER_WEAK = 1.5
+	MATCH_MULTIPLIER_MINOR = 1.15
+
 	def __init__(self, want, **kwargs):
 		self.want = want
-
-		self.MATCH_SCORE_THRESHOLD = 1.5
-		self.MATCH_SCORE_DEFAULT = 1
-
-		self.MATCH_MULTIPLIER_EXACT = 5
-		self.MATCH_MULTIPLIER_STRONG = 2
-		self.MATCH_MULTIPLIER_WEAK = 1.5
-		self.MATCH_MULTIPLIER_MINOR = 1.15
 
 		# positive matches
 		self.match_strings = {
@@ -106,8 +106,6 @@ class Profiler():
 			# 	}
 			# }
 
-			self.name_group_members = kwargs['name_group_members']
-			
 		else:
 			raise Exception('Wanted item is of type ' + type(want) + ', which has not been configured for profile creation in code.')
 
@@ -116,21 +114,26 @@ class Profiler():
 
 	def __str__(self):
 		return 'Profiler instance for finding ' + self.want.name
+
+	def spill_guts(self):
+		print('match_strings')
+		print(self.match_strings)
+		print('antimatch_strings')
+		print(self.antimatch_strings)
 			
 	def build_string_matches(self):
-		print('building item match profile...')
+		print('building item match profile for ' + str(self.want) + '...')
 
 		if type(self.want).__name__ == 'Platform':
 			is_platform_family_namesake = True if self.want.name == self.want.platform_family_name else False
 
 			for edition in self.want.editions:
 				edition['match_strings'] = {
-				'exact': [],
-				'strong': [],
-				'weak': [],
-				'minor': []
-			}
-			pprint.pprint(self.want)
+					'exact': [],
+					'strong': [],
+					'weak': [],
+					'minor': []
+				}
 
 			# FIXME: add developer, alternate_names for robust matches
 			# positive exact matches
