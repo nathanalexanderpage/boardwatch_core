@@ -2,13 +2,15 @@ import os
 import pathlib
 import pprint
 import sys
+import re
 
-from boardwatch_models import Board
+from boardwatch_models import Board, Listing, Platform, PlatformEdition
 from dotenv import load_dotenv, find_dotenv
 import psycopg2 as db
 
 from common.board_site_enums import board_sites
-from match.matchers import Prepper
+from match.preppers import Prepper
+from match.profilers import Profiler
 from scrape.populate_listings import ListingPopulator
 from scrape.listing_pop_maker import ListingPopulatorMaker
 
@@ -32,10 +34,69 @@ for site in board_sites:
 		if site['name'] == board[1] and site['is_supported'] == True:
 			Board(board[0], site['name'], site['url'], site['is_supported'])
 
+profiler = Profiler()
+
 for board in Board.boards:
-	print(dir(board))
-
-	listing_pop_maker = ListingPopulatorMaker(board)
-
-	populator = listing_pop_maker.make_listing_populator()
+	populator = ListingPopulatorMaker(board).make_listing_populator()
 	populator.populate()
+
+	# pull all products from db
+	# platform name groups
+	cur.execute('SELECT id, name, description FROM platform_name_groups;')
+	raw_platform_name_groups = cur.fetchall()
+	pngs = {}
+	for raw_platform_name_group in raw_platform_name_groups:
+		print(raw_platform_name_group)
+		print('---------------------')
+		pngs[raw_platform_name_group[1]] = raw_platform_name_group
+	# platforms
+	cur.execute('SELECT p.id, p.name, p.is_brand_missing, p.platform_family_id, pf.name as platform_family_name, p.model_no, p.storage_capacity, p.description, p.disambiguation, p.relevance FROM platforms as p JOIN platform_families as pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups as png ON png.id = p.name_group_id;')
+	raw_ps = cur.fetchall()
+	platforms = []
+	for raw_p in raw_ps:
+		p = Platform(id=raw_p[0], name=raw_p[1], is_brand_missing_from_name=raw_p[2], platform_family_id=raw_p[3], platform_family_name=raw_p[4], model_no=raw_p[5], storage_capacity=raw_p[6], description=raw_p[7], disambiguation=raw_p[8], relevance=raw_p[9])
+		platforms.append(p)
+	# platform editions
+	cur.execute("""SELECT pe.id as id, pe.name as name, pe.official_color as official_color, pe.has_matte as has_matte, pe.has_transparency as has_transparency, pe.has_gloss as has_gloss, pe.note as note, pe.image_url as image_url, x.colors, p.name as platform_name FROM platforms as p JOIN platform_editions as pe ON pe.platform_id = p.id JOIN (SELECT pe.id as id, STRING_AGG(c.name,', ') as colors FROM platform_editions as pe JOIN colors_platform_editions as cpe ON cpe.platform_edition_id = pe.id JOIN colors as c ON c.id = cpe.color_id GROUP BY pe.id ORDER BY pe.id) as x ON x.id = pe.id ORDER BY p.name, name, official_color;""")
+	raw_platform_editions = cur.fetchall()
+	for raw_pe in raw_platform_editions:
+		pe = PlatformEdition(id=raw_pe[0], name=raw_pe[1], official_color=raw_pe[2], has_matte=raw_pe[3], has_transparency=raw_pe[4], has_gloss=raw_pe[5], note=raw_pe[6], image_url=raw_pe[7], colors=raw_pe[8].split(', '))
+		p_name = raw_pe[9]
+		# put edition to platform
+		next(x for x in platforms if p_name == x.name).editions.append(pe)
+
+	# pull all new listings
+	# for listing in Listing.listings:
+	test_listing = Listing(id=0, native_id=0, title='TEST LISTING SNES console', body='TEST LISTING\nused SNES console, good condition', url='https://www.domain.tld/page', seller_email=None, seller_phone=None, date_posted=None, date_scraped=None)
+	for listing in [test_listing]:
+		print(listing)
+
+		# prepare match recognizer/organizer
+		matches = []
+
+		# for each listing, iterate through all products
+		for platform in platforms:
+			print(platform.name)
+			searchtexts = profiler.build_string_matches(platform)
+			for degree in ['minor', 'weak', 'strong', 'exact']:
+				
+				# for each listing, iterate through all searchable text segments
+				for searchtext in searchtexts[degree]:
+					for text in [listing.title, listing.body]:
+						if platform.name == 'Super Nintendo Entertainment System':
+
+							# evaluate if preliminary match on spot (wherever hot text within listing happens to be)
+							try:
+								match_index = text.index(searchtext)
+							except:
+								continue
+							print(searchtext + ' found within ' + text)
+			
+			# if preliminary match, look in product's name group to check if matched item text isn't suited better for a different product with similar name
+
+			# insert db record to indicate match between listing and each found product
+			for match in matches:
+				if match.type == 'platform':
+					pass
+				else:
+					pass
