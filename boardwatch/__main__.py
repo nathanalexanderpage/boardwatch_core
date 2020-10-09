@@ -54,13 +54,16 @@ for board in Board.boards:
 	raw_ps = cur.fetchall()
 	platforms = []
 	for raw_p in raw_ps:
-		p = Platform(id=raw_p[0], name=raw_p[1], is_brand_missing_from_name=raw_p[2], platform_family_id=raw_p[3], platform_family_name=raw_p[4], model_no=raw_p[5], storage_capacity=raw_p[6], description=raw_p[7], disambiguation=raw_p[8], relevance=raw_p[9])
-		platforms.append(p)
+		platforms.append(Platform(id=raw_p[0], name=raw_p[1], is_brand_missing_from_name=raw_p[2], platform_family_id=raw_p[3], platform_family_name=raw_p[4], model_no=raw_p[5], storage_capacity=raw_p[6], description=raw_p[7], disambiguation=raw_p[8], relevance=raw_p[9]))
 	# platform editions
 	cur.execute("""SELECT pe.id as id, pe.name as name, pe.official_color as official_color, pe.has_matte as has_matte, pe.has_transparency as has_transparency, pe.has_gloss as has_gloss, pe.note as note, pe.image_url as image_url, x.colors, p.name as platform_name FROM platforms as p JOIN platform_editions as pe ON pe.platform_id = p.id JOIN (SELECT pe.id as id, STRING_AGG(c.name,', ') as colors FROM platform_editions as pe JOIN colors_platform_editions as cpe ON cpe.platform_edition_id = pe.id JOIN colors as c ON c.id = cpe.color_id GROUP BY pe.id ORDER BY pe.id) as x ON x.id = pe.id ORDER BY p.name, name, official_color;""")
 	raw_platform_editions = cur.fetchall()
 	for raw_pe in raw_platform_editions:
-		pe = PlatformEdition(id=raw_pe[0], name=raw_pe[1], official_color=raw_pe[2], has_matte=raw_pe[3], has_transparency=raw_pe[4], has_gloss=raw_pe[5], note=raw_pe[6], image_url=raw_pe[7], colors=raw_pe[8].split(', '))
+		pe = PlatformEdition(id=raw_pe[0], name=raw_pe[1], official_color=raw_pe[2], has_matte=raw_pe[3], has_transparency=raw_pe[4], has_gloss=raw_pe[5], note=raw_pe[6], image_url=raw_pe[7])
+
+		for color in raw_pe[8].split(', '):
+			pe.colors.append(color)
+
 		p_name = raw_pe[9]
 		# put edition to platform
 		next(x for x in platforms if p_name == x.name).editions.append(pe)
@@ -77,26 +80,33 @@ for board in Board.boards:
 		# for each listing, iterate through all products
 		for platform in platforms:
 			print(platform.name)
-			searchtexts = profiler.build_string_matches(platform)
-			for degree in ['minor', 'weak', 'strong', 'exact']:
-				
-				# for each listing, iterate through all searchable text segments
-				for searchtext in searchtexts[degree]:
-					for text in [listing.title, listing.body]:
-						if platform.name == 'Super Nintendo Entertainment System':
+			# print(platform.editions)
+			if platform.name == 'Super Nintendo Entertainment System':
+				print('\n\n\n------------SNES-----------\n\n\n')
+				for edition in platform.editions:
+					continue
+					# print(edition)
+					searchtexts = profiler.build_string_matches(Platform(id=platform.id, name=platform.name, is_brand_missing_from_name=platform.is_brand_missing_from_name, platform_family_id=platform.platform_family_id, platform_family_name=platform.platform_family_name, model_no=platform.model_no, storage_capacity=platform.storage_capacity, description=platform.description, disambiguation=platform.disambiguation, relevance=platform.relevance, editions=[edition]))
+					# pp.pprint(searchtexts)
+					for degree in searchtexts.keys():
+						
+						# for each listing, iterate through all searchable text segments
+						for searchtext in searchtexts[degree]:
+							for text in [listing.title, listing.body]:
+								if platform.name == 'Super Nintendo Entertainment System':
 
-							# evaluate if preliminary match on spot (wherever hot text within listing happens to be)
-							try:
-								match_index = text.index(searchtext)
-							except:
-								continue
-							print(searchtext + ' found within ' + text)
-			
-			# if preliminary match, look in product's name group to check if matched item text isn't suited better for a different product with similar name
+									# evaluate if preliminary match on spot (wherever hot text within listing happens to be)
+									try:
+										match_index = text.index(searchtext)
+									except:
+										continue
+									print(searchtext + ' found within ' + text)
+					
+					# if preliminary match, look in product's name group to check if matched item text isn't suited better for a different product with similar name
 
-			# insert db record to indicate match between listing and each found product
-			for match in matches:
-				if match.type == 'platform':
-					pass
-				else:
-					pass
+					# insert db record to indicate match between listing and each found product
+					for match in matches:
+						if match.type == 'platform':
+							pass
+						else:
+							pass
