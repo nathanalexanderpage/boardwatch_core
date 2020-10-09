@@ -1,4 +1,5 @@
 import pprint
+pp = pprint.PrettyPrinter()
 
 class Profiler():
 	"""profile used for finding a match for a product within a listing"""
@@ -15,115 +16,95 @@ class Profiler():
 		pass
 
 	def build_string_matches(self, want):
-		print('building exact item match profile for ' + str(want) + '...')
-		match_strings = []
+		print('building item match profile for ' + str(want) + '...')
+		print(want.name, want.platform_family_name, want.model_no)
+		print('editions for want:')
+		print(want.editions)
+		print(type(want).__name__)
+		match_strings = {
+			'exact': [],
+			'strong': [],
+			'weak': [],
+			'minor': []
+		}
 
 		if type(want).__name__ == 'Platform':
 			is_platform_family_namesake = True if want.name == want.platform_family_name else False
 
 			for edition in want.editions:
-				match_strings = {
-					'exact': [],
-					'strong': [],
-					'weak': [],
-					'minor': []
+				print('\n\nINSIDE EDITION\n\n')
+				# FIXME: add developer, alternate_names for robust matches
+				# positive exact matches
+				if want.model_no:
+					match_strings['exact'].append(want.model_no)
+
+				for edition in want.editions:
+					if edition.official_color and edition.name:
+						if not is_platform_family_namesake:
+							match_strings['exact'].append(edition.official_color + ' ' + edition.name + ' ' +want.platform_family_name)
+
+						match_strings['exact'].append(edition.official_color + ' ' + edition.name + ' ' + want.name)
+						match_strings['exact'].append(edition.name + ' ' + edition.official_color + ' ' + want.name)
+						match_strings['exact'].append(edition.name + ' ' + want.name + ' ' + edition.official_color)
+						match_strings['exact'].append(edition.official_color + ' ' + want.name + ' ' + edition.name)
+
+					elif edition.name:
+						match_strings['exact'].append(edition.name + ' ' + want.name)
+						match_strings['exact'].append(want.name + ' ' + edition.name)
+
+					elif edition.official_color:
+						match_strings['exact'].append(edition.official_color + ' ' + want.name)
+						match_strings['exact'].append(want.name + ' ' + edition.official_color)
+
+				# positive strong matches
+				# FIXME: check that platform name isn't the generic name contained within other similar platform names like "3DS" is in "New 3DS", "3DS XL", "New 3DS XL", etc.
+				if not is_platform_family_namesake:
+					match_strings['strong'].append(want.name)
+				for edition in want.editions:
+					for color in edition.colors:
+						if edition.name and not is_platform_family_namesake:
+							match_strings['strong'].append(edition.name + ' ' + want.platform_family_name)
+
+						if edition.name:
+							match_strings['strong'].append(edition.name + ' ' + want.name)
+
+						if not edition.official_color or color != edition.official_color.lower():
+							match_strings['strong'].append(color + ' ' + want.name)
+
+					if edition.official_color:
+						match_strings['strong'].append(edition.official_color + ' ' + want.name)
+					if edition.official_color and not is_platform_family_namesake:
+						match_strings['strong'].append(edition.official_color + ' ' + want.platform_family_name)
+				
+				# positive weak matches
+				for edition in want.editions:
+					for color in edition.colors:
+						if edition.name and not is_platform_family_namesake:
+							match_strings['weak'].append(color + ' ' + want.platform_family_name)
+
+				# positive minor matches
+				if not is_platform_family_namesake:
+					match_strings['minor'].append(want.platform_family_name)
+
+				# negative matches
+				antimatch_strings = {
+					'anywhere': [],
+					'before': {
+						'space_separated_yes': [],
+						'space_separated_no': []
+					},
+					'after': {
+						'space_separated_yes': [],
+						'space_separated_no': []
+					}
 				}
 
-			# FIXME: add developer, alternate_names for robust matches
-			# positive exact matches
-			if want.model_no:
-				self.match_strings['exact'].append(want.model_no)
-
-			for edition in want.editions:
-				if edition.official_color and edition.name:
-					if not is_platform_family_namesake:
-						match_strings['exact'].append(edition.official_color + ' ' + edition.name + ' ' +want.platform_family_name)
-
-					match_strings['exact'].append(edition.official_color + ' ' + edition.name + ' ' + want.name)
-					match_strings['exact'].append(edition.name + ' ' + edition.official_color + ' ' + want.name)
-					match_strings['exact'].append(edition.name + ' ' + want.name + ' ' + edition.official_color)
-					match_strings['exact'].append(edition.official_color + ' ' + want.name + ' ' + edition.name)
-
-				elif edition.name:
-					match_strings['exact'].append(edition.name + ' ' + want.name)
-					match_strings['exact'].append(want.name + ' ' + edition.name)
-
-				elif edition.official_color:
-					match_strings['exact'].append(edition.official_color + ' ' + want.name)
-					match_strings['exact'].append(want.name + ' ' + edition.official_color)
-
-			# positive strong matches
-			# FIXME: check that platform name isn't the generic name contained within other similar platform names like "3DS" is in "New 3DS", "3DS XL", "New 3DS XL", etc.
-			if not is_platform_family_namesake:
-				self.match_strings['strong'].append(want.name)
-			for edition in want.editions:
-				for color in edition.colors:
-					if edition.name and not is_platform_family_namesake:
-						match_strings['strong'].append(edition.name + ' ' + want.platform_family_name)
-
-					if edition.name:
-						match_strings['strong'].append(edition.name + ' ' + want.name)
-
-					if not edition.official_color or color != edition.official_color.lower():
-						match_strings['strong'].append(color + ' ' + want.name)
-
-				if edition.official_color:
-					match_strings['strong'].append(edition.official_color + ' ' + want.name)
-				if edition.official_color and not is_platform_family_namesake:
-					match_strings['strong'].append(edition.official_color + ' ' + want.platform_family_name)
-			
-			# positive weak matches
-			for edition in want.editions:
-				for color in edition.colors:
-					if edition.name and not is_platform_family_namesake:
-						match_strings['weak'].append(color + ' ' + want.platform_family_name)
-
-			# positive minor matches
-			if not is_platform_family_namesake:
-				self.match_strings['minor'].append(want.platform_family_name)
-
-			# negative matches
-			self.antimatch_strings = {
-				'anywhere': [],
-				'before': {
-					'space_separated_yes': [],
-					'space_separated_no': []
-				},
-				'after': {
-					'space_separated_yes': [],
-					'space_separated_no': []
-				}
-			}
-
-			pprint.pprint(want)
+				pprint.pprint(want)
 		
 		else:
 			raise Exception()
 		
-		return string_matches
-
-	def build_strong_string_matches(self, want):
-		print('building strong item match profile for ' + str(want) + '...')
-		string_matches = []
-		return string_matches
-
-	def build_weak_string_matches(self, want):
-		print('building weak item match profile for ' + str(want) + '...')
-		string_matches = []
-		return string_matches
-
-	def build_minor_string_matches(self, want):
-		print('building minor item match profile for ' + str(want) + '...')
-
-
-
-		string_matches = []
-		return string_matches
-
-	def check_if_weed_out(self, title_compare):
-		for check in self.antimatch_strings['anywhere']:
-			if check in title_compare: return True
-		return False
+		return match_strings
 
 	def check_if_negative_matches(self, title_compare, positive_match_string):
 		print('CHECKING if \'' + positive_match_string + '\' truly matches with \'' + title_compare + '\'')
