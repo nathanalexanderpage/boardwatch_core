@@ -9,6 +9,7 @@ from dotenv import load_dotenv, find_dotenv
 import psycopg2 as db
 
 from common.board_site_enums import board_sites
+from match.match import Match
 from match.preppers import Prepper
 from match.profilers import Profiler
 from scrape.populate_listings import ListingPopulator
@@ -73,9 +74,6 @@ for board in Board.boards:
 	for listing in [test_listing]:
 		print(listing)
 
-		# prepare match recognizer/organizer
-		matches = []
-
 		# for each listing, iterate through all products
 		for platform in platforms:
 			print(platform.name)
@@ -98,14 +96,17 @@ for board in Board.boards:
 								try:
 									match_index = text.index(searchtext)
 									print('FOUND ' + searchtext + ' @ ' + str(match_index))
+									Match(score=1, start=match_index, end=match_index+len(searchtext), item=current_p, listing=listing)
 								except Exception as e:
 									# print(e)
 									continue
+
+					continue
 					
 					# if preliminary match, look in product's name group to check if matched item text isn't suited better for a different product with similar name
 
 					# insert db record to indicate match between listing and each found product
-					for match in matches:
+					for match in Match.matches:
 						if match.type == 'platform':
 							cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id) VALUES(%s, %s);""", (listing.id, edition.id,))
 						else:
