@@ -46,9 +46,8 @@ for board in Board.boards:
 	raw_platform_name_groups = cur.fetchall()
 	pngs = {}
 	for raw_platform_name_group in raw_platform_name_groups:
-		print(raw_platform_name_group)
-		print('---------------------')
 		pngs[raw_platform_name_group[1]] = raw_platform_name_group
+	pp.pprint(pngs)
 	# platforms
 	cur.execute('SELECT p.id, p.name, p.is_brand_missing, p.platform_family_id, pf.name as platform_family_name, p.model_no, p.storage_capacity, p.description, p.disambiguation, p.relevance FROM platforms as p JOIN platform_families as pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups as png ON png.id = p.name_group_id;')
 	raw_ps = cur.fetchall()
@@ -70,7 +69,7 @@ for board in Board.boards:
 
 	# pull all new listings
 	# for listing in Listing.listings:
-	test_listing = Listing(id=0, native_id=0, title='TEST LISTING SNES console', body='TEST LISTING\nused SNES console, good condition', url='https://www.domain.tld/page', seller_email=None, seller_phone=None, date_posted=None, date_scraped=None)
+	test_listing = Listing(id=0, native_id=0, title='TEST LISTING SNES console', body='TEST LISTING\nused SNS-101 console, good condition purple Super Nintendo Entertainment System', url='https://www.domain.tld/page', seller_email=None, seller_phone=None, date_posted=None, date_scraped=None)
 	for listing in [test_listing]:
 		print(listing)
 
@@ -82,31 +81,34 @@ for board in Board.boards:
 			print(platform.name)
 			# print(platform.editions)
 			if platform.name == 'Super Nintendo Entertainment System':
-				print('\n\n\n------------SNES-----------\n\n\n')
+				# print('\n\n\n------------SNES-----------\n\n\n')
 				for edition in platform.editions:
-					continue
 					# print(edition)
-					searchtexts = profiler.build_string_matches(Platform(id=platform.id, name=platform.name, is_brand_missing_from_name=platform.is_brand_missing_from_name, platform_family_id=platform.platform_family_id, platform_family_name=platform.platform_family_name, model_no=platform.model_no, storage_capacity=platform.storage_capacity, description=platform.description, disambiguation=platform.disambiguation, relevance=platform.relevance, editions=[edition]))
-					# pp.pprint(searchtexts)
+					current_p = Platform(id=platform.id, name=platform.name, is_brand_missing_from_name=platform.is_brand_missing_from_name, platform_family_id=platform.platform_family_id, platform_family_name=platform.platform_family_name, model_no=platform.model_no, storage_capacity=platform.storage_capacity, description=platform.description, disambiguation=platform.disambiguation, relevance=platform.relevance)
+					current_p.editions.append(edition)
+					searchtexts = profiler.build_string_matches(current_p)
+					pp.pprint(searchtexts)
+
 					for degree in searchtexts.keys():
 						
 						# for each listing, iterate through all searchable text segments
 						for searchtext in searchtexts[degree]:
 							for text in [listing.title, listing.body]:
-								if platform.name == 'Super Nintendo Entertainment System':
-
-									# evaluate if preliminary match on spot (wherever hot text within listing happens to be)
-									try:
-										match_index = text.index(searchtext)
-									except:
-										continue
-									print(searchtext + ' found within ' + text)
+								# evaluate if preliminary match on spot (wherever hot text within listing happens to be)
+								try:
+									match_index = text.index(searchtext)
+									print('FOUND ' + searchtext + ' @ ' + str(match_index))
+								except Exception as e:
+									# print(e)
+									continue
 					
 					# if preliminary match, look in product's name group to check if matched item text isn't suited better for a different product with similar name
 
 					# insert db record to indicate match between listing and each found product
 					for match in matches:
 						if match.type == 'platform':
-							pass
+							cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id) VALUES(%s, %s);""", (listing.id, edition.id,))
 						else:
 							pass
+
+cur.close()
