@@ -17,10 +17,8 @@ class Profiler():
 
 	def build_string_matches(self, want):
 		print('building item match profile for ' + str(want) + '...')
-		print(want.name, want.platform_family_name, want.model_no)
 		print('editions for want:')
 		print(want.editions)
-		print(type(want).__name__)
 		match_strings = {
 			'exact': [],
 			'strong': [],
@@ -32,7 +30,6 @@ class Profiler():
 			is_platform_family_namesake = True if want.name == want.platform_family_name else False
 
 			for edition in want.editions:
-				print('\n\nINSIDE EDITION\n\n')
 				# FIXME: add developer, alternate_names for robust matches
 				# positive exact matches
 				if want.model_no:
@@ -99,8 +96,6 @@ class Profiler():
 					}
 				}
 
-				pprint.pprint(want)
-		
 		else:
 			raise Exception()
 		
