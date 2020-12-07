@@ -72,7 +72,7 @@ Any changes made to `pg_hba.conf` will not take effect until the machine's `post
 sudo service postgresql restart
 ```
 
-### Required packages
+### Required Packages
 (`requirements.txt` to come)
 
 #### Troubleshooting `psycopg2` Installation Errors
