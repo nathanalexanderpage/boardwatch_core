@@ -4,7 +4,9 @@ CREATE DATABASE boardwatch
     ENCODING = 'UTF8';
 
 -- requires superuser permission
-CREATE EXTENSION "uuid-ossp";
+SET search_path TO public;
+DROP EXTENSION IF EXISTS "uuid-ossp";
+CREATE EXTENSION "uuid-ossp" SCHEMA public;
 
 CREATE TABLE users (
 	id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
