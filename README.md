@@ -66,6 +66,12 @@ You will likely find `pg_hba.conf` in dir `/etc/postgresql/<version>/main/pg_hba
 sudo nano /etc/postgresql/12/main/pg_hba.conf
 ```
 
+Any changes made to `pg_hba.conf` will not take effect until the machine's `postgresql` service has been restarted.
+
+```
+sudo service postgresql restart
+```
+
 ### Required packages
 (`requirements.txt` to come)
 
