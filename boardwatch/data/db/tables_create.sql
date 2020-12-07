@@ -1,7 +1,9 @@
+-- requires CREATEDB permission
 CREATE DATABASE boardwatch
     WITH
     ENCODING = 'UTF8';
 
+-- requires superuser permission
 CREATE EXTENSION "uuid-ossp";
 
 CREATE TABLE users (
