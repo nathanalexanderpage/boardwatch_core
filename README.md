@@ -27,6 +27,59 @@ Modes of sending findings:
 - [ ] on-site messages (combined with tweets?)
 - [ ] in-house app
 
+## Setup
+
+__Note:__ Instructional code snippets given here are for Ubuntu.
+
+### PostgreSQL
+
+Install PostgreSQL
+
+```
+sudo apt-get install postgresql
+```
+
+Create a new user without superuser permissions to avoid unintended consequences as you run many SQL commands.
+
+```
+# shell
+sudo psql -U postgres
+
+# within psql
+CREATE USER your-username-here CREATEDB LOGIN PASSWORD 'your-password-here';
+```
+
+In your `.env` file, include the following:
+
+```
+POSTGRESQL_USERNAME = "your-username-here"
+POSTGRESQL_PASSWORD = "your-password-here"
+POSTGRESQL_PORT = 5432
+POSTGRESQL_HOST = "localhost"
+POSTGRESQL_DBNAME = "boardwatch"
+```
+
+Edit the `pg_hba.conf` if necessary to make non-superuser localhost user connections use `md5` authentication method.
+You will likely find `pg_hba.conf` in dir `/etc/postgresql/<version>/main/pg_hba.conf`
+
+```
+sudo nano /etc/postgresql/12/main/pg_hba.conf
+```
+
+### Required packages
+(`requirements.txt` to come)
+
+#### Troubleshooting `psycopg2` Installation Errors
+If there are errors installing `psycopg2`, a couple troubleshooting steps:
+
+1. Make sure you have already installed `postgresql`
+2. A few resources are required from `libpq-dev`
+
+```
+sudo apt-get update
+sudo apt-get install libpq-dev
+```
+
 ## Structure
 
 ### Overview
