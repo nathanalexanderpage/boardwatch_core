@@ -9,6 +9,7 @@ In short: a bot to root through postings on secondhand market sites in search of
 section		|subsections
 ---			|---
 Features	|Search, Notifications
+Setup       |PostgreSQL, Required Packages
 Structure	|Overview, Database
 
 ## Features
