@@ -3,7 +3,7 @@ import pprint as pp
 import psycopg2 as db
 import os
 
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 
 pprint = pp.PrettyPrinter()
 
