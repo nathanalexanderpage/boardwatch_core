@@ -36,6 +36,8 @@ __Note:__ Instructional code snippets given here are for Ubuntu.
 
 Make sure when running Python commands specific to this repo that you do so within a virtual environment.
 
+First, a virtual environment must be created.
+
 ```
 # run in repo's root dir
 python3 -m venv venv
