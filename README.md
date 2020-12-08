@@ -9,7 +9,7 @@ In short: a bot to root through postings on secondhand market sites in search of
 section		            |subsections
 ---		            	|---
 [Features](#features)	|[Search](#search), [Notifications](#notifications)
-[Setup](#setup)         |[Virtual Environment](#virtual-environment), [PostgreSQL](#postgresql), [Required Packages](required-packages)
+[Setup](#setup)         |[Virtual Environment](#virtual-environment), [PostgreSQL](#postgresql), [Required Packages](required-packages), [.env](#.env)
 [Structure](#structure)	|[Database](#database)
 
 ## Features
