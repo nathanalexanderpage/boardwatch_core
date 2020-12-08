@@ -6,11 +6,11 @@ In short: a bot to root through postings on secondhand market sites in search of
 
 ## Table of Contents
 
-section		|subsections
----			|---
-Features	|Search, Notifications
-Setup       |Python Environment, PostgreSQL, Required Packages
-Structure	|Overview, Database
+section		            |subsections
+---		            	|---
+[Features](#features)	|[Search](#search), [Notifications](#notifications)
+[Setup](#setup)         |[Virtual Environment](#virtual-environment), [PostgreSQL](#postgresql), [Required Packages](required-packages)
+[Structure](#structure)	|[Database](#database)
 
 ## Features
 
@@ -32,7 +32,7 @@ Modes of sending findings:
 
 __Note:__ Instructional code snippets given here are for Ubuntu.
 
-### Python Environment
+### Virtual Environment
 
 Make sure when running Python commands specific to this repo that you do so within a virtual environment.
 
@@ -106,9 +106,30 @@ sudo apt-get update
 sudo apt-get install libpq-dev
 ```
 
-## Structure
+### `.env`
 
-### Overview
+Located in the root dir of this repo, your `.env` file will at a maximum have the below variables defined.
+
+```
+EBAY_API_DEV_KEY
+EBAY_API_CLIENT_ID
+EBAY_API_CLIENT_SECRET
+
+IGDB_API_USER_KEY
+
+GMAIL_HOST_ADDRESS
+GMAIL_TLS_PORT
+GMAIL_ADDRESS
+GMAIL_PASSWORD
+
+POSTGRESQL_USERNAME
+POSTGRESQL_PASSWORD
+POSTGRESQL_PORT
+POSTGRESQL_HOST
+POSTGRESQL_DBNAME
+```
+
+## Structure
 
 This app runs a scraper that interacts with a database.
 
@@ -119,7 +140,5 @@ For listings with new post IDs, it scrapes the page of the individual post. The 
 Game titles are usually not identifiable from single words unless they involve unique and recognizable character names like Banjo Kazooie or non-words like "robobot". The program will compile a list of keywords to search for in the first once-over (perhaps already narrowed based on post title), then, because each keyword in the list will be mapped to specific games programmatically, a small-ish number of superfine-toothed combs can run over the post text to determine matches with specific titles.
 
 ### Database
-
-#### Overview
 
 PostgreSQL, accessed using [psycopg2](https://pypi.org/project/psycopg2/) Python module.

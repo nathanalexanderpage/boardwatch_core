@@ -75,8 +75,8 @@ class Mailer():
 		load_dotenv()
 		GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
 		GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
-		HOST_ADDRESS = os.getenv('HOST_ADDRESS')
-		TLS_PORT = os.getenv('TLS_PORT')
+		GMAIL_HOST_ADDRESS = os.getenv('GMAIL_HOST_ADDRESS')
+		GMAIL_TLS_PORT = os.getenv('GMAIL_TLS_PORT')
 
 		message_listings_text = generate_message_text(matches)
 		message_listings_html = generate_message_html(matches)
@@ -88,7 +88,7 @@ class Mailer():
 		print(names)
 		print(emails)
 
-		smtp = smtplib.SMTP(host=HOST_ADDRESS, port=TLS_PORT)
+		smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
 		smtp.starttls()
 		smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
 
