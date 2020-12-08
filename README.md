@@ -9,7 +9,7 @@ In short: a bot to root through postings on secondhand market sites in search of
 section		            |subsections
 ---		            	|---
 [Features](#features)	|[Search](#search), [Notifications](#notifications)
-[Setup](#setup)         |[Virtual Environment](#virtual-environment), [PostgreSQL](#postgresql), [Required Packages](required-packages), [`.env`](#env)
+[Setup](#setup)         |[Virtual Environment](#virtual-environment), [PostgreSQL](#postgresql), [Dependencies](#dependencies), [`.env`](#env)
 [Structure](#structure)	|[Database](#database)
 
 ## Features
@@ -94,13 +94,21 @@ In a psql session, run all commands in this repo's `tables_create.sql` file, fou
 
 Then, navigate to `/boardwatch/data/files` and run `data_loader.py`.
 
-### Required Packages
-(`requirements.txt` to come)
+### Dependencies
+
+Open your virtual environment. (See a refresher [here](#virtual-environment).)
+
+Install project dependencies.
+
+```
+pip install -r requirements.txt
+```
 
 #### Troubleshooting `psycopg2` Installation Errors
+
 If there are errors installing `psycopg2`, a couple troubleshooting steps:
 
-1. Make sure you have already installed `postgresql`
+1. [Make sure you have already installed `postgresql`](#postgresql)
 2. A few resources are required from `libpq-dev`
 
 ```
