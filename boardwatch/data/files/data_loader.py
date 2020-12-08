@@ -331,7 +331,7 @@ pprint.pprint(games)
 # execute SQL seed statements
 print('-------------------- enter SQL section --------------------')
 
-load_dotenv(dotenv_path='../../.env')
+load_dotenv(dotenv_path='../../../.env')
 POSTGRESQL_USERNAME = os.getenv('POSTGRESQL_USERNAME')
 POSTGRESQL_PASSWORD = os.getenv('POSTGRESQL_PASSWORD')
 POSTGRESQL_PORT = os.getenv('POSTGRESQL_PORT')
