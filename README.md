@@ -9,7 +9,7 @@ In short: a bot to root through postings on secondhand market sites in search of
 section		|subsections
 ---			|---
 Features	|Search, Notifications
-Setup       |PostgreSQL, Required Packages
+Setup       |Python Environment, PostgreSQL, Required Packages
 Structure	|Overview, Database
 
 ## Features
@@ -31,6 +31,21 @@ Modes of sending findings:
 ## Setup
 
 __Note:__ Instructional code snippets given here are for Ubuntu.
+
+### Python Environment
+
+Make sure when running Python commands specific to this repo that you do so within a virtual environment.
+
+```
+# run in repo's root dir
+python3 -m venv venv
+```
+
+You should see a virtual environment dir named `/venv`. Now the environment must be activated.
+
+```
+source ./venv/bin/activate
+```
 
 ### PostgreSQL
 
@@ -72,6 +87,10 @@ Any changes made to `pg_hba.conf` will not take effect until the machine's `post
 ```
 sudo service postgresql restart
 ```
+
+In a psql session, run all commands in this repo's `tables_create.sql` file, found in `/boardwatch/data/db`.
+
+Then, navigate to `/boardwatch/data/files` and run `data_loader.py`.
 
 ### Required Packages
 (`requirements.txt` to come)
