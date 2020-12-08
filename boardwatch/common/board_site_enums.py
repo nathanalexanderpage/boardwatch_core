@@ -13,10 +13,5 @@ board_sites = [
 		'name': 'OfferUp',
 		'url': 'https://offerup.com',
 		'is_supported': False
-	},
-	{
-		'name': 'Letgo',
-		'url': 'https://letgo.com',
-		'is_supported': False
 	}
 ]
