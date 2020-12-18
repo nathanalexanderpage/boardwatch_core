@@ -22,5 +22,9 @@ INSERT INTO watchlist_platform_editions
         ) LIMIT 1)
     );
 
-SELECT * FROM watchlist_platform_editions as wpe
+SELECT
+    u.id as user_id,
+    u.username as username,
+    wpe.platform_edition_id as watched_platform_edition_id
+    FROM watchlist_platform_editions as wpe
     JOIN users as u ON u.id = wpe.user_id;
