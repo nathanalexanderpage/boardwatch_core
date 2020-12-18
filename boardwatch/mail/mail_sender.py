@@ -20,7 +20,7 @@ pp = pprint.PrettyPrinter(indent=2)
 # matcher = PlatformProfiler(ps1, {})
 # matches = [result for result in test_parsed_results if matcher.assess_match(result)]
 
-# usable_sites = [site for site in board_sites if site['is_supported']]
+usable_sites = [site for site in board_site_enums.board_sites if site['is_supported']]
 
 # pp.pprint(matches)
 
@@ -28,7 +28,7 @@ class Mailer():
 	def __init__(self):
 		pass
 
-	def generate_message_text(listings):
+	def generate_message_text(self, listings):
 		message_text_matches = ''
 		for site in usable_sites:
 			site_message = '\n\nListings from ' + site['name'] + ' (' + site['url'] + '):'
@@ -39,7 +39,7 @@ class Mailer():
 			message_text_matches = message_text_matches + site_message
 		return message_text_matches
 
-	def generate_message_html(listings):
+	def generate_message_html(self, listings):
 		message_text_matches = ''
 
 		for site in usable_sites:
@@ -57,7 +57,7 @@ class Mailer():
 			message_text_matches = message_text_matches + site_message
 		return message_text_matches
 
-	def get_contacts(filename):
+	def get_contacts(self, filename):
 		names = []
 		emails = []
 		with open(filename, mode='r', encoding='utf-8') as contacts_file:
@@ -66,24 +66,25 @@ class Mailer():
 				emails.append(contact.split()[1])
 		return names, emails
 
-	def read_template(filename):
+	def read_template(self, filename):
 		with open(filename, 'r', encoding='utf-8') as template_file:
 			template_file_content = template_file.read()
 		return Template(template_file_content)
 
-	def send_mail():
+	def send_mail(self):
 		load_dotenv()
 		GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
 		GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
 		GMAIL_HOST_ADDRESS = os.getenv('GMAIL_HOST_ADDRESS')
 		GMAIL_TLS_PORT = os.getenv('GMAIL_TLS_PORT')
 
-		message_listings_text = generate_message_text(matches)
-		message_listings_html = generate_message_html(matches)
+		message_listings_text = self.generate_message_text(matches)
+		message_listings_html = self.generate_message_html(matches)
 
-		names, emails = get_contacts('contacts.txt')
-		message_html_template = read_template('mail_message.html')
-		message_text_template = read_template('mail_message.txt')
+		# FIXME: get contact e-mail from db, not hard-coded file.
+		names, emails = self.get_contacts('contacts.txt')
+		message_html_template = self.read_template('mail_message.html')
+		message_text_template = self.read_template('mail_message.txt')
 
 		print(names)
 		print(emails)
@@ -256,4 +257,6 @@ if __name__ == '__main__':
 	<p>-Nathan Mailbot</p>
 	"""
 
-	send_mail()
+	mailer = Mailer()
+	mailer.send_mail()
+	
