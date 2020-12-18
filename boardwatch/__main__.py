@@ -35,39 +35,40 @@ for site in board_sites:
 		if site['name'] == board[1] and site['is_supported'] == True:
 			Board(board[0], site['name'], site['url'], site['is_supported'])
 
+# pull all products from db
+# platform name groups
+cur.execute('SELECT id, name, description FROM platform_name_groups;')
+raw_platform_name_groups = cur.fetchall()
+pngs = {}
+for raw_platform_name_group in raw_platform_name_groups:
+	pngs[raw_platform_name_group[1]] = raw_platform_name_group
+pp.pprint(pngs)
+
+# platforms
+cur.execute('SELECT p.id, p.name, p.is_brand_missing, p.platform_family_id, pf.name as platform_family_name, p.model_no, p.storage_capacity, p.description, p.disambiguation, p.relevance FROM platforms as p JOIN platform_families as pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups as png ON png.id = p.name_group_id;')
+raw_ps = cur.fetchall()
+platforms = []
+for raw_p in raw_ps:
+	platforms.append(Platform(id=raw_p[0], name=raw_p[1], is_brand_missing_from_name=raw_p[2], platform_family_id=raw_p[3], platform_family_name=raw_p[4], model_no=raw_p[5], storage_capacity=raw_p[6], description=raw_p[7], disambiguation=raw_p[8], relevance=raw_p[9]))
+
+# platform editions
+cur.execute("""SELECT pe.id as id, pe.name as name, pe.official_color as official_color, pe.has_matte as has_matte, pe.has_transparency as has_transparency, pe.has_gloss as has_gloss, pe.note as note, pe.image_url as image_url, x.colors, p.name as platform_name FROM platforms as p JOIN platform_editions as pe ON pe.platform_id = p.id JOIN (SELECT pe.id as id, STRING_AGG(c.name,', ') as colors FROM platform_editions as pe JOIN colors_platform_editions as cpe ON cpe.platform_edition_id = pe.id JOIN colors as c ON c.id = cpe.color_id GROUP BY pe.id ORDER BY pe.id) as x ON x.id = pe.id ORDER BY p.name, name, official_color;""")
+raw_platform_editions = cur.fetchall()
+for raw_pe in raw_platform_editions:
+	pe = PlatformEdition(id=raw_pe[0], name=raw_pe[1], official_color=raw_pe[2], has_matte=raw_pe[3], has_transparency=raw_pe[4], has_gloss=raw_pe[5], note=raw_pe[6], image_url=raw_pe[7])
+
+	for color in raw_pe[8].split(', '):
+		pe.colors.append(color)
+
+	p_name = raw_pe[9]
+	# put edition to platform
+	next(x for x in platforms if p_name == x.name).editions.append(pe)
+
 profiler = Profiler()
 
 for board in Board.boards:
 	populator = ListingPopulatorMaker(board).make_listing_populator()
 	populator.populate()
-
-	# pull all products from db
-	# platform name groups
-	cur.execute('SELECT id, name, description FROM platform_name_groups;')
-	raw_platform_name_groups = cur.fetchall()
-	pngs = {}
-	for raw_platform_name_group in raw_platform_name_groups:
-		pngs[raw_platform_name_group[1]] = raw_platform_name_group
-	pp.pprint(pngs)
-	# platforms
-	cur.execute('SELECT p.id, p.name, p.is_brand_missing, p.platform_family_id, pf.name as platform_family_name, p.model_no, p.storage_capacity, p.description, p.disambiguation, p.relevance FROM platforms as p JOIN platform_families as pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups as png ON png.id = p.name_group_id;')
-	raw_ps = cur.fetchall()
-	platforms = []
-	for raw_p in raw_ps:
-		platforms.append(Platform(id=raw_p[0], name=raw_p[1], is_brand_missing_from_name=raw_p[2], platform_family_id=raw_p[3], platform_family_name=raw_p[4], model_no=raw_p[5], storage_capacity=raw_p[6], description=raw_p[7], disambiguation=raw_p[8], relevance=raw_p[9]))
-	# platform editions
-	cur.execute("""SELECT pe.id as id, pe.name as name, pe.official_color as official_color, pe.has_matte as has_matte, pe.has_transparency as has_transparency, pe.has_gloss as has_gloss, pe.note as note, pe.image_url as image_url, x.colors, p.name as platform_name FROM platforms as p JOIN platform_editions as pe ON pe.platform_id = p.id JOIN (SELECT pe.id as id, STRING_AGG(c.name,', ') as colors FROM platform_editions as pe JOIN colors_platform_editions as cpe ON cpe.platform_edition_id = pe.id JOIN colors as c ON c.id = cpe.color_id GROUP BY pe.id ORDER BY pe.id) as x ON x.id = pe.id ORDER BY p.name, name, official_color;""")
-	raw_platform_editions = cur.fetchall()
-	for raw_pe in raw_platform_editions:
-		pe = PlatformEdition(id=raw_pe[0], name=raw_pe[1], official_color=raw_pe[2], has_matte=raw_pe[3], has_transparency=raw_pe[4], has_gloss=raw_pe[5], note=raw_pe[6], image_url=raw_pe[7])
-
-		for color in raw_pe[8].split(', '):
-			pe.colors.append(color)
-
-		p_name = raw_pe[9]
-		# put edition to platform
-		next(x for x in platforms if p_name == x.name).editions.append(pe)
-
 	# pull all new listings
 	# for listing in Listing.listings:
 	test_listing = Listing(id=0, native_id=0, title='TEST LISTING SNES console', body='TEST LISTING\nused SNS-101 console, good condition purple Super Nintendo Entertainment System', url='https://www.domain.tld/page', seller_email=None, seller_phone=None, date_posted=None, date_scraped=None)
@@ -111,5 +112,33 @@ for board in Board.boards:
 							cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id) VALUES(%s, %s);""", (listing.id, edition.id,))
 						else:
 							pass
+
+# loop through users. send e-mail notifications only for those whose settings indicate that preference.
+cur.execute("""SELECT wpe.user_id as user_id, pf.name AS platform_family, p.name AS platform, wpe.platform_edition_id as watched_platform_edition_id, pe.name AS edition_name, pe.official_color AS official_color, x.colors AS colors FROM watchlist_platform_editions as wpe JOIN platform_editions AS pe ON pe.id = wpe.platform_edition_id JOIN platforms AS p ON pe.platform_id = p.id JOIN platform_families AS pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups AS png ON png.id = p.name_group_id JOIN generations AS gen ON gen.id = pf.generation JOIN (SELECT pe.id AS id, STRING_AGG(c.name,', ') AS colors FROM platform_editions AS pe JOIN colors_platform_editions AS cpe ON cpe.platform_edition_id = pe.id JOIN colors AS c ON c.id = cpe.color_id GROUP BY pe.id ORDER BY pe.id) AS x ON x.id = pe.id ORDER BY user_id, gen.id, png.name, platform_family, platform;""")
+raw_pe_watches = cur.fetchall()
+
+pe_watches = []
+
+for watch in raw_pe_watches:
+	pe_watches.append({
+		'user_id': watch[0],
+		'platform_family':  watch[1],
+		'platform': watch[2],
+		'watched_platform_edition_id': watch[3],
+		'edition_name': watch[4],
+		'official_color': watch[5],
+		'colors': watch[6].split(', ')
+	})
+
+user_watches = {}
+
+for watch in pe_watches:
+	if watch['user_id'] not in user_watches:
+		user_watches[watch['user_id']] = {}
+	if watch['platform'] not in user_watches[watch['user_id']]:
+		user_watches[watch['user_id']][watch['platform']] = []
+	user_watches[watch['user_id']][watch['platform']].append(watch['watched_platform_edition_id'])
+
+pp.pprint(user_watches)
 
 cur.close()
