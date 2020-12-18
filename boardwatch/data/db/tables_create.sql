@@ -7,6 +7,8 @@ CREATE DATABASE boardwatch
 SET search_path TO public;
 DROP EXTENSION IF EXISTS "uuid-ossp";
 CREATE EXTENSION "uuid-ossp" SCHEMA public;
+DROP EXTENSION IF EXISTS pgcrypto;
+CREATE EXTENSION pgcrypto SCHEMA public;
 
 CREATE TABLE users (
 	id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
