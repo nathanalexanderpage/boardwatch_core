@@ -24,10 +24,10 @@ INSERT INTO watchlist_platform_editions
 
 SELECT
     wpe.user_id as user_id,
-    wpe.platform_edition_id as watched_platform_edition_id,
     pf.name AS platform_family,
     p.name AS platform,
-    pe.name AS edition,
+    wpe.platform_edition_id as watched_platform_edition_id,
+    pe.name AS edition_name,
     pe.official_color AS official_color,
     x.colors AS colors
     FROM watchlist_platform_editions as wpe
