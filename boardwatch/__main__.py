@@ -141,4 +141,25 @@ for watch in pe_watches:
 
 pp.pprint(user_watches)
 
+# grab product presences, organize in respective lookup dicts
+cur.execute("""SELECT listing_id, platform_edition_id FROM listings_platform_editions;""")
+raw_pe_presences = cur.fetchall()
+
+pe_presences = []
+pe_presences_per_pe = {}
+
+for presence in raw_pe_presences:
+	pe_presences.append({
+		'listing_id': presence[0],
+		'platform_edition_id': presence[1]
+	})
+
+for presence in pe_presences:
+	if presence['platform_edition_id'] not in pe_presences_per_pe:
+		pe_presences_per_pe[presence['platform_edition_id']] = presence['listing_id']
+
+pp.pprint(pe_presences_per_pe)
+
+# iterate through user_watches, composing e-mail notification for each user
+
 cur.close()
