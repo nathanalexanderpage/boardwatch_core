@@ -192,30 +192,35 @@ CREATE TABLE characters_in_games (
 CREATE TABLE watchlist_platforms (
 	user_id uuid NOT NULL REFERENCES users(id),
 	platform_id int NOT NULL REFERENCES platforms(id),
+	created_at timestamptz NOT NULL DEFAULT (now() AT TIME ZONE 'utc'),
 	PRIMARY KEY (user_id, platform_id)
 );
 
 CREATE TABLE watchlist_platform_editions (
 	user_id uuid NOT NULL REFERENCES users(id),
 	platform_edition_id int NOT NULL REFERENCES platform_editions(id),
+	created_at timestamptz NOT NULL DEFAULT (now() AT TIME ZONE 'utc'),
 	PRIMARY KEY (user_id, platform_edition_id)
 );
 
 CREATE TABLE watchlist_games (
 	user_id uuid NOT NULL REFERENCES users(id),
 	game_id int NOT NULL REFERENCES games(id),
+	created_at timestamptz NOT NULL DEFAULT (now() AT TIME ZONE 'utc'),
 	PRIMARY KEY (user_id, game_id)
 );
 
 CREATE TABLE watchlist_accessories (
 	user_id uuid NOT NULL REFERENCES users(id),
 	accessory_id int NOT NULL REFERENCES accessories(id),
+	created_at timestamptz NOT NULL DEFAULT (now() AT TIME ZONE 'utc'),
 	PRIMARY KEY (user_id, accessory_id)
 );
 
 CREATE TABLE watchlist_accessory_variations (
 	user_id uuid NOT NULL REFERENCES users(id),
 	accessory_variation_id int NOT NULL REFERENCES accessory_variations(id),
+	created_at timestamptz NOT NULL DEFAULT (now() AT TIME ZONE 'utc'),
 	PRIMARY KEY (user_id, accessory_variation_id)
 );
 
