@@ -27,7 +27,7 @@ POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 cur = conn.cursor()
 
-cur.execute('SELECT id, name FROM boards;')
+cur.execute("""SELECT id, name FROM boards;""")
 boards = cur.fetchall()
 
 for site in board_sites:
@@ -37,7 +37,7 @@ for site in board_sites:
 
 # pull all products from db
 # platform name groups
-cur.execute('SELECT id, name, description FROM platform_name_groups;')
+cur.execute("""SELECT id, name, description FROM platform_name_groups;""")
 raw_platform_name_groups = cur.fetchall()
 pngs = {}
 for raw_platform_name_group in raw_platform_name_groups:
@@ -45,7 +45,7 @@ for raw_platform_name_group in raw_platform_name_groups:
 pp.pprint(pngs)
 
 # platforms
-cur.execute('SELECT p.id, p.name, p.is_brand_missing, p.platform_family_id, pf.name as platform_family_name, p.model_no, p.storage_capacity, p.description, p.disambiguation, p.relevance FROM platforms as p JOIN platform_families as pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups as png ON png.id = p.name_group_id;')
+cur.execute("""SELECT p.id, p.name, p.is_brand_missing, p.platform_family_id, pf.name as platform_family_name, p.model_no, p.storage_capacity, p.description, p.disambiguation, p.relevance FROM platforms as p JOIN platform_families as pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups as png ON png.id = p.name_group_id;""")
 raw_ps = cur.fetchall()
 platforms = []
 for raw_p in raw_ps:
