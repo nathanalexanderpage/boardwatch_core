@@ -37,4 +37,5 @@ DROP TABLE listings;
 DROP TABLE boards;
 DROP TABLE company_roles;
 DROP TABLE companies;
+DROP TABLE user_set_settings;
 DROP TABLE users;
