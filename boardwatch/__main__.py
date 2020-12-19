@@ -9,6 +9,7 @@ from dotenv import load_dotenv, find_dotenv
 import psycopg2 as db
 
 from common.board_site_enums import board_sites
+from data.puller import DataPuller
 from match.match import Match
 from match.preppers import Prepper
 from match.profilers import Profiler
@@ -27,13 +28,8 @@ POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 cur = conn.cursor()
 
-cur.execute("""SELECT id, name FROM boards;""")
-boards = cur.fetchall()
-
-for site in board_sites:
-	for board in boards:
-		if site['name'] == board[1] and site['is_supported'] == True:
-			Board(board[0], site['name'], site['url'], site['is_supported'])
+data_puller = DataPuller()
+data_puller.pull_boards()
 
 # pull all products from db
 # platform name groups
