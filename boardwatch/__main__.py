@@ -31,13 +31,7 @@ cur = conn.cursor()
 # pull all product data from db
 data_puller = DataPuller()
 data_puller.pull_boards()
-
-# platform name groups
-cur.execute("""SELECT id, name, description FROM platform_name_groups;""")
-raw_platform_name_groups = cur.fetchall()
-for raw_png in raw_platform_name_groups:
-	png = PlatformNameGroup(id=raw_png[0], name=raw_png[1], description=raw_png[2])
-	png.add_to_registry()
+data_puller.pull_platform_name_groups()
 
 # platform families
 # FIXME: pfs missing

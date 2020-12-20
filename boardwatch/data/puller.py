@@ -1,6 +1,6 @@
 import os
 
-from boardwatch_models import Board, Listing, Platform, PlatformEdition
+from boardwatch_models import Board, Listing, Platform, PlatformEdition, PlatformNameGroup
 from dotenv import load_dotenv, find_dotenv
 import psycopg2 as db
 
@@ -36,7 +36,16 @@ class DataPuller():
         pass
 
     def pull_platform_name_groups(self):
-        pass
+        cur = conn.cursor()
+
+        cur.execute("""SELECT id, name, description FROM platform_name_groups;""")
+        raw_platform_name_groups = cur.fetchall()
+
+        for raw_png in raw_platform_name_groups:
+            png = PlatformNameGroup(id=raw_png[0], name=raw_png[1], description=raw_png[2])
+            png.add_to_registry()
+
+        cur.close()
 
     def pull_platforms(self):
         pass
