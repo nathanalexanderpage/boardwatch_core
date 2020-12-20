@@ -1,4 +1,7 @@
 import pprint
+
+from boardwatch_models import Platform, PlatformEdition
+
 pp = pprint.PrettyPrinter()
 
 class Profiler():
@@ -29,13 +32,13 @@ class Profiler():
 		if type(want).__name__ == 'Platform':
 			is_platform_family_namesake = True if want.name == want.platform_family_name else False
 
-			for edition in want.editions:
+			for edition in want.get_all_editions():
 				# FIXME: add developer, alternate_names for robust matches
 				# positive exact matches
 				if want.model_no:
 					match_strings['exact'].append(want.model_no)
 
-				for edition in want.editions:
+				for edition in want.get_all_editions():
 					if edition.official_color and edition.name:
 						if not is_platform_family_namesake:
 							match_strings['exact'].append(edition.official_color + ' ' + edition.name + ' ' +want.platform_family_name)
@@ -57,7 +60,7 @@ class Profiler():
 				# FIXME: check that platform name isn't the generic name contained within other similar platform names like "3DS" is in "New 3DS", "3DS XL", "New 3DS XL", etc.
 				if not is_platform_family_namesake:
 					match_strings['strong'].append(want.name)
-				for edition in want.editions:
+				for edition in want.get_all_editions():
 					for color in edition.colors:
 						if edition.name and not is_platform_family_namesake:
 							match_strings['strong'].append(edition.name + ' ' + want.platform_family_name)
@@ -74,7 +77,7 @@ class Profiler():
 						match_strings['strong'].append(edition.official_color + ' ' + want.platform_family_name)
 				
 				# positive weak matches
-				for edition in want.editions:
+				for edition in want.get_all_editions():
 					for color in edition.colors:
 						if edition.name and not is_platform_family_namesake:
 							match_strings['weak'].append(color + ' ' + want.platform_family_name)

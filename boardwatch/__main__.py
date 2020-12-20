@@ -4,7 +4,7 @@ import pprint
 import sys
 import re
 
-from boardwatch_models import Board, Listing, Platform, PlatformEdition
+from boardwatch_models import Board, Listing, Platform, PlatformEdition, PlatformNameGroup
 from dotenv import load_dotenv, find_dotenv
 import psycopg2 as db
 
@@ -28,27 +28,30 @@ POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 cur = conn.cursor()
 
+# pull all product data from db
 data_puller = DataPuller()
 data_puller.pull_boards()
 
-# pull all products from db
 # platform name groups
 cur.execute("""SELECT id, name, description FROM platform_name_groups;""")
 raw_platform_name_groups = cur.fetchall()
-pngs = {}
-for raw_platform_name_group in raw_platform_name_groups:
-	pngs[raw_platform_name_group[1]] = raw_platform_name_group
-pp.pprint(pngs)
+for raw_png in raw_platform_name_groups:
+	png = PlatformNameGroup(id=raw_png[0], name=raw_png[1], description=raw_png[2])
+	png.add_to_registry()
+
+# platform families
+# FIXME: pfs missing
 
 # platforms
 cur.execute("""SELECT p.id, p.name, p.is_brand_missing, p.platform_family_id, pf.name as platform_family_name, p.model_no, p.storage_capacity, p.description, p.disambiguation, p.relevance FROM platforms as p JOIN platform_families as pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups as png ON png.id = p.name_group_id;""")
 raw_ps = cur.fetchall()
-platforms = []
 for raw_p in raw_ps:
-	platforms.append(Platform(id=raw_p[0], name=raw_p[1], is_brand_missing_from_name=raw_p[2], platform_family_id=raw_p[3], platform_family_name=raw_p[4], model_no=raw_p[5], storage_capacity=raw_p[6], description=raw_p[7], disambiguation=raw_p[8], relevance=raw_p[9]))
+	p = Platform(id=raw_p[0], name=raw_p[1], is_brand_missing_from_name=raw_p[2], platform_family_id=raw_p[3], platform_family_name=raw_p[4], model_no=raw_p[5], storage_capacity=raw_p[6], description=raw_p[7], disambiguation=raw_p[8], relevance=raw_p[9])
+	p.add_to_registry()
 
 # platform editions
-cur.execute("""SELECT pe.id as id, pe.name as name, pe.official_color as official_color, pe.has_matte as has_matte, pe.has_transparency as has_transparency, pe.has_gloss as has_gloss, pe.note as note, pe.image_url as image_url, x.colors, p.name as platform_name FROM platforms as p JOIN platform_editions as pe ON pe.platform_id = p.id JOIN (SELECT pe.id as id, STRING_AGG(c.name,', ') as colors FROM platform_editions as pe JOIN colors_platform_editions as cpe ON cpe.platform_edition_id = pe.id JOIN colors as c ON c.id = cpe.color_id GROUP BY pe.id ORDER BY pe.id) as x ON x.id = pe.id ORDER BY p.name, name, official_color;""")
+cur.execute("""SELECT pe.id AS id, pe.name AS name, pe.official_color AS official_color, pe.has_matte AS has_matte, pe.has_transparency AS has_transparency, pe.has_gloss AS has_gloss, pe.note AS note, pe.image_url AS image_url, x.colors, p.id AS platform_id FROM platforms AS p JOIN platform_editions AS pe ON pe.platform_id = p.id JOIN (SELECT pe.id AS id, STRING_AGG(c.name,', ') AS colors FROM platform_editions AS pe JOIN colors_platform_editions AS cpe ON cpe.platform_edition_id = pe.id JOIN colors AS c ON c.id = cpe.color_id GROUP BY pe.id ORDER BY pe.id) AS x ON x.id = pe.id ORDER BY p.id, name, official_color;
+""")
 raw_platform_editions = cur.fetchall()
 for raw_pe in raw_platform_editions:
 	pe = PlatformEdition(id=raw_pe[0], name=raw_pe[1], official_color=raw_pe[2], has_matte=raw_pe[3], has_transparency=raw_pe[4], has_gloss=raw_pe[5], note=raw_pe[6], image_url=raw_pe[7])
@@ -56,13 +59,14 @@ for raw_pe in raw_platform_editions:
 	for color in raw_pe[8].split(', '):
 		pe.colors.append(color)
 
-	p_name = raw_pe[9]
 	# put edition to platform
-	next(x for x in platforms if p_name == x.name).editions.append(pe)
+	p_id = raw_pe[9]
+	pp.pprint(Platform.get_all())
+	Platform.get_by_id(p_id).add_edition(pe)
 
 profiler = Profiler()
 
-for board in Board.boards:
+for board in Board.get_all():
 	populator = ListingPopulatorMaker(board).make_listing_populator()
 	populator.populate()
 	# pull all new listings
@@ -72,16 +76,13 @@ for board in Board.boards:
 		print(listing)
 
 		# for each listing, iterate through all products
-		for platform in platforms:
+		for platform in Platform.get_all():
 			print(platform.name)
 			# print(platform.editions)
 			if platform.name == 'Super Nintendo Entertainment System':
 				# print('\n\n\n------------SNES-----------\n\n\n')
 				for edition in platform.editions:
-					# print(edition)
-					current_p = Platform(id=platform.id, name=platform.name, is_brand_missing_from_name=platform.is_brand_missing_from_name, platform_family_id=platform.platform_family_id, platform_family_name=platform.platform_family_name, model_no=platform.model_no, storage_capacity=platform.storage_capacity, description=platform.description, disambiguation=platform.disambiguation, relevance=platform.relevance)
-					current_p.editions.append(edition)
-					searchtexts = profiler.build_string_matches(current_p)
+					searchtexts = profiler.build_string_matches(platform)
 					pp.pprint(searchtexts)
 
 					for degree in searchtexts.keys():
