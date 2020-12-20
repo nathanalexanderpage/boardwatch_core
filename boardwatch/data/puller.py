@@ -35,7 +35,16 @@ class DataPuller():
 
 	@staticmethod
 	def pull_listings():
-		pass
+		cur = conn.cursor()
+
+		cur.execute("""SELECT id, board_id, native_id, url, title, price, body, seller_email, seller_phone, date_posted, date_scraped FROM listings WHERE is_scanned = FALSE AND date_posted >= ((now() AT TIME ZONE 'utc') - interval '1 day');""")
+		raw_listings = cur.fetchall()
+
+		for raw_l in raw_listings:
+			listing = Listing(id=raw_l[0], native_id=raw_l[0], title=raw_l[0], body=raw_l[0], url=raw_l[0], seller_email=raw_l[0], seller_phone=raw_l[0], date_posted=raw_l[0], date_scraped=raw_l[0])
+			listing.add_to_registry()
+
+		cur.close()
 
 	@staticmethod
 	def pull_platform_name_groups():

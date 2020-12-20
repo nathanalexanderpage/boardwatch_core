@@ -39,7 +39,7 @@ class CraigslistListingPopulator(ListingPopulator):
 			board_id = cur.fetchone()
 
 			for result in results:
-				cur.execute('SELECT id, native_id, title FROM listings WHERE native_id = %s', (result['id'],))
+				cur.execute("""SELECT id, native_id, title FROM listings WHERE native_id = %s""", (result['id'],))
 				existing_post_id = cur.fetchone()
 				if existing_post_id is None:
 					post_soup_maker = CraigslistPostSoupMaker()
@@ -47,15 +47,13 @@ class CraigslistListingPopulator(ListingPopulator):
 					post_soup = post_soup_maker.make_soup()
 					post_data = CraigslistPostScraper(post_soup)
 
-					listing = Listing(id=None, native_id=result['id'], title=result['title_massaged'], body=post_data.data['body'], url=result['url'], seller_email=post_data.data['seller_email'], seller_phone=post_data.data['seller_phone'], date_posted=result['datetime'], date_scraped=None)
-
-					# print('printing post_data:')
-					# print(post_data.data)
+					listing = Listing(id=None, native_id=result['id'], title=result['title_massaged'], body=post_data.data['body'], url=result['url'], date_posted=result['datetime'], date_scraped=None)
 
 					# TODO: move me to listing instance method
-					cur.execute('INSERT INTO listings (board_id, native_id, url, title, body, seller_email, seller_phone, date_posted) VALUES(%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id, title', (board_id, listing.native_id, listing.url, listing.title, listing.body, listing.seller_email, listing.seller_phone, listing.date_posted))
+					cur.execute("""INSERT INTO listings (board_id, native_id, url, title, body, seller_email, seller_phone, date_posted) VALUES(%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id, title;""", (board_id, listing.native_id, listing.url, listing.title, listing.body, listing.seller_email, listing.seller_phone, listing.date_posted))
 					conn.commit()
 					cur.fetchone()
 				else:
-					print('listing already in database; skipping')
+					print('dupe listing; skipping')
 					print(existing_post_id)
+		cur.close()

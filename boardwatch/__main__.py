@@ -42,46 +42,48 @@ profiler = Profiler()
 for board in Board.get_all():
 	populator = ListingPopulatorMaker(board).make_listing_populator()
 	populator.populate()
-	# pull all new listings
-	# for listing in Listing.listings:
-	test_listing = Listing(id=0, native_id=0, title='TEST LISTING SNES console', body='TEST LISTING\nused SNS-101 console, good condition purple Super Nintendo Entertainment System', url='https://www.domain.tld/page', seller_email=None, seller_phone=None, date_posted=None, date_scraped=None)
-	for listing in [test_listing]:
-		print(listing)
 
-		# for each listing, iterate through all products
-		for platform in Platform.get_all():
-			print(platform.name)
-			# print(platform.editions)
-			if platform.name == 'Super Nintendo Entertainment System':
-				# print('\n\n\n------------SNES-----------\n\n\n')
-				for edition in platform.editions:
-					searchtexts = profiler.build_string_matches(platform)
-					pp.pprint(searchtexts)
+# pull all new listings
 
-					for degree in searchtexts.keys():
-						
-						# for each listing, iterate through all searchable text segments
-						for searchtext in searchtexts[degree]:
-							for text in [listing.title, listing.body]:
-								# evaluate if preliminary match on spot (wherever hot text within listing happens to be)
-								try:
-									match_index = text.index(searchtext)
-									print('FOUND ' + searchtext + ' @ ' + str(match_index))
-									Match(score=1, start=match_index, end=match_index+len(searchtext), item=current_p, listing=listing)
-								except Exception as e:
-									# print(e)
-									continue
+# for listing in Listing.listings:
+test_listing = Listing(id=0, native_id=0, title='TEST LISTING SNES console', body='TEST LISTING\nused SNS-101 console, good condition purple Super Nintendo Entertainment System', price=None, url='https://www.domain.tld/page', date_posted=None, date_scraped=None)
+for listing in [test_listing]:
+	print(listing)
 
-					continue
+	# for each listing, iterate through all products
+	for platform in Platform.get_all():
+		print(platform.name)
+		# print(platform.editions)
+		if platform.name == 'Super Nintendo Entertainment System':
+			# print('\n\n\n------------SNES-----------\n\n\n')
+			for edition in platform.editions:
+				searchtexts = profiler.build_string_matches(platform)
+				pp.pprint(searchtexts)
+
+				for degree in searchtexts.keys():
 					
-					# if preliminary match, look in product's name group to check if matched item text isn't suited better for a different product with similar name
+					# for each listing, iterate through all searchable text segments
+					for searchtext in searchtexts[degree]:
+						for text in [listing.title, listing.body]:
+							# evaluate if preliminary match on spot (wherever hot text within listing happens to be)
+							try:
+								match_index = text.index(searchtext)
+								print('FOUND ' + searchtext + ' @ ' + str(match_index))
+								Match(score=1, start=match_index, end=match_index+len(searchtext), item=current_p, listing=listing)
+							except Exception as e:
+								# print(e)
+								continue
 
-					# insert db record to indicate match between listing and each found product
-					for match in Match.matches:
-						if match.type == 'platform':
-							cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id) VALUES(%s, %s);""", (listing.id, edition.id,))
-						else:
-							pass
+				continue
+				
+				# if preliminary match, look in product's name group to check if matched item text isn't suited better for a different product with similar name
+
+				# insert db record to indicate match between listing and each found product
+				for match in Match.matches:
+					if match.type == 'platform':
+						cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id) VALUES(%s, %s);""", (listing.id, edition.id,))
+					else:
+						pass
 
 # loop through users. send e-mail notifications only for those whose settings indicate that preference.
 cur.execute("""SELECT wpe.user_id as user_id, pf.name AS platform_family, p.name AS platform, wpe.platform_edition_id as watched_platform_edition_id, pe.name AS edition_name, pe.official_color AS official_color, x.colors AS colors FROM watchlist_platform_editions as wpe JOIN platform_editions AS pe ON pe.id = wpe.platform_edition_id JOIN platforms AS p ON pe.platform_id = p.id JOIN platform_families AS pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups AS png ON png.id = p.name_group_id JOIN generations AS gen ON gen.id = pf.generation JOIN (SELECT pe.id AS id, STRING_AGG(c.name,', ') AS colors FROM platform_editions AS pe JOIN colors_platform_editions AS cpe ON cpe.platform_edition_id = pe.id JOIN colors AS c ON c.id = cpe.color_id GROUP BY pe.id ORDER BY pe.id) AS x ON x.id = pe.id ORDER BY user_id, gen.id, png.name, platform_family, platform;""")

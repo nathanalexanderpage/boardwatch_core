@@ -65,3 +65,16 @@ SELECT
         ORDER BY pe.id)
     AS x ON x.id = pe.id
     ORDER BY p.id, name, official_color;
+
+SELECT
+    id,
+    native_id,
+    title,
+    body,
+    url,
+    price,
+    date_posted,
+    date_scraped,
+    board_id
+    FROM listings
+    WHERE is_scanned = FALSE AND date_posted >= ((now() AT TIME ZONE 'utc') - interval '1 day');
