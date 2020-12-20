@@ -33,24 +33,10 @@ data_puller = DataPuller()
 data_puller.pull_boards()
 data_puller.pull_platform_name_groups()
 data_puller.pull_platforms()
+data_puller.pull_platform_editions()
 
 # platform families
 # FIXME: pfs missing
-
-# platform editions
-cur.execute("""SELECT pe.id AS id, pe.name AS name, pe.official_color AS official_color, pe.has_matte AS has_matte, pe.has_transparency AS has_transparency, pe.has_gloss AS has_gloss, pe.note AS note, pe.image_url AS image_url, x.colors, p.id AS platform_id FROM platforms AS p JOIN platform_editions AS pe ON pe.platform_id = p.id JOIN (SELECT pe.id AS id, STRING_AGG(c.name,', ') AS colors FROM platform_editions AS pe JOIN colors_platform_editions AS cpe ON cpe.platform_edition_id = pe.id JOIN colors AS c ON c.id = cpe.color_id GROUP BY pe.id ORDER BY pe.id) AS x ON x.id = pe.id ORDER BY p.id, name, official_color;
-""")
-raw_platform_editions = cur.fetchall()
-for raw_pe in raw_platform_editions:
-	pe = PlatformEdition(id=raw_pe[0], name=raw_pe[1], official_color=raw_pe[2], has_matte=raw_pe[3], has_transparency=raw_pe[4], has_gloss=raw_pe[5], note=raw_pe[6], image_url=raw_pe[7])
-
-	for color in raw_pe[8].split(', '):
-		pe.colors.append(color)
-
-	# put edition to platform
-	p_id = raw_pe[9]
-	pp.pprint(Platform.get_all())
-	Platform.get_by_id(p_id).add_edition(pe)
 
 profiler = Profiler()
 
