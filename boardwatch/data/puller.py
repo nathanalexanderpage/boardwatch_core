@@ -31,3 +31,18 @@ class DataPuller():
                     Board(board[0], site['name'], site['url'], site['is_supported'])
 
         cur.close()
+
+    def pull_listings(self):
+        pass
+
+    def pull_platform_name_groups(self):
+        pass
+
+    def pull_platforms(self):
+        pass
+
+    def pull_platform_editions(self):
+        pass
+
+    def pull_games(self):
+        pass
