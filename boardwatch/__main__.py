@@ -29,11 +29,10 @@ conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=P
 cur = conn.cursor()
 
 # pull all product data from db
-data_puller = DataPuller()
-data_puller.pull_boards()
-data_puller.pull_platform_name_groups()
-data_puller.pull_platforms()
-data_puller.pull_platform_editions()
+DataPuller.pull_boards()
+DataPuller.pull_platform_name_groups()
+DataPuller.pull_platforms()
+DataPuller.pull_platform_editions()
 
 # platform families
 # FIXME: pfs missing
