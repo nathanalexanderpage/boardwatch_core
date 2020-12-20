@@ -52,7 +52,8 @@ SELECT
     pe.note AS note,
     pe.image_url AS image_url,
     x.colors,
-    p.name AS platform_name
+    p.id AS platform_id
+    -- p.name AS platform_name
     FROM platforms AS p
     JOIN platform_editions AS pe ON pe.platform_id = p.id
     JOIN
@@ -63,4 +64,4 @@ SELECT
         GROUP BY pe.id
         ORDER BY pe.id)
     AS x ON x.id = pe.id
-    ORDER BY p.name, name, official_color;
+    ORDER BY p.id, name, official_color;
