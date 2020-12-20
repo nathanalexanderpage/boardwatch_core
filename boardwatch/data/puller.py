@@ -48,7 +48,16 @@ class DataPuller():
         cur.close()
 
     def pull_platforms(self):
-        pass
+        cur = conn.cursor()
+
+        cur.execute("""SELECT p.id, p.name, p.is_brand_missing, p.platform_family_id, pf.name as platform_family_name, p.model_no, p.storage_capacity, p.description, p.disambiguation, p.relevance FROM platforms as p JOIN platform_families as pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups as png ON png.id = p.name_group_id;""")
+        raw_ps = cur.fetchall()
+        
+        for raw_p in raw_ps:
+            p = Platform(id=raw_p[0], name=raw_p[1], is_brand_missing_from_name=raw_p[2], platform_family_id=raw_p[3], platform_family_name=raw_p[4], model_no=raw_p[5], storage_capacity=raw_p[6], description=raw_p[7], disambiguation=raw_p[8], relevance=raw_p[9])
+            p.add_to_registry()
+
+        cur.close()
 
     def pull_platform_editions(self):
         pass
