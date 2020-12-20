@@ -1,6 +1,8 @@
 import os
-from .profilers import Profiler
+
 from boardwatch_models import Listing, PlatformEdition
+
+from .profilers import Profiler
 
 class Matcher():
 	def __init__(self):

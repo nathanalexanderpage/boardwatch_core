@@ -1,4 +1,5 @@
 from boardwatch_models import Board
+
 from boardwatch.scrape.populate_listings import ListingPopulator, CraigslistListingPopulator
 
 class ListingPopulatorMaker():

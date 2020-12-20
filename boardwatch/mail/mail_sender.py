@@ -1,15 +1,16 @@
-import os
-import smtplib
-from boardwatch.common import board_site_enums
-from dotenv import load_dotenv
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 # from email.MIMEImage import MIMEImage
+import os
+import pprint
+import smtplib
+
+from boardwatch.common import board_site_enums
+from dotenv import load_dotenv
 from boardwatch.match import profilers
 from boardwatch.scrape.soup_maker import CraigslistSoupMaker
 from string import Template
 
-import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
 # cl_results_scraper = CraigslistSoupMaker()

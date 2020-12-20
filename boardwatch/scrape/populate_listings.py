@@ -1,12 +1,14 @@
 import os
-import psycopg2 as db
+import pprint
+
+from boardwatch_models import Board, Listing
 from dotenv import load_dotenv, find_dotenv
+import psycopg2 as db
+
 from .scraper import CraigslistPostScraper
 from .soup_maker import CraigslistPostSoupMaker, CraigslistSoupMaker
 from boardwatch.common import board_site_enums
-from boardwatch_models import Board, Listing
 
-import pprint
 pp = pprint.PrettyPrinter(indent=2)
 
 load_dotenv(dotenv_path=find_dotenv())

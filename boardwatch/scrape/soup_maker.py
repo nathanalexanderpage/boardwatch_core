@@ -1,7 +1,10 @@
-import pprint, requests
+import pprint
+
 from boardwatch_models import Listing
-from boardwatch.scrape import scraper
 from bs4 import BeautifulSoup
+import requests
+
+from boardwatch.scrape import scraper
 
 class SoupMaker():
 	def __init__(self):

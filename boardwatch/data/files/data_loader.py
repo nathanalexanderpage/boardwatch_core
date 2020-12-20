@@ -1,11 +1,8 @@
 import csv
-import pprint as pp
-import psycopg2 as db
 import os
 
+import psycopg2 as db
 from dotenv import load_dotenv, find_dotenv
-
-pprint = pp.PrettyPrinter()
 
 colors = {}
 
@@ -18,7 +15,6 @@ with open('company_roles.tsv', newline='') as csv_company_roles:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -41,7 +37,6 @@ with open('companies.tsv', newline='') as csv_companies:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -64,7 +59,6 @@ with open('generations.tsv', newline='') as csv_generations:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -87,7 +81,6 @@ with open('console_families.tsv', newline='') as csv_platform_families:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -105,7 +98,6 @@ with open('console_families.tsv', newline='') as csv_platform_families:
 				column_no += 1
 			console_families.append(row_data)
 		row_no += 1
-# pprint.pprint(console_families)
 
 name_groups = list()
 with open('name_groups.tsv', newline='') as csv_name_groups:
@@ -116,7 +108,6 @@ with open('name_groups.tsv', newline='') as csv_name_groups:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -129,7 +120,6 @@ with open('name_groups.tsv', newline='') as csv_name_groups:
 				column_no += 1
 			name_groups.append(row_data)
 		row_no += 1
-# pprint.pprint(name_groups)
 
 consoles = list()
 with open('consoles.tsv', newline='') as csv_platforms:
@@ -140,7 +130,6 @@ with open('consoles.tsv', newline='') as csv_platforms:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -158,7 +147,6 @@ with open('consoles.tsv', newline='') as csv_platforms:
 				column_no += 1
 			consoles.append(row_data)
 		row_no += 1
-# pprint.pprint(consoles)
 
 console_editions = list()
 with open('console_editions.tsv', newline='') as csv_editions:
@@ -169,7 +157,6 @@ with open('console_editions.tsv', newline='') as csv_editions:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -199,7 +186,6 @@ with open('console_editions.tsv', newline='') as csv_editions:
 				column_no += 1
 			console_editions.append(row_data)
 		row_no += 1
-# pprint.pprint(console_editions)
 
 addon_platforms = list()
 with open('addon_platforms.tsv', newline='') as csv_addon_platforms:
@@ -210,7 +196,6 @@ with open('addon_platforms.tsv', newline='') as csv_addon_platforms:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -223,7 +208,6 @@ with open('addon_platforms.tsv', newline='') as csv_addon_platforms:
 				column_no += 1
 			addon_platforms.append(row_data)
 		row_no += 1
-# pprint.pprint(addon_platforms)
 
 accessory_types = list()
 with open('accessory_types.tsv', newline='') as csv_accessory_types:
@@ -234,7 +218,6 @@ with open('accessory_types.tsv', newline='') as csv_accessory_types:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -247,7 +230,6 @@ with open('accessory_types.tsv', newline='') as csv_accessory_types:
 				column_no += 1
 			accessory_types.append(row_data)
 		row_no += 1
-# pprint.pprint(accessory_types)
 
 game_families = list()
 with open('game_families.tsv', newline='') as csv_game_families:
@@ -258,7 +240,6 @@ with open('game_families.tsv', newline='') as csv_game_families:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -271,7 +252,6 @@ with open('game_families.tsv', newline='') as csv_game_families:
 				column_no += 1
 			game_families.append(row_data)
 		row_no += 1
-# pprint.pprint(game_families)
 
 games = list()
 with open('games.tsv', newline='') as csv_games:
@@ -282,7 +262,6 @@ with open('games.tsv', newline='') as csv_games:
 		if row_no == 0:
 			for column in row:
 				columns.append(column)
-			# print(columns)
 		else:
 			row_data = {}
 			column_no = 0
@@ -302,14 +281,11 @@ with open('games.tsv', newline='') as csv_games:
 				column_no += 1
 			games.append(row_data)
 		row_no += 1
-# pprint.pprint(games)
 
 # visual confirmation of data to be inserted
 for family in console_families:
-	print(family['name'])
 	for console in consoles:
 		if console['console'] == family['console']:
-			print('\t' + console['name'])
 			for edition in console_editions:
 				if edition['console'] == console['console'] and edition['variation ref'] == console['desc']:
 					printable = '\t\t'
@@ -319,14 +295,6 @@ for family in console_families:
 						printable += edition['color'] + ' - '
 					if edition['colors'] is not None:
 						printable += ', '.join(edition['colors'])
-					print(printable)
-
-pprint.pprint(company_roles)
-pprint.pprint(companies)
-pprint.pprint(generations)
-pprint.pprint(addon_platforms)
-pprint.pprint(game_families)
-pprint.pprint(games)
 
 # execute SQL seed statements
 print('-------------------- enter SQL section --------------------')
@@ -342,53 +310,53 @@ conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=P
 cur = conn.cursor()
 
 for role in company_roles:
-	pprint.pprint(role)
+	print(role)
 	cur.execute('INSERT INTO company_roles (name, description) VALUES(%s, %s) RETURNING name, description;', (role['name'], role['description']))
 	conn.commit()
 
 	query_result = cur.fetchone()
-	pprint.pprint(query_result)
+	print(query_result)
 	
 for acc_type in accessory_types:
-	pprint.pprint(acc_type)
+	print(acc_type)
 	cur.execute('INSERT INTO accessory_types (name, description) VALUES(%s, %s) RETURNING name, description;', (acc_type['name'], acc_type['description']))
 	conn.commit()
 
 	query_result = cur.fetchone()
-	pprint.pprint(query_result)
+	print(query_result)
 
 for company in companies:
-	pprint.pprint(company)
+	print(company)
 	cur.execute('INSERT INTO companies (name, street_address, web_address, description) VALUES(%s, %s, %s, %s) RETURNING id, name, street_address, web_address, description;', (company['name'], company['street_address'], company['web_address'], company['description']))
 	conn.commit()
 
 	query_result = cur.fetchone()
-	pprint.pprint(query_result)
+	print(query_result)
 
 for gen in generations:
-	pprint.pprint(gen)
+	print(gen)
 	cur.execute('INSERT INTO generations (id, year_begin, year_end) VALUES(%s, %s, %s) RETURNING id, year_begin, year_end;', (gen['number'], gen['year_begin'], gen['year_end']))
 	conn.commit()
 
 	query_result = cur.fetchone()
-	pprint.pprint(query_result)
+	print(query_result)
 
 for family in console_families:
-	pprint.pprint(family)
+	print(family)
 	cur.execute('INSERT INTO platform_families (name, generation) VALUES(%s, %s) RETURNING id, name, generation;', (family['name'], family['generation']))
 	conn.commit()
 
 	query_result = cur.fetchone()
-	pprint.pprint(query_result)
+	print(query_result)
 	family['id'] = query_result[0]
 
 for name_group in name_groups:
-	pprint.pprint(name_group)
+	print(name_group)
 	cur.execute('INSERT INTO platform_name_groups (name, description) VALUES(%s, %s) RETURNING id, name, description;', (name_group['name'], name_group['description']))
 	conn.commit()
 
 	query_result = cur.fetchone()
-	pprint.pprint(query_result)
+	print(query_result)
 	name_group['id'] = query_result[0]
 
 for console in consoles:
@@ -408,7 +376,7 @@ for console in consoles:
 	conn.commit()
 
 	query_result = cur.fetchone()
-	pprint.pprint(query_result)
+	print(query_result)
 	console['id'] = query_result[0]
 
 for color in colors.keys():
@@ -416,7 +384,7 @@ for color in colors.keys():
 	conn.commit()
 
 	query_result = cur.fetchone()
-	pprint.pprint(query_result)
+	print(query_result)
 	colors[color] = query_result[0]
 
 for edition in console_editions:
@@ -440,4 +408,4 @@ for edition in console_editions:
 cur.close()
 conn.close()
 print('-------------------- exit SQL section --------------------')
-pprint.pprint(console_editions)
+print(console_editions)
