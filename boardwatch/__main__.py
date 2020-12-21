@@ -39,11 +39,13 @@ DataPuller.pull_platform_editions()
 
 profiler = Profiler()
 
+# gather new listings
 for board in Board.get_all():
-	populator = ListingPopulatorMaker(board).make_listing_populator()
+	populator = ListingPopulatorMaker.make_listing_populator(board)
 	populator.populate()
 
-# pull all new listings
+# pull all database listings newer than 1 day old
+DataPuller.pull_listings()
 
 # for listing in Listing.listings:
 test_listing = Listing(id=0, native_id=0, title='TEST LISTING SNES console', body='TEST LISTING\nused SNS-101 console, good condition purple Super Nintendo Entertainment System', price=None, url='https://www.domain.tld/page', date_posted=None, date_scraped=None)

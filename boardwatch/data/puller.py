@@ -37,11 +37,11 @@ class DataPuller():
 	def pull_listings():
 		cur = conn.cursor()
 
-		cur.execute("""SELECT id, board_id, native_id, url, title, price, body, seller_email, seller_phone, date_posted, date_scraped FROM listings WHERE is_scanned = FALSE AND date_posted >= ((now() AT TIME ZONE 'utc') - interval '1 day');""")
+		cur.execute("""SELECT id, native_id, title, body, price, url, date_posted, date_scraped, board_id FROM listings WHERE is_scanned = FALSE AND date_posted >= ((now() AT TIME ZONE 'utc') - interval '1 day');""")
 		raw_listings = cur.fetchall()
 
 		for raw_l in raw_listings:
-			listing = Listing(id=raw_l[0], native_id=raw_l[0], title=raw_l[0], body=raw_l[0], url=raw_l[0], seller_email=raw_l[0], seller_phone=raw_l[0], date_posted=raw_l[0], date_scraped=raw_l[0])
+			listing = Listing(id=raw_l[0], native_id=raw_l[1], title=raw_l[2], body=raw_l[3], price=raw_l[4], url=raw_l[5], date_posted=raw_l[6], date_scraped=raw_l[7])
 			listing.add_to_registry()
 
 		cur.close()

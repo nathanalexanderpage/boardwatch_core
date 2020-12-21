@@ -47,12 +47,13 @@ class CraigslistListingPopulator(ListingPopulator):
 					post_soup = post_soup_maker.make_soup()
 					post_data = CraigslistPostScraper(post_soup)
 
-					listing = Listing(id=None, native_id=result['id'], title=result['title_massaged'], body=post_data.data['body'], url=result['url'], date_posted=result['datetime'], date_scraped=None)
+					listing = Listing(id=None, native_id=result['id'], title=result['title_massaged'], body=post_data.data['body'], price=None, url=result['url'], date_posted=result['datetime'], date_scraped=None)
 
 					# TODO: move me to listing instance method
-					cur.execute("""INSERT INTO listings (board_id, native_id, url, title, body, seller_email, seller_phone, date_posted) VALUES(%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id, title;""", (board_id, listing.native_id, listing.url, listing.title, listing.body, listing.seller_email, listing.seller_phone, listing.date_posted))
+					cur.execute("""INSERT INTO listings (board_id, native_id, url, title, body, price, date_posted) VALUES(%s, %s, %s, %s, %s, %s, %s) RETURNING id, title;""", (board_id, listing.native_id, listing.url, listing.title, listing.body, listing.price, listing.date_posted))
 					conn.commit()
-					cur.fetchone()
+					temp = cur.fetchone()
+					print(temp)
 				else:
 					print('dupe listing; skipping')
 					print(existing_post_id)
