@@ -61,15 +61,14 @@ for listing in Listing.get_all():
 					try:
 						match_index = text.index(searchtext)
 						print('FOUND ' + searchtext + ' @ ' + str(match_index))
-						Match(score=1, start=match_index, end=match_index+len(searchtext), item=current_p, listing=listing)
+						Match(score=1, start=match_index, end=match_index+len(searchtext), item=edition, listing=listing)
 					except Exception as e:
 						# print(e)
 						continue
 
+# ensure matches are checked against each other (no more than one product match record per text segment in listing)
 for listing in Listing.get_all():
 	continue
-	# for each match for each listing, cross-check to see if any overlap exists
-	# if overlap, ignore all matches but that with the highest match score (record only the most likely match to db)
 
 	# insert db record to indicate match between listing and each found product
 	cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id) VALUES(%s, %s);""", (listing.id, edition.id,))
