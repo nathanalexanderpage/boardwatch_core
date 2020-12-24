@@ -22,10 +22,23 @@ INSERT INTO watchlist_platform_editions
 		) LIMIT 1)
 	);
 
+INSERT INTO watchlist_platform_editions
+	(
+		user_id,
+		platform_edition_id
+	)
+	VALUES(
+		(SELECT id FROM users WHERE username = 'testuser' LIMIT 1),
+		(SELECT id FROM platform_editions WHERE platform_id = (
+			SELECT id FROM platforms WHERE model_no = 'SNS-101, SNS-102'
+		) LIMIT 1)
+	);
+
 SELECT
 	wpe.user_id as user_id,
 	pf.name AS platform_family,
 	p.name AS platform,
+	p.id AS p_id,
 	wpe.platform_edition_id as watched_platform_edition_id,
 	pe.name AS edition_name,
 	pe.official_color AS official_color,

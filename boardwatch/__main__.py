@@ -74,7 +74,7 @@ for listing in Listing.get_all():
 	cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id) VALUES(%s, %s);""", (listing.id, edition.id,))
 
 # loop through users. send e-mail notifications only for those whose settings indicate that preference.
-cur.execute("""SELECT wpe.user_id as user_id, pf.name AS platform_family, p.name AS platform, wpe.platform_edition_id as watched_platform_edition_id, pe.name AS edition_name, pe.official_color AS official_color, x.colors AS colors FROM watchlist_platform_editions as wpe JOIN platform_editions AS pe ON pe.id = wpe.platform_edition_id JOIN platforms AS p ON pe.platform_id = p.id JOIN platform_families AS pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups AS png ON png.id = p.name_group_id JOIN generations AS gen ON gen.id = pf.generation JOIN (SELECT pe.id AS id, STRING_AGG(c.name,', ') AS colors FROM platform_editions AS pe JOIN colors_platform_editions AS cpe ON cpe.platform_edition_id = pe.id JOIN colors AS c ON c.id = cpe.color_id GROUP BY pe.id ORDER BY pe.id) AS x ON x.id = pe.id ORDER BY user_id, gen.id, png.name, platform_family, platform;""")
+cur.execute("""SELECT wpe.user_id as user_id, pf.name AS platform_family, p.name AS platform, p.id AS p_id, wpe.platform_edition_id as watched_platform_edition_id, pe.name AS edition_name, pe.official_color AS official_color, x.colors AS colors FROM watchlist_platform_editions as wpe JOIN platform_editions AS pe ON pe.id = wpe.platform_edition_id JOIN platforms AS p ON pe.platform_id = p.id JOIN platform_families AS pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups AS png ON png.id = p.name_group_id JOIN generations AS gen ON gen.id = pf.generation JOIN (SELECT pe.id AS id, STRING_AGG(c.name,', ') AS colors FROM platform_editions AS pe JOIN colors_platform_editions AS cpe ON cpe.platform_edition_id = pe.id JOIN colors AS c ON c.id = cpe.color_id GROUP BY pe.id 	ORDER BY pe.id) AS x ON x.id = pe.id ORDER BY user_id, gen.id, png.name, platform_family, platform;""")
 raw_pe_watches = cur.fetchall()
 
 pe_watches = []
@@ -82,22 +82,24 @@ pe_watches = []
 for watch in raw_pe_watches:
 	pe_watches.append({
 		'user_id': watch[0],
-		'platform_family':  watch[1],
+		'platform_family': watch[1],
 		'platform': watch[2],
-		'watched_platform_edition_id': watch[3],
-		'edition_name': watch[4],
-		'official_color': watch[5],
-		'colors': watch[6].split(', ')
+		'platform_id': watch[3],
+		'watched_platform_edition_id': watch[4],
+		'edition_name': watch[5],
+		'official_color': watch[6],
+		'colors': watch[7].split(', ')
 	})
 
 user_watches = {}
 
 for watch in pe_watches:
+	pp.pprint(watch)
 	if watch['user_id'] not in user_watches:
 		user_watches[watch['user_id']] = {}
-	if watch['platform'] not in user_watches[watch['user_id']]:
-		user_watches[watch['user_id']][watch['platform']] = []
-	user_watches[watch['user_id']][watch['platform']].append(watch['watched_platform_edition_id'])
+	if watch['platform_id'] not in user_watches[watch['user_id']]:
+		user_watches[watch['user_id']][watch['platform_id']] = []
+	user_watches[watch['user_id']][watch['platform_id']].append(watch['watched_platform_edition_id'])
 
 pp.pprint(user_watches)
 
