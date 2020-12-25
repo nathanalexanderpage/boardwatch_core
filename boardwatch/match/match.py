@@ -23,3 +23,10 @@ class Match():
 		Examine all matches to eliminate those which correspond to the same text.
 		"""
 		pass
+
+	@classmethod
+	def get_all(cls):
+		"""
+		Returns registry of all matches.
+		"""
+		return cls.registry

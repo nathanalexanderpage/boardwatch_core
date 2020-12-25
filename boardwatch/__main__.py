@@ -61,7 +61,8 @@ for listing in Listing.get_all():
 					try:
 						match_index = text.index(searchtext)
 						print('FOUND ' + searchtext + ' @ ' + str(match_index))
-						Match(score=1, start=match_index, end=match_index+len(searchtext), item=edition, listing=listing)
+						match = Match(score=1, start=match_index, end=match_index+len(searchtext), item=edition, listing=listing)
+						match.add_to_registry()
 					except Exception as e:
 						# print(e)
 						continue

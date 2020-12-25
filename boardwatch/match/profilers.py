@@ -20,8 +20,6 @@ class Profiler():
 
 	def build_string_matches(self, want):
 		print('building item match profile for ' + str(want) + '...')
-		print('editions for want:')
-		print(want.editions)
 		match_strings = {
 			'exact': [],
 			'strong': [],

@@ -90,6 +90,8 @@ class DataPuller():
 			p_id = raw_pe[9]
 			Platform.get_by_id(p_id).add_edition(pe)
 
+			pe.add_to_registry()
+
 		cur.close()
 
 	@staticmethod
