@@ -97,6 +97,9 @@ class Profiler():
 					}
 				}
 
+		if type(want).__name__ == 'PlatformEdition':
+			print('profiler for PlatformEdition')
+
 		else:
 			raise Exception()
 		
