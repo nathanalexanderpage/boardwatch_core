@@ -53,7 +53,7 @@ class Profiler():
 
 			# positive strong matches
 			# FIXME: check that platform name isn't the generic name contained within other similar platform names like "3DS" is in "New 3DS", "3DS XL", "New 3DS XL", etc.
-			if not is_platform_family_namesake:
+			if not is_platform_family_namesake and item.name:
 				match_strings['strong'].append(item.name)
 			for color in item.colors:
 				if item.name and not is_platform_family_namesake:
