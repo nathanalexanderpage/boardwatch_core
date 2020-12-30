@@ -19,7 +19,7 @@ class Profiler():
 		pass
 
 	def build_string_matches(self, item):
-		print('building item match profile for ' + str(item) + '...')
+		# print('building item match profile for ' + str(item) + '...')
 		match_strings = {
 			'exact': [],
 			'strong': [],

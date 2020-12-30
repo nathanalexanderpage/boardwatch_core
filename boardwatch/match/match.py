@@ -1,3 +1,15 @@
+import os
+
+from dotenv import load_dotenv, find_dotenv
+import psycopg2 as db
+
+load_dotenv(dotenv_path=find_dotenv())
+POSTGRESQL_USERNAME = os.getenv('POSTGRESQL_USERNAME')
+POSTGRESQL_PASSWORD = os.getenv('POSTGRESQL_PASSWORD')
+POSTGRESQL_PORT = os.getenv('POSTGRESQL_PORT')
+POSTGRESQL_HOST = os.getenv('POSTGRESQL_HOST')
+POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
+
 class Match():
 	registry = {}
 
@@ -19,10 +31,20 @@ class Match():
 		Match.registry[self.listing.id][self.item.__class__.__name__][self.item.id] = self
 
 	def remove_from_registry(self):
-		print('REMOVING')
-		print(self)
-		print(Match.registry[self.listing.id][self.item.__class__.__name__][self.item.id])
 		del Match.registry[self.listing.id][self.item.__class__.__name__][self.item.id]
+
+	def insert_into_db(self):
+		conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
+		cur = conn.cursor()
+
+		try:
+			if self.item.__class__.__name__ == 'PlatformEdition':
+				cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id) VALUES(%s, %s) RETURNING listing_id, platform_edition_id;""", (self.listing.id, self.item.id,))
+				conn.commit()
+			else:
+				raise Exception()
+		finally:
+			cur.close()
 
 	def is_overlapping(self, other_match):
 		if (
