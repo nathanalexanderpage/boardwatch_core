@@ -4,12 +4,20 @@ from email.mime.text import MIMEText
 import os
 import pprint
 import smtplib
+from string import Template
+
+from boardwatch_models import Board, Listing, Platform, PlatformEdition, PlatformNameGroup
+from dotenv import load_dotenv
 
 from boardwatch.common import board_site_enums
-from dotenv import load_dotenv
 from boardwatch.match import profilers
 from boardwatch.scrape.soup_maker import CraigslistSoupMaker
-from string import Template
+
+load_dotenv()
+GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
+GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
+GMAIL_HOST_ADDRESS = os.getenv('GMAIL_HOST_ADDRESS')
+GMAIL_TLS_PORT = os.getenv('GMAIL_TLS_PORT')
 
 pp = pprint.PrettyPrinter(indent=2)
 
@@ -26,8 +34,12 @@ usable_sites = [site for site in board_site_enums.board_sites if site['is_suppor
 # pp.pprint(matches)
 
 class Mailer():
-	def __init__(self):
-		pass
+	def __init__(self, user, platforms, platform_editions, games, accessories):
+		self.user = user
+		self.platforms = platforms
+		self.platform_editions = platform_editions
+		self.games = games
+		self.accessories = accessories
 
 	def generate_message_text(self, listings):
 		message_text_matches = ''
@@ -73,14 +85,8 @@ class Mailer():
 		return Template(template_file_content)
 
 	def send_mail(self):
-		load_dotenv()
-		GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
-		GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
-		GMAIL_HOST_ADDRESS = os.getenv('GMAIL_HOST_ADDRESS')
-		GMAIL_TLS_PORT = os.getenv('GMAIL_TLS_PORT')
-
-		message_listings_text = self.generate_message_text(matches)
-		message_listings_html = self.generate_message_html(matches)
+		message_listings_text = self.generate_message_text([])
+		message_listings_html = self.generate_message_html([])
 
 		# FIXME: get contact e-mail from db, not hard-coded file.
 		names, emails = self.get_contacts('contacts.txt')

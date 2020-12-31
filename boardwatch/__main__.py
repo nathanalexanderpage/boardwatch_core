@@ -4,12 +4,13 @@ import pprint
 import sys
 import re
 
-from boardwatch_models import Board, Listing, Platform, PlatformEdition, PlatformNameGroup
+from boardwatch_models import Board, Listing, Platform, PlatformEdition, PlatformNameGroup, User
 from dotenv import load_dotenv, find_dotenv
 import psycopg2 as db
 
 from common.board_site_enums import board_sites
 from data.puller import DataPuller
+from mail.mail_sender import Mailer
 from match.match import Match
 from match.preppers import Prepper
 from match.profilers import Profiler
@@ -97,17 +98,17 @@ for watch in raw_pe_watches:
 		'colors': watch[7].split(', ')
 	})
 
-user_watches = {}
+user_pe_watches = {}
 
 for watch in pe_watches:
 	pp.pprint(watch)
-	if watch['user_id'] not in user_watches:
-		user_watches[watch['user_id']] = {}
-	if watch['platform_id'] not in user_watches[watch['user_id']]:
-		user_watches[watch['user_id']][watch['platform_id']] = []
-	user_watches[watch['user_id']][watch['platform_id']].append(watch['watched_platform_edition_id'])
+	if watch['user_id'] not in user_pe_watches:
+		user_pe_watches[watch['user_id']] = {}
+	if watch['platform_id'] not in user_pe_watches[watch['user_id']]:
+		user_pe_watches[watch['user_id']][watch['platform_id']] = []
+	user_pe_watches[watch['user_id']][watch['platform_id']].append(watch['watched_platform_edition_id'])
 
-pp.pprint(user_watches)
+pp.pprint(user_pe_watches)
 
 # grab product presences, organize in respective lookup dicts
 cur.execute("""SELECT listing_id, platform_edition_id FROM listings_platform_editions;""")
@@ -128,6 +129,16 @@ for presence in pe_presences:
 
 pp.pprint(pe_presences_per_pe)
 
-# iterate through user_watches, composing e-mail notification for each user
+cur.execute("""SELECT id, username, email FROM users;""")
+raw_users = cur.fetchall()
+
+for raw_user in raw_users:
+	user = User(id=raw_user[0], username=raw_user[1], email=raw_user[2], public_id=None, password=None, created_at=None)
+	user.add_to_registry()
+
+# iterate through user_pe_watches, composing e-mail notification for each user
+for user_id in user_pe_watches:
+	user = User.get_by_id(user_id)
+	mailer = Mailer(user=user, platforms=None, platform_editions=user_pe_watches[user.id], games=None, accessories=None)
 
 cur.close()
