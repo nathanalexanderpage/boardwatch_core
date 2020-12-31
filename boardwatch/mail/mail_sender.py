@@ -41,24 +41,48 @@ class Mailer():
 		self.games = games
 		self.accessories = accessories
 
-	def generate_message_text(self, listings):
+	def generate_message(self, is_user_mail_html_compatible):
+		if is_user_mail_html_compatible:
+			return self.generate_message_html()
+		else:
+			return self.generate_message_text()
+
+	def generate_message_text(self):
 		message_text_matches = ''
-		for site in usable_sites:
-			site_message = '\n\nListings from ' + site['name'] + ' (' + site['url'] + '):'
-			listing_ct = 1
-			for listing in listings:
-				site_message = site_message + '\n' + str(listing_ct) + '. ' + listing['title'] + '\n' + listing['url']
-				listing_ct += 1
-			message_text_matches = message_text_matches + site_message
+
+		message_text_matches = message_text_matches + 'PLATFORMS & EDITIONS\n'
+
+		if self.platforms:
+			for platform_id in self.platforms:
+				site_message_per_platform = ''
+
+				platform = Platform.get_by_id(platform_id)
+				# ----- Platform Name -----
+				site_message_per_platform = site_message_per_platform + '----- ' + platform.name + ' -----\n'
+
+				# Watched editions:
+				site_message_per_platform = site_message_per_platform + 'Watched editions:\n'
+
+				if self.platform_editions.get(platform_id):
+					for edition_id in self.platform_editions.get(platform_id):
+						edition = PlatformEdition.get_by_id(edition_id)
+
+						site_message_per_platform = site_message_per_platform + 'DESCRIPTIVE EDITION DESCRIPTION:'
+
+				# listing_ct = 1
+				for listing in []:
+					site_message = site_message + '\n' + str(listing_ct) + '. ' + listing['title'] + '\n' + listing['url']
+					listing_ct += 1
+				message_text_matches = message_text_matches + site_message
 		return message_text_matches
 
-	def generate_message_html(self, listings):
+	def generate_message_html(self):
 		message_text_matches = ''
 
 		for site in usable_sites:
 			site_message = '<h2>Listings from ' + site['name'] + ' (' + site['url'] + '):</h2>\n<ul style="padding: 0; list-style: none;">'
 			listing_ct = 1
-			for listing in listings:
+			for listing in []:
 				listing_no = str(listing_ct)
 				listing_title = listing['title']
 				listing_url = listing['url']
@@ -85,8 +109,8 @@ class Mailer():
 		return Template(template_file_content)
 
 	def send_mail(self):
-		message_listings_text = self.generate_message_text([])
-		message_listings_html = self.generate_message_html([])
+		message_listings_text = self.generate_message_text()
+		message_listings_html = self.generate_message_html()
 
 		# FIXME: get contact e-mail from db, not hard-coded file.
 		names, emails = self.get_contacts('contacts.txt')

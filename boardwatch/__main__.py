@@ -139,6 +139,8 @@ for raw_user in raw_users:
 # iterate through user_pe_watches, composing e-mail notification for each user
 for user_id in user_pe_watches:
 	user = User.get_by_id(user_id)
-	mailer = Mailer(user=user, platforms=None, platform_editions=user_pe_watches[user.id], games=None, accessories=None)
+	mailer = Mailer(user=user, platforms=None, platform_editions=user_pe_watches.get(user.id), games=None, accessories=None)
+	is_user_mail_html_compatible = False
+	message_content = mailer.generate_message(is_user_mail_html_compatible)
 
 cur.close()
