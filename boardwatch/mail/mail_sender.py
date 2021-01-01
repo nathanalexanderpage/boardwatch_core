@@ -36,6 +36,8 @@ usable_sites = [site for site in board_site_enums.board_sites if site['is_suppor
 # pp.pprint(matches)
 
 class Mailer():
+	pe_presences_per_pe = None
+
 	def __init__(self, user, platforms, platform_editions, games, accessories):
 		self.user = user
 		self.platforms = platforms
@@ -54,48 +56,65 @@ class Mailer():
 	def generate_message_text(self):
 		message_text_matches = ''
 
-		message_text_matches = message_text_matches + 'PLATFORMS & EDITIONS\n'
+		message_text_matches = message_text_matches + 'PLATFORMS & EDITIONS\n\n'
 
 		print(self.platforms)
 
-		if self.platforms:
-			for platform_id in self.platform_editions:
+		pp.pprint(Listing.registry)
+		for platform in Platform.get_all():
+			# ?
+			if platform.id in self.platform_editions or (self.platforms and platform.id in self.platforms):
 				site_message_per_platform = ''
 
-				platform = Platform.get_by_id(platform_id)
 				# ----- Platform Name -----
 				site_message_per_platform = site_message_per_platform + '----- ' + platform.name + ' -----\n'
 
-				# Watched editions:
-				site_message_per_platform = site_message_per_platform + 'Watched editions:\n'
-
-				if self.platform_editions.get(platform_id):
-					for edition_id in self.platform_editions.get(platform_id):
+				if self.platform_editions.get(platform.id):
+					for edition_id in self.platform_editions.get(platform.id):
 						edition = PlatformEdition.get_by_id(edition_id)
 
-						site_message_per_platform = site_message_per_platform + 'DESCRIPTIVE EDITION DESCRIPTION:'
+						edition_referencial_name = ''
 
-						for listing in []:
-							# listing title
-							site_message_per_platform = site_message_per_platform + listing.title + '\n'
+						if edition.name:
+							if len(edition_referencial_name) != 0:
+								edition_referencial_name = edition_referencial_name + ' '
+							edition_referencial_name = edition_referencial_name + edition.name
+						if edition.official_color:
+							if len(edition_referencial_name) != 0:
+								edition_referencial_name = edition_referencial_name + ' '
+							edition_referencial_name = edition_referencial_name + edition.official_color
+						if len(edition.colors) > 0:
+							for color in edition.colors:
+								if len(edition_referencial_name) != 0:
+									edition_referencial_name = edition_referencial_name + ' '
+								edition_referencial_name = edition_referencial_name + color
 
-							# listing price
-							site_message_per_platform = site_message_per_platform + listing.price + '\n'
+						site_message_per_platform = site_message_per_platform + edition_referencial_name + '\n'
 
-							# listing link
-							site_message_per_platform = site_message_per_platform + listing.url + '\n'
+						if Mailer.pe_presences_per_pe.get(edition.id):
+							for listing_id in Mailer.pe_presences_per_pe.get(edition.id):
+								listing = Listing.get_by_id(listing_id)
+								# listing title
+								site_message_per_platform = site_message_per_platform + '\t' + listing.title + '\n'
 
-							# listing datetime
-							site_message_per_platform = site_message_per_platform + listing.datetime + '\n'
+								# listing price
+								if listing.price is None:
+									site_message_per_platform = site_message_per_platform + '\t' + '(price not listed)' + '\n'
+								else:
+									site_message_per_platform = site_message_per_platform + '\t' + listing.price + '\n'
 
-							# blank line
-							site_message_per_platform = site_message_per_platform + '\n'
+								# listing link
+								site_message_per_platform = site_message_per_platform + '\t' + listing.url + '\n'
 
-				# listing_ct = 1
-				for listing in []:
-					site_message = site_message + '\n' + str(listing_ct) + '. ' + listing['title'] + '\n' + listing['url']
-					listing_ct += 1
-				message_text_matches = message_text_matches + site_message
+								# listing datetime
+								site_message_per_platform = site_message_per_platform + '\t' + str(listing.date_posted) + '\n'
+
+								# blank line
+								site_message_per_platform = site_message_per_platform + '\t' + '\n'
+						print(site_message_per_platform)
+					site_message_per_platform = site_message_per_platform + '\n'
+
+				message_text_matches = message_text_matches + site_message_per_platform
 		return message_text_matches
 
 	def generate_message_html(self):
@@ -162,6 +181,7 @@ class Mailer():
 			print(current_folder)
 
 			message_listings_text = self.generate_message_text()
+			# print(message_listings_text)
 			message_text_template = self.read_template(current_folder + '/mail_message.txt')
 
 			print(GMAIL_ADDRESS, GMAIL_PASSWORD)
@@ -185,6 +205,13 @@ class Mailer():
 			print('\t\tSENT')
 
 			smtp.quit()
+
+	@classmethod
+	def calibrate_pe_presences(cls, pe_presences_per_pe):
+		"""
+		Add reference to dictionary of applicable PlatformEdition presences.
+		"""
+		cls.pe_presences_per_pe = pe_presences_per_pe
 
 if __name__ == '__main__':
 	message_articles_html_test = """

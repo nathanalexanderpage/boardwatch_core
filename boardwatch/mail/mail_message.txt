@@ -4,9 +4,7 @@ Here is the list of postings which match your watchlist.
 
 ${MATCHING_POSTS}
 
-If this format is hard to sift through, don't worry. A better format for this e-mail is in development!
-
-Thank you for using my tool. Until next time, happy bargain hunting!
+Thank you for using my tool. Happy bargain hunting!
 
 
 -Nathan Mailbot

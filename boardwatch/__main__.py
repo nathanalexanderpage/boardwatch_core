@@ -126,7 +126,8 @@ for presence in raw_pe_presences:
 
 for presence in pe_presences:
 	if presence['platform_edition_id'] not in pe_presences_per_pe:
-		pe_presences_per_pe[presence['platform_edition_id']] = presence['listing_id']
+		pe_presences_per_pe[presence['platform_edition_id']] = list()
+	pe_presences_per_pe[presence['platform_edition_id']].append(presence['listing_id'])
 
 pp.pprint('pe_presences_per_pe')
 pp.pprint(pe_presences_per_pe)
@@ -145,6 +146,9 @@ for user_id in user_pe_watches:
 	user = User.get_by_id(user_id)
 	print(user)
 	mailer = Mailer(user=user, platforms=None, platform_editions=user_pe_watches.get(user.id), games=None, accessories=None)
+
+	Mailer.calibrate_pe_presences(pe_presences_per_pe)
+
 	is_user_mail_html_compatible = False
 	mailer.send_mail(is_user_mail_html_compatible)
 
