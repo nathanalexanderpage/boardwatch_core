@@ -119,20 +119,73 @@ class Mailer():
 
 	def generate_message_html(self):
 		message_text_matches = ''
+		message_text_matches = message_text_matches + 'PLATFORMS & EDITIONS\n\n'
 
-		for site in usable_sites:
-			site_message = '<h2>Listings from ' + site['name'] + ' (' + site['url'] + '):</h2>\n<ul style="padding: 0; list-style: none;">'
-			listing_ct = 1
-			for listing in []:
-				listing_no = str(listing_ct)
-				listing_title = listing['title']
-				listing_url = listing['url']
-				listing_datetime = listing['datetime']
-				listing_price = '$' + str(listing['price'])
-				site_message = site_message + '\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">\n<span style="font-size: 1.15em;">' + listing_no + '. <a href="' + listing_url + '" style="color: black;">' + listing_title + '</a>' + ' – <span style="color: green; font-weight: bold;">' + listing_price + '</span>\n</span>\n<p><span style="color: #563900;"><time>' + listing_datetime + '</time></span></p>\n</li>'
-				listing_ct += 1
-			site_message = site_message + '\n</ul>'
-			message_text_matches = message_text_matches + site_message
+		print(self.platforms)
+
+		pp.pprint(Listing.registry)
+		for platform in Platform.get_all():
+			# ?
+			if platform.id in self.platform_editions or (self.platforms and platform.id in self.platforms):
+				site_message_per_platform = ''
+
+				# ----- Platform Name -----
+				site_message_per_platform = site_message_per_platform + '----- ' + platform.name + ' -----\n'
+
+				if self.platform_editions.get(platform.id):
+					for edition_id in self.platform_editions.get(platform.id):
+						edition = PlatformEdition.get_by_id(edition_id)
+
+						edition_referencial_name = ''
+
+						if edition.name:
+							if len(edition_referencial_name) != 0:
+								edition_referencial_name = edition_referencial_name + ' '
+							edition_referencial_name = edition_referencial_name + edition.name
+						if edition.official_color:
+							if len(edition_referencial_name) != 0:
+								edition_referencial_name = edition_referencial_name + ' '
+							edition_referencial_name = edition_referencial_name + edition.official_color
+						if len(edition.colors) > 0:
+							for color in edition.colors:
+								if len(edition_referencial_name) != 0:
+									edition_referencial_name = edition_referencial_name + ' '
+								edition_referencial_name = edition_referencial_name + color
+
+						site_message_per_platform = site_message_per_platform + edition_referencial_name + '\n'
+
+						if Mailer.pe_presences_per_pe.get(edition.id):
+							for listing_id in Mailer.pe_presences_per_pe.get(edition.id):
+								f"""
+								\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
+								\n<span style="font-size: 1.15em;">{listing_no}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
+								\n</span>
+								\n<p><span style="color: #563900;"><time>{listing_datetime}</time></span></p>
+								\n</li>
+								"""
+								
+								listing = Listing.get_by_id(listing_id)
+								# listing title
+								site_message_per_platform = site_message_per_platform + '\t' + listing.title + '\n'
+
+								# listing price
+								if listing.price is None:
+									site_message_per_platform = site_message_per_platform + '\t' + '(price not listed)' + '\n'
+								else:
+									site_message_per_platform = site_message_per_platform + '\t' + listing.price + '\n'
+
+								# listing link
+								site_message_per_platform = site_message_per_platform + '\t' + listing.url + '\n'
+
+								# listing datetime
+								site_message_per_platform = site_message_per_platform + '\t' + str(listing.date_posted) + '\n'
+
+								# blank line
+								site_message_per_platform = site_message_per_platform + '\t' + '\n'
+						print(site_message_per_platform)
+					site_message_per_platform = site_message_per_platform + '\n'
+
+				message_text_matches = message_text_matches + site_message_per_platform
 		return message_text_matches
 
 	def get_contacts(self, filename):
