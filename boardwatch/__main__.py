@@ -108,6 +108,7 @@ for watch in pe_watches:
 		user_pe_watches[watch['user_id']][watch['platform_id']] = []
 	user_pe_watches[watch['user_id']][watch['platform_id']].append(watch['watched_platform_edition_id'])
 
+pp.pprint('user_pe_watches')
 pp.pprint(user_pe_watches)
 
 # grab product presences, organize in respective lookup dicts
@@ -127,8 +128,10 @@ for presence in pe_presences:
 	if presence['platform_edition_id'] not in pe_presences_per_pe:
 		pe_presences_per_pe[presence['platform_edition_id']] = presence['listing_id']
 
+pp.pprint('pe_presences_per_pe')
 pp.pprint(pe_presences_per_pe)
 
+# pull users from db
 cur.execute("""SELECT id, username, email FROM users;""")
 raw_users = cur.fetchall()
 
@@ -138,9 +141,11 @@ for raw_user in raw_users:
 
 # iterate through user_pe_watches, composing e-mail notification for each user
 for user_id in user_pe_watches:
+	print(user_id)
 	user = User.get_by_id(user_id)
+	print(user)
 	mailer = Mailer(user=user, platforms=None, platform_editions=user_pe_watches.get(user.id), games=None, accessories=None)
 	is_user_mail_html_compatible = False
-	message_content = mailer.generate_message(is_user_mail_html_compatible)
+	mailer.send_mail(is_user_mail_html_compatible)
 
 cur.close()

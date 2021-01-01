@@ -1,0 +1,10 @@
+${RECIPIENT},
+
+Your e-mail client is not able to view this message in its intended format (HTML).
+
+You may change your user preferences within your account to receive plaintext e-mail notifications moving forward.
+
+Thank you for using my tool. Until next time, happy bargain hunting!
+
+
+-Nathan Mailbot

@@ -1,9 +1,8 @@
 ${RECIPIENT},
 
-Your e-mail client is not able to view this message in its intended format, and may result in errors where symbols or non-English text are present.
+Here is the list of postings which match your watchlist.
 
-Support for plain text e-mail is not in place at this time. It will be forthcoming in the following weeks.
-
+${MATCHING_POSTS}
 
 If this format is hard to sift through, don't worry. A better format for this e-mail is in development!
 

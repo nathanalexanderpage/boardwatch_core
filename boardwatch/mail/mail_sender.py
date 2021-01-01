@@ -1,12 +1,14 @@
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 # from email.MIMEImage import MIMEImage
+from email.message import EmailMessage
 import os
+import pathlib
 import pprint
 import smtplib
 from string import Template
 
-from boardwatch_models import Board, Listing, Platform, PlatformEdition, PlatformNameGroup
+from boardwatch_models import Board, Listing, Platform, PlatformEdition, PlatformNameGroup, User
 from dotenv import load_dotenv
 
 from boardwatch.common import board_site_enums
@@ -37,6 +39,8 @@ class Mailer():
 	def __init__(self, user, platforms, platform_editions, games, accessories):
 		self.user = user
 		self.platforms = platforms
+		if platforms is None:
+			self.platforms = list()
 		self.platform_editions = platform_editions
 		self.games = games
 		self.accessories = accessories
@@ -52,8 +56,10 @@ class Mailer():
 
 		message_text_matches = message_text_matches + 'PLATFORMS & EDITIONS\n'
 
+		print(self.platforms)
+
 		if self.platforms:
-			for platform_id in self.platforms:
+			for platform_id in self.platform_editions:
 				site_message_per_platform = ''
 
 				platform = Platform.get_by_id(platform_id)
@@ -68,6 +74,22 @@ class Mailer():
 						edition = PlatformEdition.get_by_id(edition_id)
 
 						site_message_per_platform = site_message_per_platform + 'DESCRIPTIVE EDITION DESCRIPTION:'
+
+						for listing in []:
+							# listing title
+							site_message_per_platform = site_message_per_platform + listing.title + '\n'
+
+							# listing price
+							site_message_per_platform = site_message_per_platform + listing.price + '\n'
+
+							# listing link
+							site_message_per_platform = site_message_per_platform + listing.url + '\n'
+
+							# listing datetime
+							site_message_per_platform = site_message_per_platform + listing.datetime + '\n'
+
+							# blank line
+							site_message_per_platform = site_message_per_platform + '\n'
 
 				# listing_ct = 1
 				for listing in []:
@@ -108,39 +130,61 @@ class Mailer():
 			template_file_content = template_file.read()
 		return Template(template_file_content)
 
-	def send_mail(self):
-		message_listings_text = self.generate_message_text()
-		message_listings_html = self.generate_message_html()
+	def send_mail(self, is_user_mail_html_compatible):
+		print('SENDING to ' + self.user.email)
+		if is_user_mail_html_compatible:
+			message_listings_html = self.generate_message_html()
+			message_html_template = self.read_template('mail_message.html')
+			message_premable_template = self.read_template('mail_message_preamble.txt')
 
-		# FIXME: get contact e-mail from db, not hard-coded file.
-		names, emails = self.get_contacts('contacts.txt')
-		message_html_template = self.read_template('mail_message.html')
-		message_text_template = self.read_template('mail_message.txt')
+			smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
+			smtp.starttls()
+			smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
 
-		print(names)
-		print(emails)
-
-		smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
-		smtp.starttls()
-		smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
-
-		for name, email in zip(names, emails):
-			print('SENDING to ' + email)
 			msg = MIMEMultipart('alternative')
-			message_html = message_html_template.substitute(RECIPIENT=name, MATCHING_POSTS=message_listings_html)
-			message_text = message_text_template.substitute(RECIPIENT=name, MATCHING_POSTS=message_listings_text)
+			message_html = message_html_template.substitute(RECIPIENT=self.user.name, MATCHING_POSTS=message_listings_html)
+			message_preamble = message_premable_template.substitute(RECIPIENT=self.user.name)
 
 			msg['From'] = GMAIL_ADDRESS
-			msg['To'] = email
+			msg['To'] = self.user.email
 			msg['Subject'] = 'Craigswatch'
-			msg.preamble = message_text.encode('ascii', 'ignore').decode('unicode_escape')
+			msg.preamble = message_preamble.encode('ascii', 'ignore').decode('unicode_escape')
 
 			msg.attach(MIMEText(message_html.encode('utf-8'), _subtype='html', _charset='UTF-8'))
 
 			smtp.send_message(msg)
 			del msg
 			print('\t\tSENT')
-		smtp.quit()
+
+			smtp.quit()
+		else:
+			current_folder = str(pathlib.Path(__file__).resolve().parents[0].absolute())
+			print(current_folder)
+
+			message_listings_text = self.generate_message_text()
+			message_text_template = self.read_template(current_folder + '/mail_message.txt')
+
+			print(GMAIL_ADDRESS, GMAIL_PASSWORD)
+
+			smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
+			smtp.starttls()
+			smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
+
+			print(self.user.username)
+
+			message_text = message_text_template.substitute(RECIPIENT=self.user.username, MATCHING_POSTS=message_listings_text)
+			msg = EmailMessage()
+			msg.set_content(message_text)
+
+			msg['From'] = GMAIL_ADDRESS
+			msg['To'] = self.user.email
+			msg['Subject'] = 'Craigswatch'
+
+			smtp.send_message(msg)
+			del msg
+			print('\t\tSENT')
+
+			smtp.quit()
 
 if __name__ == '__main__':
 	message_articles_html_test = """
