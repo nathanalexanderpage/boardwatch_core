@@ -1,3 +1,4 @@
+from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 # from email.MIMEImage import MIMEImage
@@ -167,13 +168,13 @@ class Mailer():
 								listing_url = listing.url
 
 								# listing datetime
-								listing_datetime = str(listing.date_posted)
+								listing_datetime = listing.date_posted.strftime("%I:%M%p on %Y-%m-%d")
 
 								site_message_per_platform = site_message_per_platform + f"""
 								\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
 								\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
 								\n</span>
-								\n<p><span style="color: #563900;"><time>{listing_datetime}</time></span></p>
+								\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
 								\n</li>
 								"""
 							site_message_per_platform = site_message_per_platform + '\n</ul>'
