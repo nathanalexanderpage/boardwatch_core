@@ -36,12 +36,6 @@ class Mailer():
 		self.games = games
 		self.accessories = accessories
 
-	def generate_message(self, is_user_mail_html_compatible):
-		if is_user_mail_html_compatible:
-			return self.generate_message_html()
-		else:
-			return self.generate_message_text()
-
 	def generate_message_text(self):
 		message_text_matches = ''
 
@@ -183,15 +177,6 @@ class Mailer():
 
 				message_text_matches = message_text_matches + message_text_per_platform
 		return message_text_matches
-
-	def get_contacts(self, filename):
-		names = []
-		emails = []
-		with open(filename, mode='r', encoding='utf-8') as contacts_file:
-			for contact in contacts_file:
-				names.append(contact.split()[0])
-				emails.append(contact.split()[1])
-		return names, emails
 
 	def read_template(self, filename):
 		with open(filename, 'r', encoding='utf-8') as template_file:
