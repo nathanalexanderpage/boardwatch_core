@@ -53,10 +53,10 @@ class Mailer():
 		for platform in Platform.get_all():
 			# ?
 			if platform.id in self.platform_editions or (self.platforms and platform.id in self.platforms):
-				site_message_per_platform = ''
+				message_text_per_platform = ''
 
 				# ----- Platform Name -----
-				site_message_per_platform = site_message_per_platform + '----- ' + platform.name + ' -----\n'
+				message_text_per_platform = message_text_per_platform + '----- ' + platform.name + ' -----\n'
 
 				if self.platform_editions.get(platform.id):
 					for edition_id in self.platform_editions.get(platform.id):
@@ -78,32 +78,32 @@ class Mailer():
 									edition_referencial_name = edition_referencial_name + ' '
 								edition_referencial_name = edition_referencial_name + color
 
-						site_message_per_platform = site_message_per_platform + edition_referencial_name + '\n'
+						message_text_per_platform = message_text_per_platform + edition_referencial_name + '\n'
 
 						if Mailer.pe_presences_per_pe.get(edition.id):
 							for listing_id in Mailer.pe_presences_per_pe.get(edition.id):
 								listing = Listing.get_by_id(listing_id)
 								# listing title
-								site_message_per_platform = site_message_per_platform + '\t' + listing.title + '\n'
+								message_text_per_platform = message_text_per_platform + '\t' + listing.title + '\n'
 
 								# listing price
 								if listing.price is None:
-									site_message_per_platform = site_message_per_platform + '\t' + '(price not listed)' + '\n'
+									message_text_per_platform = message_text_per_platform + '\t' + '(price not listed)' + '\n'
 								else:
-									site_message_per_platform = site_message_per_platform + '\t' + listing.price + '\n'
+									message_text_per_platform = message_text_per_platform + '\t' + listing.price + '\n'
 
 								# listing link
-								site_message_per_platform = site_message_per_platform + '\t' + listing.url + '\n'
+								message_text_per_platform = message_text_per_platform + '\t' + listing.url + '\n'
 
 								# listing datetime
-								site_message_per_platform = site_message_per_platform + '\t' + str(listing.date_posted) + '\n'
+								message_text_per_platform = message_text_per_platform + '\t' + str(listing.date_posted) + '\n'
 
 								# blank line
-								site_message_per_platform = site_message_per_platform + '\t' + '\n'
-						print(site_message_per_platform)
-					site_message_per_platform = site_message_per_platform + '\n'
+								message_text_per_platform = message_text_per_platform + '\t' + '\n'
+						print(message_text_per_platform)
+					message_text_per_platform = message_text_per_platform + '\n'
 
-				message_text_matches = message_text_matches + site_message_per_platform
+				message_text_matches = message_text_matches + message_text_per_platform
 		return message_text_matches
 
 	def generate_message_html(self):
@@ -116,10 +116,10 @@ class Mailer():
 		for platform in Platform.get_all():
 			# ?
 			if platform.id in self.platform_editions or (self.platforms and platform.id in self.platforms):
-				site_message_per_platform = ''
+				message_text_per_platform = ''
 
 				# Platform Name
-				site_message_per_platform = site_message_per_platform + f'\n<h3>{platform.name}</h3>'
+				message_text_per_platform = message_text_per_platform + f'\n<h3>{platform.name}</h3>'
 
 				if self.platform_editions.get(platform.id):
 					for edition_id in self.platform_editions.get(platform.id):
@@ -141,11 +141,11 @@ class Mailer():
 									edition_referencial_name = edition_referencial_name + ' '
 								edition_referencial_name = edition_referencial_name + color
 
-						site_message_per_platform = site_message_per_platform + f'\n<h4>{edition_referencial_name}</h4>'
+						message_text_per_platform = message_text_per_platform + f'\n<h4>{edition_referencial_name}</h4>'
 
 						if Mailer.pe_presences_per_pe.get(edition.id):
 							listing_ct = 0
-							site_message_per_platform = site_message_per_platform + '\n<ul style="padding: 0; list-style: none;">'
+							message_text_per_platform = message_text_per_platform + '\n<ul style="padding: 0; list-style: none;">'
 							for listing_id in Mailer.pe_presences_per_pe.get(edition.id):
 								listing_ct += 1
 								listing = Listing.get_by_id(listing_id)
@@ -170,18 +170,18 @@ class Mailer():
 								# listing datetime
 								listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')
 
-								site_message_per_platform = site_message_per_platform + f"""
+								message_text_per_platform = message_text_per_platform + f"""
 								\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
 								\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
 								\n</span>
 								\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
 								\n</li>
 								"""
-							site_message_per_platform = site_message_per_platform + '\n</ul>'
-						print(site_message_per_platform)
-					site_message_per_platform = site_message_per_platform + '\n'
+							message_text_per_platform = message_text_per_platform + '\n</ul>'
+						print(message_text_per_platform)
+					message_text_per_platform = message_text_per_platform + '\n'
 
-				message_text_matches = message_text_matches + site_message_per_platform
+				message_text_matches = message_text_matches + message_text_per_platform
 		return message_text_matches
 
 	def get_contacts(self, filename):
@@ -200,29 +200,23 @@ class Mailer():
 
 	def send_mail(self, is_user_mail_html_compatible):
 		print('SENDING to ' + self.user.email)
-		if is_user_mail_html_compatible:
-			current_folder = str(pathlib.Path(__file__).resolve().parents[0].absolute())
+		current_folder = str(pathlib.Path(__file__).resolve().parents[0].absolute())
 
+		if is_user_mail_html_compatible:
 			message_listings_html = self.generate_message_html()
 			message_html_template = self.read_template(current_folder + '/mail_message.html')
 			message_premable_template = self.read_template(current_folder + '/mail_message_preamble.txt')
-
-			msg = MIMEMultipart('alternative')
 			message_html = message_html_template.substitute(RECIPIENT=self.user.username, MATCHING_POSTS=message_listings_html)
 			message_preamble = message_premable_template.substitute(RECIPIENT=self.user.username)
 
+			msg = MIMEMultipart('alternative')
 			msg['From'] = GMAIL_ADDRESS
 			msg['To'] = self.user.email
 			msg['Subject'] = 'Craigswatch'
 			msg.preamble = message_preamble.encode('ascii', 'ignore').decode('unicode_escape')
-
 			msg.attach(MIMEText(message_html.encode('utf-8'), _subtype='html', _charset='UTF-8'))
 
-			print(message_html)
-			print(GMAIL_HOST_ADDRESS, GMAIL_TLS_PORT)
-
 			smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
-			smtp.connect(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
 			smtp.ehlo()
 			smtp.starttls()
 			smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
@@ -233,29 +227,20 @@ class Mailer():
 
 			smtp.quit()
 		else:
-			current_folder = str(pathlib.Path(__file__).resolve().parents[0].absolute())
-			print(current_folder)
-
 			message_listings_text = self.generate_message_text()
-			# print(message_listings_text)
 			message_text_template = self.read_template(current_folder + '/mail_message.txt')
-
-			print(GMAIL_ADDRESS, GMAIL_PASSWORD)
-			print(GMAIL_HOST_ADDRESS, GMAIL_TLS_PORT)
-
-			smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
-			smtp.starttls()
-			smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
-
-			print(self.user.username)
-
 			message_text = message_text_template.substitute(RECIPIENT=self.user.username, MATCHING_POSTS=message_listings_text)
+
 			msg = EmailMessage()
 			msg.set_content(message_text)
-
 			msg['From'] = GMAIL_ADDRESS
 			msg['To'] = self.user.email
 			msg['Subject'] = 'Craigswatch'
+
+			smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
+			smtp.ehlo()
+			smtp.starttls()
+			smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
 
 			smtp.send_message(msg)
 			del msg
