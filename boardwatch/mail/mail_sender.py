@@ -23,18 +23,6 @@ GMAIL_TLS_PORT = os.getenv('GMAIL_TLS_PORT')
 
 pp = pprint.PrettyPrinter(indent=2)
 
-# cl_results_scraper = CraigslistSoupMaker()
-# test_parsed_results = cl_results_scraper.make_soup()
-
-# pp.pprint(test_parsed_results)
-
-# matcher = PlatformProfiler(ps1, {})
-# matches = [result for result in test_parsed_results if matcher.assess_match(result)]
-
-usable_sites = [site for site in board_site_enums.board_sites if site['is_supported']]
-
-# pp.pprint(matches)
-
 class Mailer():
 	pe_presences_per_pe = None
 
@@ -119,7 +107,7 @@ class Mailer():
 
 	def generate_message_html(self):
 		message_text_matches = ''
-		message_text_matches = message_text_matches + 'PLATFORMS & EDITIONS\n\n'
+		message_text_matches = message_text_matches + '<h2>PLATFORMS & EDITIONS</h2>\n\n'
 
 		print(self.platforms)
 
@@ -129,8 +117,8 @@ class Mailer():
 			if platform.id in self.platform_editions or (self.platforms and platform.id in self.platforms):
 				site_message_per_platform = ''
 
-				# ----- Platform Name -----
-				site_message_per_platform = site_message_per_platform + '----- ' + platform.name + ' -----\n'
+				# Platform Name
+				site_message_per_platform = site_message_per_platform + f'\n<h3>{platform.name}</h3>'
 
 				if self.platform_editions.get(platform.id):
 					for edition_id in self.platform_editions.get(platform.id):
@@ -152,36 +140,43 @@ class Mailer():
 									edition_referencial_name = edition_referencial_name + ' '
 								edition_referencial_name = edition_referencial_name + color
 
-						site_message_per_platform = site_message_per_platform + edition_referencial_name + '\n'
+						site_message_per_platform = site_message_per_platform + f'\n<h4>{edition_referencial_name}</h4>'
 
 						if Mailer.pe_presences_per_pe.get(edition.id):
+							listing_ct = 0
+							site_message_per_platform = site_message_per_platform + '\n<ul style="padding: 0; list-style: none;">'
 							for listing_id in Mailer.pe_presences_per_pe.get(edition.id):
-								f"""
+								listing_ct += 1
+								listing = Listing.get_by_id(listing_id)
+
+								# listing title
+								listing_title = None
+								if listing.title is None:
+									listing_title = '(untitled)'
+								else:
+									listing_title = listing.title
+
+								# listing price
+								listing_price = None
+								if listing.price is None:
+									listing_price = '(price not listed)'
+								else:
+									listing_price = str(listing.price)
+
+								# listing URL
+								listing_url = listing.url
+
+								# listing datetime
+								listing_datetime = str(listing.date_posted)
+
+								site_message_per_platform = site_message_per_platform + f"""
 								\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
-								\n<span style="font-size: 1.15em;">{listing_no}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
+								\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
 								\n</span>
 								\n<p><span style="color: #563900;"><time>{listing_datetime}</time></span></p>
 								\n</li>
 								"""
-								
-								listing = Listing.get_by_id(listing_id)
-								# listing title
-								site_message_per_platform = site_message_per_platform + '\t' + listing.title + '\n'
-
-								# listing price
-								if listing.price is None:
-									site_message_per_platform = site_message_per_platform + '\t' + '(price not listed)' + '\n'
-								else:
-									site_message_per_platform = site_message_per_platform + '\t' + listing.price + '\n'
-
-								# listing link
-								site_message_per_platform = site_message_per_platform + '\t' + listing.url + '\n'
-
-								# listing datetime
-								site_message_per_platform = site_message_per_platform + '\t' + str(listing.date_posted) + '\n'
-
-								# blank line
-								site_message_per_platform = site_message_per_platform + '\t' + '\n'
+							site_message_per_platform = site_message_per_platform + '\n</ul>'
 						print(site_message_per_platform)
 					site_message_per_platform = site_message_per_platform + '\n'
 
@@ -205,17 +200,15 @@ class Mailer():
 	def send_mail(self, is_user_mail_html_compatible):
 		print('SENDING to ' + self.user.email)
 		if is_user_mail_html_compatible:
-			message_listings_html = self.generate_message_html()
-			message_html_template = self.read_template('mail_message.html')
-			message_premable_template = self.read_template('mail_message_preamble.txt')
+			current_folder = str(pathlib.Path(__file__).resolve().parents[0].absolute())
 
-			smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
-			smtp.starttls()
-			smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
+			message_listings_html = self.generate_message_html()
+			message_html_template = self.read_template(current_folder + '/mail_message.html')
+			message_premable_template = self.read_template(current_folder + '/mail_message_preamble.txt')
 
 			msg = MIMEMultipart('alternative')
-			message_html = message_html_template.substitute(RECIPIENT=self.user.name, MATCHING_POSTS=message_listings_html)
-			message_preamble = message_premable_template.substitute(RECIPIENT=self.user.name)
+			message_html = message_html_template.substitute(RECIPIENT=self.user.username, MATCHING_POSTS=message_listings_html)
+			message_preamble = message_premable_template.substitute(RECIPIENT=self.user.username)
 
 			msg['From'] = GMAIL_ADDRESS
 			msg['To'] = self.user.email
@@ -223,6 +216,15 @@ class Mailer():
 			msg.preamble = message_preamble.encode('ascii', 'ignore').decode('unicode_escape')
 
 			msg.attach(MIMEText(message_html.encode('utf-8'), _subtype='html', _charset='UTF-8'))
+
+			print(message_html)
+			print(GMAIL_HOST_ADDRESS, GMAIL_TLS_PORT)
+
+			smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
+			smtp.connect(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
+			smtp.ehlo()
+			smtp.starttls()
+			smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
 
 			smtp.send_message(msg)
 			del msg
@@ -238,6 +240,7 @@ class Mailer():
 			message_text_template = self.read_template(current_folder + '/mail_message.txt')
 
 			print(GMAIL_ADDRESS, GMAIL_PASSWORD)
+			print(GMAIL_HOST_ADDRESS, GMAIL_TLS_PORT)
 
 			smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
 			smtp.starttls()

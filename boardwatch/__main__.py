@@ -149,7 +149,7 @@ for user_id in user_pe_watches:
 
 	Mailer.calibrate_pe_presences(pe_presences_per_pe)
 
-	is_user_mail_html_compatible = False
+	is_user_mail_html_compatible = True
 	mailer.send_mail(is_user_mail_html_compatible)
 
 cur.close()
