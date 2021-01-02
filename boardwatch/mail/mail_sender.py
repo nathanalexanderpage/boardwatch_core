@@ -34,14 +34,10 @@ class Mailer():
 
 	def generate_message_text(self):
 		message_text_matches = ''
-
 		message_text_matches = message_text_matches + 'PLATFORMS & EDITIONS\n\n'
-
-		print(self.platforms)
 
 		pp.pprint(Listing.registry)
 		for platform in Platform.get_all():
-			# ?
 			if platform.id in self.platform_editions or (self.platforms and platform.id in self.platforms):
 				message_text_per_platform = ''
 
@@ -90,7 +86,6 @@ class Mailer():
 
 								# blank line
 								message_text_per_platform = message_text_per_platform + '\t' + '\n'
-						print(message_text_per_platform)
 					message_text_per_platform = message_text_per_platform + '\n'
 
 				message_text_matches = message_text_matches + message_text_per_platform
@@ -100,11 +95,8 @@ class Mailer():
 		message_text_matches = ''
 		message_text_matches = message_text_matches + '<h2>PLATFORMS & EDITIONS</h2>\n\n'
 
-		print(self.platforms)
-
 		pp.pprint(Listing.registry)
 		for platform in Platform.get_all():
-			# ?
 			if platform.id in self.platform_editions or (self.platforms and platform.id in self.platforms):
 				message_text_per_platform = ''
 
@@ -168,7 +160,6 @@ class Mailer():
 								\n</li>
 								"""
 							message_text_per_platform = message_text_per_platform + '\n</ul>'
-						print(message_text_per_platform)
 					message_text_per_platform = message_text_per_platform + '\n'
 
 				message_text_matches = message_text_matches + message_text_per_platform

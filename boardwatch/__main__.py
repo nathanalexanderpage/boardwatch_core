@@ -52,7 +52,6 @@ DataPuller.pull_listings()
 for listing in Listing.get_all():
 	for edition in PlatformEdition.get_all():
 		searchtexts = profiler.build_string_matches(edition)
-		# pp.pprint(searchtexts)
 
 		for degree in searchtexts.keys():
 			# for each listing, iterate through all searchable text segments
@@ -65,8 +64,7 @@ for listing in Listing.get_all():
 						match = Match(score=1, start=match_index, end=match_index+len(searchtext), item=edition, listing=listing)
 						match.add_to_registry()
 					except Exception as e:
-						# print(e)
-						continue
+						pass
 
 # ensure matches are checked against each other (no more than one product match record per text segment in listing)
 Match.remove_competing_matches()
@@ -108,7 +106,6 @@ for watch in pe_watches:
 		user_pe_watches[watch['user_id']][watch['platform_id']] = []
 	user_pe_watches[watch['user_id']][watch['platform_id']].append(watch['watched_platform_edition_id'])
 
-pp.pprint('user_pe_watches')
 pp.pprint(user_pe_watches)
 
 # grab product presences, organize in respective lookup dicts
@@ -129,8 +126,7 @@ for presence in pe_presences:
 		pe_presences_per_pe[presence['platform_edition_id']] = list()
 	pe_presences_per_pe[presence['platform_edition_id']].append(presence['listing_id'])
 
-pp.pprint('pe_presences_per_pe')
-pp.pprint(pe_presences_per_pe)
+Mailer.calibrate_pe_presences(pe_presences_per_pe)
 
 # pull users from db
 cur.execute("""SELECT id, username, email FROM users;""")
@@ -140,15 +136,10 @@ for raw_user in raw_users:
 	user = User(id=raw_user[0], username=raw_user[1], email=raw_user[2], public_id=None, password=None, created_at=None)
 	user.add_to_registry()
 
-# iterate through user_pe_watches, composing e-mail notification for each user
+# iterate through user_pe_watches, sending e-mail notification for each user
 for user_id in user_pe_watches:
-	print(user_id)
 	user = User.get_by_id(user_id)
-	print(user)
 	mailer = Mailer(user=user, platforms=None, platform_editions=user_pe_watches.get(user.id), games=None, accessories=None)
-
-	Mailer.calibrate_pe_presences(pe_presences_per_pe)
-
 	is_user_mail_html_compatible = True
 	mailer.send_mail(is_user_mail_html_compatible)
 
