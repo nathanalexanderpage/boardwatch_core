@@ -12,10 +12,6 @@ from string import Template
 from boardwatch_models import Board, Listing, Platform, PlatformEdition, PlatformNameGroup, User
 from dotenv import load_dotenv
 
-from boardwatch.common import board_site_enums
-from boardwatch.match import profilers
-from boardwatch.scrape.soup_maker import CraigslistSoupMaker
-
 load_dotenv()
 GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
 GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
