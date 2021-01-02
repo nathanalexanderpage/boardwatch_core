@@ -168,7 +168,7 @@ class Mailer():
 								listing_url = listing.url
 
 								# listing datetime
-								listing_datetime = listing.date_posted.strftime("%I:%M%p on %Y-%m-%d")
+								listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')
 
 								site_message_per_platform = site_message_per_platform + f"""
 								\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
