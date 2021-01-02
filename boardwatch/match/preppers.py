@@ -26,8 +26,6 @@ class Prepper():
 	def prep_items(self):
 		conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 		cur = conn.cursor()
-
-
 		cur.execute('SELECT id, name, generation as gen FROM platform_families;')
 		platform_families = cur.fetchall()
 
@@ -65,7 +63,7 @@ class Prepper():
 					}
 
 					print('EDITION')
-					edition = PlatformEdition(id=platform_edition[0], name=platform_edition[1], official_color=platform_edition[2], colors=[], has_matte=platform_edition[3], has_transparency=platform_edition[4], has_gloss=platform_edition[5], note=platform_edition[6], image_url=platform_edition[7])
+					edition = PlatformEdition(id=platform_edition[0], name=platform_edition[1], official_color=platform_edition[2], has_matte=platform_edition[3], has_transparency=platform_edition[4], has_gloss=platform_edition[5], note=platform_edition[6], image_url=platform_edition[7])
 					print(edition)
 
 					cur.execute('SELECT colors.id as id, colors.name as name FROM colors JOIN colors_platform_editions as cpe ON id = cpe.color_id WHERE cpe.platform_edition_id = %s;', (current_edition['id'],))
