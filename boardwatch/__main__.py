@@ -53,68 +53,22 @@ Match.remove_competing_matches()
 # insert db record to indicate match between listing and each found product
 Match.insert_all_to_db()
 
-# loop through users. send e-mail notifications only for those whose settings indicate that preference.
-cur.execute("""SELECT wpe.user_id as user_id, pf.name AS platform_family, p.name AS platform, p.id AS p_id, wpe.platform_edition_id as watched_platform_edition_id, pe.name AS edition_name, pe.official_color AS official_color, x.colors AS colors FROM watchlist_platform_editions as wpe JOIN platform_editions AS pe ON pe.id = wpe.platform_edition_id JOIN platforms AS p ON pe.platform_id = p.id JOIN platform_families AS pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups AS png ON png.id = p.name_group_id JOIN generations AS gen ON gen.id = pf.generation JOIN (SELECT pe.id AS id, STRING_AGG(c.name,', ') AS colors FROM platform_editions AS pe JOIN colors_platform_editions AS cpe ON cpe.platform_edition_id = pe.id JOIN colors AS c ON c.id = cpe.color_id GROUP BY pe.id 	ORDER BY pe.id) AS x ON x.id = pe.id ORDER BY user_id, gen.id, png.name, platform_family, platform;""")
-raw_pe_watches = cur.fetchall()
-
-pe_watches = []
-
-for watch in raw_pe_watches:
-	pe_watches.append({
-		'user_id': watch[0],
-		'platform_family': watch[1],
-		'platform': watch[2],
-		'platform_id': watch[3],
-		'watched_platform_edition_id': watch[4],
-		'edition_name': watch[5],
-		'official_color': watch[6],
-		'colors': watch[7].split(', ')
-	})
-
-user_pe_watches = {}
-
-for watch in pe_watches:
-	pp.pprint(watch)
-	if watch['user_id'] not in user_pe_watches:
-		user_pe_watches[watch['user_id']] = {}
-	if watch['platform_id'] not in user_pe_watches[watch['user_id']]:
-		user_pe_watches[watch['user_id']][watch['platform_id']] = []
-	user_pe_watches[watch['user_id']][watch['platform_id']].append(watch['watched_platform_edition_id'])
+# pull platform edition watches from db
+user_pe_watches = DataPuller.pull_platform_edition_watches()
 
 pp.pprint(user_pe_watches)
 
-# grab product presences, organize in respective lookup dicts
-cur.execute("""SELECT listing_id, platform_edition_id FROM listings_platform_editions;""")
-raw_pe_presences = cur.fetchall()
-
-pe_presences = []
-pe_presences_per_pe = {}
-
-for presence in raw_pe_presences:
-	pe_presences.append({
-		'listing_id': presence[0],
-		'platform_edition_id': presence[1]
-	})
-del raw_pe_presences
-
-for presence in pe_presences:
-	if presence['platform_edition_id'] not in pe_presences_per_pe:
-		pe_presences_per_pe[presence['platform_edition_id']] = list()
-	pe_presences_per_pe[presence['platform_edition_id']].append(presence['listing_id'])
-del pe_presences
+# pull platform edition presences from db
+pe_presences_per_pe = DataPuller.pull_platform_edition_presences()
 
 pp.pprint(pe_presences_per_pe)
+
+# calibrate Mailer class to platform edition presences
 Mailer.calibrate_pe_presences(pe_presences_per_pe)
 del pe_presences_per_pe
 
-# pull users from db
-cur.execute("""SELECT id, username, email FROM users;""")
-raw_users = cur.fetchall()
-
-for raw_user in raw_users:
-	user = User(id=raw_user[0], username=raw_user[1], email=raw_user[2], public_id=None, password=None, created_at=None)
-	user.add_to_registry()
-del raw_users
+# pull all users from db
+DataPuller.pull_users()
 
 # iterate through user_pe_watches, sending e-mail notification for each user
 for user_id in user_pe_watches:
