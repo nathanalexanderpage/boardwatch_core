@@ -51,13 +51,7 @@ Match.find_matches()
 Match.remove_competing_matches()
 
 # insert db record to indicate match between listing and each found product
-for match_catalog_for_listing in Match.get_all().values():
-	for product_class_matches in match_catalog_for_listing.values():
-		for match in product_class_matches.values():
-			try:
-				match.insert_into_db()
-			except Exception:
-				pass
+Match.insert_all_to_db()
 
 # loop through users. send e-mail notifications only for those whose settings indicate that preference.
 cur.execute("""SELECT wpe.user_id as user_id, pf.name AS platform_family, p.name AS platform, p.id AS p_id, wpe.platform_edition_id as watched_platform_edition_id, pe.name AS edition_name, pe.official_color AS official_color, x.colors AS colors FROM watchlist_platform_editions as wpe JOIN platform_editions AS pe ON pe.id = wpe.platform_edition_id JOIN platforms AS p ON pe.platform_id = p.id JOIN platform_families AS pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups AS png ON png.id = p.name_group_id JOIN generations AS gen ON gen.id = pf.generation JOIN (SELECT pe.id AS id, STRING_AGG(c.name,', ') AS colors FROM platform_editions AS pe JOIN colors_platform_editions AS cpe ON cpe.platform_edition_id = pe.id JOIN colors AS c ON c.id = cpe.color_id GROUP BY pe.id 	ORDER BY pe.id) AS x ON x.id = pe.id ORDER BY user_id, gen.id, png.name, platform_family, platform;""")

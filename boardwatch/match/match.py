@@ -107,3 +107,16 @@ class Match():
 									contrasted_match = cls.registry[match.listing.id][product_class][contrasted_match_item_key]
 									if match is not contrasted_match and match.is_overlapping(contrasted_match) and contrasted_match.score <= match.score:
 										contrasted_match.remove_from_registry()
+
+	@classmethod
+	def insert_all_to_db(cls):
+		"""
+		Insert all matches contained within Match class registry into database.
+		"""
+		for match_catalog_for_listing in cls.get_all().values():
+			for product_class_matches in match_catalog_for_listing.values():
+				for match in product_class_matches.values():
+					try:
+						match.insert_into_db()
+					except Exception:
+						pass
