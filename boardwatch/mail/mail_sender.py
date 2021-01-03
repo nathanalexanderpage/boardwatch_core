@@ -93,15 +93,17 @@ class Mailer():
 
 	def generate_message_html(self):
 		message_text_matches = ''
-		message_text_matches = message_text_matches + '<h2>PLATFORMS & EDITIONS</h2>\n\n'
+		platforms_and_editions_category_title =  '<h2>PLATFORMS & EDITIONS</h2>\n\n'
+		message_text_all_platforms = ''
 
-		pp.pprint(Listing.registry)
 		for platform in Platform.get_all():
-			if platform.id in self.platform_editions or (self.platforms and platform.id in self.platforms):
-				message_text_per_platform = ''
+			message_text_this_platform = ''
 
+			if platform.id in self.platform_editions or (self.platforms and platform.id in self.platforms):
 				# Platform Name
-				message_text_per_platform = message_text_per_platform + f'\n<h3>{platform.name}</h3>'
+				this_platform_name = f'\n<h3>{platform.name}</h3>'
+
+				message_text_all_editions = ''
 
 				if self.platform_editions.get(platform.id):
 					for edition_id in self.platform_editions.get(platform.id):
@@ -123,46 +125,89 @@ class Mailer():
 									edition_referencial_name = edition_referencial_name + ' '
 								edition_referencial_name = edition_referencial_name + color
 
-						message_text_per_platform = message_text_per_platform + f'\n<h4>{edition_referencial_name}</h4>'
+						message_text_this_edition = ''
+
+						this_edition_name = f'\n<h4>{edition_referencial_name}</h4>'
+
+						message_text_this_edition_listings = ''
 
 						if Mailer.pe_presences_per_pe.get(edition.id):
 							listing_ct = 0
-							message_text_per_platform = message_text_per_platform + '\n<ul style="padding: 0; list-style: none;">'
+							editions_list_start = '\n<ul style="padding: 0; list-style: none;">'
+
 							for listing_id in Mailer.pe_presences_per_pe.get(edition.id):
-								listing_ct += 1
 								listing = Listing.get_by_id(listing_id)
 
-								# listing title
-								listing_title = None
-								if listing.title is None:
-									listing_title = '(untitled)'
-								else:
-									listing_title = listing.title
+								if listing is not None:
+									listing_ct += 1
 
-								# listing price
-								listing_price = None
-								if listing.price is None:
-									listing_price = '(price not listed)'
-								else:
-									listing_price = str(listing.price)
+									# listing title
+									listing_title = None
+									if listing.title is None:
+										listing_title = '(untitled)'
+									else:
+										listing_title = listing.title
 
-								# listing URL
-								listing_url = listing.url
+									# listing price
+									listing_price = None
+									if listing.price is None:
+										listing_price = '(price not listed)'
+									else:
+										listing_price = str(listing.price)
 
-								# listing datetime
-								listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')
+									# listing URL
+									listing_url = listing.url
 
-								message_text_per_platform = message_text_per_platform + f"""
-								\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
-								\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
-								\n</span>
-								\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
-								\n</li>
-								"""
-							message_text_per_platform = message_text_per_platform + '\n</ul>'
-					message_text_per_platform = message_text_per_platform + '\n'
+									# listing datetime
+									listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')
 
-				message_text_matches = message_text_matches + message_text_per_platform
+									message_text_this_edition_listings = message_text_this_edition_listings + f"""
+									\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
+									\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
+									\n</span>
+									\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
+									\n</li>
+									"""
+
+							editions_list_end = '\n</ul>'
+
+						if len(message_text_this_edition_listings) > 0:
+							print('LISTING ADDED FOR ' + platform.name)
+							# add edition title
+							message_text_this_edition = message_text_this_edition + this_edition_name
+							# add edition listings
+							message_text_this_edition = message_text_this_edition + editions_list_start + message_text_this_edition_listings + editions_list_end
+							print(1)
+
+					if len(message_text_this_edition) > 0:
+						print('ADDING THIS EDITION TO THIS PLATFORM\'S EDITIONS')
+						# add edition message text
+						message_text_all_editions = message_text_all_editions + message_text_this_edition
+						print(2)
+
+				if len(message_text_all_editions) > 0:
+					print('ADDING ALL EDITIONS TO THIS PLATFORM')
+					# add platform title
+					message_text_this_platform = message_text_this_platform + this_platform_name
+					# add platform editions message text
+					message_text_this_platform = message_text_this_platform + message_text_all_editions
+					print(3)
+					
+			if len(message_text_this_platform) > 0:
+				print('ADDING THIS PLATFORM TO ALL PLATFORMS')
+				# add platform editions message text
+				message_text_all_platforms = message_text_all_platforms + message_text_this_platform
+				print(4)
+					
+		if len(message_text_all_platforms) > 0:
+			print('ADDING ALL PLATFORMS TO TEXT')
+			# add platform & edition category title to mail message
+			message_text_matches = message_text_matches + platforms_and_editions_category_title
+			# add platform & edition category content to mail message
+			message_text_matches = message_text_matches + message_text_all_platforms
+
+			print(5)
+		
 		return message_text_matches
 
 	def read_template(self, filename):

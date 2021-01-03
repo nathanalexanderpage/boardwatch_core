@@ -35,7 +35,7 @@ class DataPuller():
 	@staticmethod
 	def pull_listings():
 		cur = conn.cursor()
-		cur.execute("""SELECT id, native_id, title, body, price, url, date_posted, date_scraped, board_id FROM listings WHERE is_scanned = FALSE AND date_posted >= ((now() AT TIME ZONE 'utc') - interval '1 day');""")
+		cur.execute("""SELECT id, native_id, title, body, price, url, date_posted, date_scraped, board_id FROM listings WHERE is_scanned = FALSE AND date_posted >= ((now() AT TIME ZONE 'utc') - interval '5 day');""")
 		raw_listings = cur.fetchall()
 
 		for raw_l in raw_listings:

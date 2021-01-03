@@ -125,7 +125,7 @@ for presence in pe_presences:
 	if presence['platform_edition_id'] not in pe_presences_per_pe:
 		pe_presences_per_pe[presence['platform_edition_id']] = list()
 	pe_presences_per_pe[presence['platform_edition_id']].append(presence['listing_id'])
-
+pp.pprint(pe_presences_per_pe)
 Mailer.calibrate_pe_presences(pe_presences_per_pe)
 
 # pull users from db
