@@ -93,6 +93,8 @@ class Mailer():
 
 	def generate_message_html(self):
 		message_text_matches = ''
+		products_matched_ct = 0
+
 		platforms_and_editions_category_title =  '<h2>PLATFORMS & EDITIONS</h2>\n\n'
 		message_text_all_platforms = ''
 
@@ -172,6 +174,7 @@ class Mailer():
 							editions_list_end = '\n</ul>'
 
 						if len(message_text_this_edition_listings) > 0:
+							products_matched_ct += 1
 							# add edition title
 							message_text_this_edition = message_text_this_edition + this_edition_name
 							# add edition listings
@@ -197,7 +200,7 @@ class Mailer():
 			# add platform & edition category content to mail message
 			message_text_matches = message_text_matches + message_text_all_platforms
 		
-		return message_text_matches
+		return message_text_matches, products_matched_ct
 
 	def read_template(self, filename):
 		with open(filename, 'r', encoding='utf-8') as template_file:
@@ -209,7 +212,7 @@ class Mailer():
 		current_folder = str(pathlib.Path(__file__).resolve().parents[0].absolute())
 
 		if is_user_mail_html_compatible:
-			message_listings_html = self.generate_message_html()
+			message_listings_html, products_matched_ct = self.generate_message_html()
 			message_html_template = self.read_template(current_folder + '/mail_message.html')
 			message_premable_template = self.read_template(current_folder + '/mail_message_preamble.txt')
 			message_html = message_html_template.substitute(RECIPIENT=self.user.username, MATCHING_POSTS=message_listings_html)
@@ -218,7 +221,7 @@ class Mailer():
 			msg = MIMEMultipart('alternative')
 			msg['From'] = GMAIL_ADDRESS
 			msg['To'] = self.user.email
-			msg['Subject'] = 'Craigswatch'
+			msg['Subject'] = f"""New matches for {products_matched_ct} of your watched products"""
 			msg.preamble = message_preamble.encode('ascii', 'ignore').decode('unicode_escape')
 			msg.attach(MIMEText(message_html.encode('utf-8'), _subtype='html', _charset='UTF-8'))
 
