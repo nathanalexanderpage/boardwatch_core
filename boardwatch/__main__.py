@@ -45,12 +45,9 @@ for board in Board.get_all():
 # pull all database listings newer than 1 day old
 DataPuller.pull_listings()
 
+# find all product matches within listing; ensure no two matchings using same text within each posting; insert remaining matches to db
 Match.find_matches()
-
-# ensure matches are checked against each other (no more than one product match record per text segment in listing)
 Match.remove_competing_matches()
-
-# insert db record to indicate match between listing and each found product
 Match.insert_all_to_db()
 
 # pull platform edition watches from db
