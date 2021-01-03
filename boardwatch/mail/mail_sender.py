@@ -172,41 +172,30 @@ class Mailer():
 							editions_list_end = '\n</ul>'
 
 						if len(message_text_this_edition_listings) > 0:
-							print('LISTING ADDED FOR ' + platform.name)
 							# add edition title
 							message_text_this_edition = message_text_this_edition + this_edition_name
 							# add edition listings
 							message_text_this_edition = message_text_this_edition + editions_list_start + message_text_this_edition_listings + editions_list_end
-							print(1)
 
 					if len(message_text_this_edition) > 0:
-						print('ADDING THIS EDITION TO THIS PLATFORM\'S EDITIONS')
 						# add edition message text
 						message_text_all_editions = message_text_all_editions + message_text_this_edition
-						print(2)
 
 				if len(message_text_all_editions) > 0:
-					print('ADDING ALL EDITIONS TO THIS PLATFORM')
 					# add platform title
 					message_text_this_platform = message_text_this_platform + this_platform_name
 					# add platform editions message text
 					message_text_this_platform = message_text_this_platform + message_text_all_editions
-					print(3)
 					
 			if len(message_text_this_platform) > 0:
-				print('ADDING THIS PLATFORM TO ALL PLATFORMS')
 				# add platform editions message text
 				message_text_all_platforms = message_text_all_platforms + message_text_this_platform
-				print(4)
 					
 		if len(message_text_all_platforms) > 0:
-			print('ADDING ALL PLATFORMS TO TEXT')
 			# add platform & edition category title to mail message
 			message_text_matches = message_text_matches + platforms_and_editions_category_title
 			# add platform & edition category content to mail message
 			message_text_matches = message_text_matches + message_text_all_platforms
-
-			print(5)
 		
 		return message_text_matches
 
