@@ -213,28 +213,32 @@ class Mailer():
 
 		if is_user_mail_html_compatible:
 			message_listings_html, products_matched_ct = self.generate_message_html()
-			message_html_template = self.read_template(current_folder + '/mail_message.html')
-			message_premable_template = self.read_template(current_folder + '/mail_message_preamble.txt')
-			message_html = message_html_template.substitute(RECIPIENT=self.user.username, MATCHING_POSTS=message_listings_html)
-			message_preamble = message_premable_template.substitute(RECIPIENT=self.user.username)
 
-			msg = MIMEMultipart('alternative')
-			msg['From'] = GMAIL_ADDRESS
-			msg['To'] = self.user.email
-			msg['Subject'] = f"""New matches for {products_matched_ct} of your watched products"""
-			msg.preamble = message_preamble.encode('ascii', 'ignore').decode('unicode_escape')
-			msg.attach(MIMEText(message_html.encode('utf-8'), _subtype='html', _charset='UTF-8'))
+			if products_matched_ct > 0:
+				message_html_template = self.read_template(current_folder + '/mail_message.html')
+				message_premable_template = self.read_template(current_folder + '/mail_message_preamble.txt')
+				message_html = message_html_template.substitute(RECIPIENT=self.user.username, MATCHING_POSTS=message_listings_html)
+				message_preamble = message_premable_template.substitute(RECIPIENT=self.user.username)
 
-			smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
-			smtp.ehlo()
-			smtp.starttls()
-			smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
+				msg = MIMEMultipart('alternative')
+				msg['From'] = GMAIL_ADDRESS
+				msg['To'] = self.user.email
+				msg['Subject'] = f"""New matches for {products_matched_ct} of your watched products"""
+				msg.preamble = message_preamble.encode('ascii', 'ignore').decode('unicode_escape')
+				msg.attach(MIMEText(message_html.encode('utf-8'), _subtype='html', _charset='UTF-8'))
 
-			smtp.send_message(msg)
-			del msg
-			print('\t\tSENT')
+				smtp = smtplib.SMTP(host=GMAIL_HOST_ADDRESS, port=GMAIL_TLS_PORT)
+				smtp.ehlo()
+				smtp.starttls()
+				smtp.login(GMAIL_ADDRESS, GMAIL_PASSWORD)
 
-			smtp.quit()
+				smtp.send_message(msg)
+				del msg
+				print('\t\tSENT')
+
+				smtp.quit()
+			else:
+				print(f'skipping User {self.user.id}: no matches\n{self.user.email}')
 		else:
 			message_listings_text = self.generate_message_text()
 			message_text_template = self.read_template(current_folder + '/mail_message.txt')
