@@ -30,7 +30,11 @@ class Mailer():
 			self.platforms = list()
 		self.platform_editions = platform_editions
 		self.games = games
+		if games is None:
+			self.games = list()
 		self.accessories = accessories
+		if accessories is None:
+			self.accessories = list()
 
 	def generate_message_text(self):
 		message_text_matches = ''

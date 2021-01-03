@@ -26,6 +26,7 @@ class Matcher():
 				'space_separated_no': []
 			}
 		}
+
 	def get_antimatch_strings(self, want):
 		# conditional execution based on class name
 		if type(want).__name__ == 'Platform':
@@ -41,6 +42,7 @@ class Matcher():
 				'busted',
 				'defective'
 			])
+
 			self.antimatch_strings['before']['space_separated_yes'].extend([
 				'for',
 				'for the',
@@ -51,6 +53,7 @@ class Matcher():
 				'no',
 				'compatible with'
 			])
+
 			# self.antimatch_strings['before']['space_separated_no'].extend([])
 			self.antimatch_strings['after']['space_separated_yes'].extend([
 				'compatible',
@@ -62,6 +65,7 @@ class Matcher():
 				'control',
 				'pad'
 			])
+
 			self.antimatch_strings['after']['space_separated_no'].extend([
 				'-compatible'
 			])

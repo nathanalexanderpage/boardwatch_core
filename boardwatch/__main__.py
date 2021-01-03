@@ -13,7 +13,6 @@ from data.puller import DataPuller
 from mail.mail_sender import Mailer
 from match.match import Match
 from match.preppers import Prepper
-from match.profilers import Profiler
 from scrape.populate_listings import ListingPopulator
 from scrape.listing_pop_maker import ListingPopulatorMaker
 
@@ -38,8 +37,6 @@ DataPuller.pull_platform_editions()
 # platform families
 # FIXME: pfs missing
 
-profiler = Profiler()
-
 # gather new listings
 for board in Board.get_all():
 	populator = ListingPopulatorMaker.make_listing_populator(board)
@@ -48,23 +45,7 @@ for board in Board.get_all():
 # pull all database listings newer than 1 day old
 DataPuller.pull_listings()
 
-# find product instances in listings
-for listing in Listing.get_all():
-	for edition in PlatformEdition.get_all():
-		searchtexts = profiler.build_string_matches(edition)
-
-		for degree in searchtexts.keys():
-			# for each listing, iterate through all searchable text segments
-			for searchtext in searchtexts[degree]:
-				for text in [listing.title, listing.body]:
-					# evaluate if preliminary match on spot (wherever hot text within listing happens to be)
-					try:
-						match_index = text.index(searchtext)
-						print('FOUND ' + searchtext + ' @ ' + str(match_index))
-						match = Match(score=1, start=match_index, end=match_index+len(searchtext), item=edition, listing=listing)
-						match.add_to_registry()
-					except Exception as e:
-						pass
+Match.find_matches()
 
 # ensure matches are checked against each other (no more than one product match record per text segment in listing)
 Match.remove_competing_matches()
@@ -120,13 +101,17 @@ for presence in raw_pe_presences:
 		'listing_id': presence[0],
 		'platform_edition_id': presence[1]
 	})
+del raw_pe_presences
 
 for presence in pe_presences:
 	if presence['platform_edition_id'] not in pe_presences_per_pe:
 		pe_presences_per_pe[presence['platform_edition_id']] = list()
 	pe_presences_per_pe[presence['platform_edition_id']].append(presence['listing_id'])
+del pe_presences
+
 pp.pprint(pe_presences_per_pe)
 Mailer.calibrate_pe_presences(pe_presences_per_pe)
+del pe_presences_per_pe
 
 # pull users from db
 cur.execute("""SELECT id, username, email FROM users;""")
@@ -135,6 +120,7 @@ raw_users = cur.fetchall()
 for raw_user in raw_users:
 	user = User(id=raw_user[0], username=raw_user[1], email=raw_user[2], public_id=None, password=None, created_at=None)
 	user.add_to_registry()
+del raw_users
 
 # iterate through user_pe_watches, sending e-mail notification for each user
 for user_id in user_pe_watches:
@@ -142,5 +128,6 @@ for user_id in user_pe_watches:
 	mailer = Mailer(user=user, platforms=None, platform_editions=user_pe_watches.get(user.id), games=None, accessories=None)
 	is_user_mail_html_compatible = True
 	mailer.send_mail(is_user_mail_html_compatible)
+del user_pe_watches
 
 cur.close()

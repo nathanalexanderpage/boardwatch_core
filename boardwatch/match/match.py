@@ -1,7 +1,10 @@
 import os
 
+from boardwatch_models import Listing, PlatformEdition
 from dotenv import load_dotenv, find_dotenv
 import psycopg2 as db
+
+from boardwatch.match.profilers import Profiler
 
 load_dotenv(dotenv_path=find_dotenv())
 POSTGRESQL_USERNAME = os.getenv('POSTGRESQL_USERNAME')
@@ -61,6 +64,31 @@ class Match():
 		Returns registry of all matches (a dict sorted by listing ID).
 		"""
 		return cls.registry
+
+	@classmethod
+	def find_matches(cls):
+		"""
+		Find all matches inside yet unsearched listings
+		"""
+		# find product instances in listings
+		profiler = Profiler()
+
+		for listing in Listing.get_all():
+			for edition in PlatformEdition.get_all():
+				searchtexts = profiler.build_string_matches(edition)
+
+				for degree in searchtexts.keys():
+					# for each listing, iterate through all searchable text segments
+					for searchtext in searchtexts[degree]:
+						for text in [listing.title, listing.body]:
+							# evaluate if preliminary match on spot (wherever hot text within listing happens to be)
+							try:
+								match_index = text.index(searchtext)
+								print('FOUND ' + searchtext + ' @ ' + str(match_index))
+								match = Match(score=1, start=match_index, end=match_index+len(searchtext), item=edition, listing=listing)
+								match.add_to_registry()
+							except Exception:
+								pass
 
 	@classmethod
 	def remove_competing_matches(cls):
