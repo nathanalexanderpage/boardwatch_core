@@ -48,21 +48,7 @@ class Mailer():
 					for edition_id in self.platform_editions.get(platform.id):
 						edition = PlatformEdition.get_by_id(edition_id)
 
-						edition_referencial_name = ''
-
-						if edition.name:
-							if len(edition_referencial_name) != 0:
-								edition_referencial_name = edition_referencial_name + ' '
-							edition_referencial_name = edition_referencial_name + edition.name
-						if edition.official_color:
-							if len(edition_referencial_name) != 0:
-								edition_referencial_name = edition_referencial_name + ' '
-							edition_referencial_name = edition_referencial_name + edition.official_color
-						if len(edition.colors) > 0:
-							for color in edition.colors:
-								if len(edition_referencial_name) != 0:
-									edition_referencial_name = edition_referencial_name + ' '
-								edition_referencial_name = edition_referencial_name + color
+						edition_referencial_name = edition.referencial_name()
 
 						message_text_per_platform = message_text_per_platform + edition_referencial_name + '\n'
 
@@ -111,21 +97,7 @@ class Mailer():
 					for edition_id in self.platform_editions.get(platform.id):
 						edition = PlatformEdition.get_by_id(edition_id)
 
-						edition_referencial_name = ''
-
-						if edition.name:
-							if len(edition_referencial_name) != 0:
-								edition_referencial_name = edition_referencial_name + ' '
-							edition_referencial_name = edition_referencial_name + edition.name
-						if edition.official_color:
-							if len(edition_referencial_name) != 0:
-								edition_referencial_name = edition_referencial_name + ' '
-							edition_referencial_name = edition_referencial_name + edition.official_color
-						if len(edition.colors) > 0:
-							for color in edition.colors:
-								if len(edition_referencial_name) != 0:
-									edition_referencial_name = edition_referencial_name + ' '
-								edition_referencial_name = edition_referencial_name + color
+						edition_referencial_name = edition.referencial_name()
 
 						message_text_this_edition = ''
 
