@@ -1,6 +1,6 @@
 import os
 
-from boardwatch_models import Listing, PlatformEdition
+from boardwatch_models import Listing, Platform, PlatformEdition
 from dotenv import load_dotenv, find_dotenv
 import psycopg2 as db
 
@@ -15,6 +15,14 @@ POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 
 class Match():
 	registry = {}
+
+	MATCH_SCORE_THRESHOLD = 1.5
+	MATCH_SCORE_DEFAULT = 1
+
+	MATCH_MULTIPLIER_EXACT = 5
+	MATCH_MULTIPLIER_STRONG = 2
+	MATCH_MULTIPLIER_WEAK = 1.5
+	MATCH_MULTIPLIER_MINOR = 1.15
 
 	def __init__(self, score, start, end, item, listing):
 		"""
@@ -75,6 +83,8 @@ class Match():
 
 		for listing in Listing.get_all():
 			for edition in PlatformEdition.get_all():
+				# cls.search_for_matches(listing, edition)
+
 				searchtexts = profiler.build_string_matches(edition)
 
 				for degree in searchtexts.keys():
@@ -120,3 +130,50 @@ class Match():
 						match.insert_into_db()
 					except Exception:
 						pass
+
+	@classmethod
+	def search_for_matches(cls, listing, item):
+		"""
+		Finds all matches within listing text to any one product
+		"""
+		if type(item).__name__ == 'PlatformEdition':
+			cls.search_for_platform_edition_matches(listing, item)
+
+	@classmethod
+	def search_for_platform_edition_matches(cls, listing, edn):
+		platform = Platform.get_by_edition_id(edn.id)
+
+		findings = list()
+		
+		for text in [listing.title, listing.body]:
+			# search progressively further in to listing title and body
+			# TODO: add brand
+			if edn.name:
+				f"""{edn.name}"""
+				f"""{edn.name} {platform.name}"""
+				f"""{platform.name} {edn.name}"""
+				f"""{edn.name} {edn.official_color}"""
+				f"""{edn.official_color} {edn.name}"""
+			if edn.official_color:
+				f"""{edn.official_color}"""
+				f"""{platform.name} {edn.official_color}"""
+				f"""{edn.official_color} {platform.name}"""
+			if len(edn.colors) > 0:
+				f"""{', '.join(edn.colors)} {platform.name}"""
+				f"""{', '.join(edn.colors)} {platform.model_no} {platform.name}"""
+				f"""{platform.model_no} {', '.join(edn.colors)} {platform.name}"""
+				f"""{', '.join(edn.colors)} {platform.name} {platform.model_no}"""
+				f"""{platform.name} {', '.join(edn.colors)}"""
+				if edn.has_matte:
+					f"""matte {', '.join(edn.colors)} {platform.name}"""
+					f"""matte {' & '.join(edn.colors)} {platform.name}"""
+				if edn.has_transparency:
+					f"""transparent {', '.join(edn.colors)} {platform.name}"""
+					f"""transparent {' & '.join(edn.colors)} {platform.name}"""
+				if edn.has_gloss:
+					f"""glossy {', '.join(edn.colors)} {platform.name}"""
+					f"""glossy {' & '.join(edn.colors)} {platform.name}"""
+
+			# organize two lists?
+			# one for base search texts
+			# one for corresponding lists of anti-match search protocols
