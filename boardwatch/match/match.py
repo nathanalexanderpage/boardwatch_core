@@ -145,34 +145,35 @@ class Match():
 
 		findings = list()
 		
+		if edn.name:
+			f"""{edn.name}"""
+			f"""{edn.name} {platform.name}"""
+			f"""{platform.name} {edn.name}"""
+			f"""{edn.name} {edn.official_color}"""
+			f"""{edn.official_color} {edn.name}"""
+		if edn.official_color:
+			f"""{edn.official_color}"""
+			f"""{platform.name} {edn.official_color}"""
+			f"""{edn.official_color} {platform.name}"""
+		if len(edn.colors) > 0:
+			f"""{', '.join(edn.colors)} {platform.name}"""
+			f"""{', '.join(edn.colors)} {platform.model_no} {platform.name}"""
+			f"""{platform.model_no} {', '.join(edn.colors)} {platform.name}"""
+			f"""{', '.join(edn.colors)} {platform.name} {platform.model_no}"""
+			f"""{platform.name} {', '.join(edn.colors)}"""
+			if edn.has_matte:
+				f"""matte {', '.join(edn.colors)} {platform.name}"""
+				f"""matte {' & '.join(edn.colors)} {platform.name}"""
+			if edn.has_transparency:
+				f"""transparent {', '.join(edn.colors)} {platform.name}"""
+				f"""transparent {' & '.join(edn.colors)} {platform.name}"""
+			if edn.has_gloss:
+				f"""glossy {', '.join(edn.colors)} {platform.name}"""
+				f"""glossy {' & '.join(edn.colors)} {platform.name}"""
+				
 		for text in [listing.title, listing.body]:
 			# search progressively further in to listing title and body
 			# TODO: add brand
-			if edn.name:
-				f"""{edn.name}"""
-				f"""{edn.name} {platform.name}"""
-				f"""{platform.name} {edn.name}"""
-				f"""{edn.name} {edn.official_color}"""
-				f"""{edn.official_color} {edn.name}"""
-			if edn.official_color:
-				f"""{edn.official_color}"""
-				f"""{platform.name} {edn.official_color}"""
-				f"""{edn.official_color} {platform.name}"""
-			if len(edn.colors) > 0:
-				f"""{', '.join(edn.colors)} {platform.name}"""
-				f"""{', '.join(edn.colors)} {platform.model_no} {platform.name}"""
-				f"""{platform.model_no} {', '.join(edn.colors)} {platform.name}"""
-				f"""{', '.join(edn.colors)} {platform.name} {platform.model_no}"""
-				f"""{platform.name} {', '.join(edn.colors)}"""
-				if edn.has_matte:
-					f"""matte {', '.join(edn.colors)} {platform.name}"""
-					f"""matte {' & '.join(edn.colors)} {platform.name}"""
-				if edn.has_transparency:
-					f"""transparent {', '.join(edn.colors)} {platform.name}"""
-					f"""transparent {' & '.join(edn.colors)} {platform.name}"""
-				if edn.has_gloss:
-					f"""glossy {', '.join(edn.colors)} {platform.name}"""
-					f"""glossy {' & '.join(edn.colors)} {platform.name}"""
 
 			# organize two lists?
 			# one for base search texts
