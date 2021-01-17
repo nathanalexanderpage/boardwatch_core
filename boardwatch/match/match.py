@@ -19,10 +19,12 @@ class Match():
 	MATCH_SCORE_THRESHOLD = 1.5
 	MATCH_SCORE_DEFAULT = 1
 
-	MATCH_MULTIPLIER_EXACT = 5
-	MATCH_MULTIPLIER_STRONG = 2
-	MATCH_MULTIPLIER_WEAK = 1.5
-	MATCH_MULTIPLIER_MINOR = 1.15
+	MATCH_MULTIPLIERS = {
+		'exact': 5,
+		'strong': 2,
+		'weak': 1.5,
+		'minor': 1.15
+	}
 
 	def __init__(self, score, start, end, item, listing):
 		"""
@@ -143,38 +145,72 @@ class Match():
 	def search_for_platform_edition_matches(cls, listing, edn):
 		platform = Platform.get_by_edition_id(edn.id)
 
+		hottexts = {
+			'exact': list(),
+			'strong': list(),
+			'weak': list(),
+			'minor': list()
+		}
+
+		if len(edn.colors) > 0 and platform.name and not edn.name:
+			hottexts['strong'].append(f"""{', '.join(edn.colors)} {platform.name}""")
+			hottexts['strong'].append(f"""{platform.name} {', '.join(edn.colors)}""")
+		if len(edn.colors) > 0 and platform.name and edn.name:
+			hottexts['weak'].append(f"""{', '.join(edn.colors)} {platform.name}""")
+			hottexts['weak'].append(f"""{platform.name} {', '.join(edn.colors)}""")
+			hottexts['exact'].append(f"""{edn.name} {platform.name} {', '.join(edn.colors)}""")
+			hottexts['exact'].append(f"""{edn.name} {', '.join(edn.colors)} {platform.name}""")
+			hottexts['exact'].append(f"""{platform.name} {edn.name} {', '.join(edn.colors)}""")
+			hottexts['exact'].append(f"""{platform.name} {', '.join(edn.colors)} {edn.name}""")
+			hottexts['exact'].append(f"""{', '.join(edn.colors)} {edn.name} {platform.name}""")
+			hottexts['exact'].append(f"""{', '.join(edn.colors)} {platform.name} {edn.name}""")
+		if len(edn.colors) > 0 and platform.name and edn.has_matte:
+			hottexts['strong'].append(f"""matte {', '.join(edn.colors)} {platform.name}""")
+			hottexts['strong'].append(f"""matte {' & '.join(edn.colors)} {platform.name}""")
+		if len(edn.colors) > 0 and platform.name and edn.has_transparency:
+			hottexts['strong'].append(f"""transparent {', '.join(edn.colors)} {platform.name}""")
+			hottexts['strong'].append(f"""transparent {' & '.join(edn.colors)} {platform.name}""")
+		if len(edn.colors) > 0 and platform.name and edn.has_gloss:
+			hottexts['strong'].append(f"""glossy {', '.join(edn.colors)} {platform.name}""")
+			hottexts['strong'].append(f"""glossy {' & '.join(edn.colors)} {platform.name}""")
+		if len(edn.colors) > 0 and platform.name and platform.model_no:
+			hottexts['exact'].append(f"""{', '.join(edn.colors)} {platform.model_no} {platform.name}""")
+			hottexts['exact'].append(f"""{platform.model_no} {', '.join(edn.colors)} {platform.name}""")
+			hottexts['exact'].append(f"""{', '.join(edn.colors)} {platform.name} {platform.model_no}""")
+		if edn.name and edn.official_color:
+			hottexts['strong'].append(f"""{edn.name} {edn.official_color}""")
+			hottexts['strong'].append(f"""{edn.official_color} {edn.name}""")
+		if edn.name and platform.name:
+			hottexts['strong'].append(f"""{edn.name} {platform.name}""")
+			hottexts['strong'].append(f"""{platform.name} {edn.name}""")
+		if edn.official_color and platform.name:
+			hottexts['strong'].append(f"""{platform.name} {edn.official_color}""")
+			hottexts['strong'].append(f"""{edn.official_color} {platform.name}""")
+		if edn.name and (not edn.official_color and not platform.model_no):
+			hottexts['strong'].append(f"""{edn.name}""")
+		if edn.name and (edn.official_color or platform.model_no):
+			hottexts['weak'].append(f"""{edn.name}""")
+		if edn.official_color and edn.official_color not in edn.colors:
+			hottexts['strong'].append(f"""{edn.official_color}""")
+		
 		findings = list()
 		
-		if edn.name:
-			f"""{edn.name}"""
-			f"""{edn.name} {platform.name}"""
-			f"""{platform.name} {edn.name}"""
-			f"""{edn.name} {edn.official_color}"""
-			f"""{edn.official_color} {edn.name}"""
-		if edn.official_color:
-			f"""{edn.official_color}"""
-			f"""{platform.name} {edn.official_color}"""
-			f"""{edn.official_color} {platform.name}"""
-		if len(edn.colors) > 0:
-			f"""{', '.join(edn.colors)} {platform.name}"""
-			f"""{', '.join(edn.colors)} {platform.model_no} {platform.name}"""
-			f"""{platform.model_no} {', '.join(edn.colors)} {platform.name}"""
-			f"""{', '.join(edn.colors)} {platform.name} {platform.model_no}"""
-			f"""{platform.name} {', '.join(edn.colors)}"""
-			if edn.has_matte:
-				f"""matte {', '.join(edn.colors)} {platform.name}"""
-				f"""matte {' & '.join(edn.colors)} {platform.name}"""
-			if edn.has_transparency:
-				f"""transparent {', '.join(edn.colors)} {platform.name}"""
-				f"""transparent {' & '.join(edn.colors)} {platform.name}"""
-			if edn.has_gloss:
-				f"""glossy {', '.join(edn.colors)} {platform.name}"""
-				f"""glossy {' & '.join(edn.colors)} {platform.name}"""
-				
-		for text in [listing.title, listing.body]:
-			# search progressively further in to listing title and body
-			# TODO: add brand
+		for degree in hottexts.keys():
+			for hottext in hottexts[degree]:
+				for text in [listing.title, listing.body]:
+					search_start_index = 0
+					while search_start_index < len(hottext):
+						# search progressively further in to listing title and body
+						# TODO: add brand
 
-			# organize two lists?
-			# one for base search texts
-			# one for corresponding lists of anti-match search protocols
+						# organize two lists?
+						# one for base search texts
+						# one for corresponding lists of anti-match search protocols
+						try:
+							match_index = text[search_start_index::].index(hottext)
+							print('FOUND ' + hottext + ' @ ' + str(match_index + search_start_index))
+							print(text[search_start_index+match_index::search_start_index+match_index+len(hottext)])
+							match = Match(score=cls.MATCH_MULTIPLIERS[degree], start=match_index+search_start_index, end=search_start_index+match_index+len(hottext), item=edn, listing=listing)
+							findings.append(match)
+						except Exception:
+							search_start_index = len(hottext)
