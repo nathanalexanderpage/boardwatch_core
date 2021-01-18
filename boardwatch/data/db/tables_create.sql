@@ -257,29 +257,40 @@ CREATE TABLE listings (
 CREATE TABLE listings_platforms (
 	listing_id int NOT NULL REFERENCES listings(id),
 	platform_id int NOT NULL REFERENCES platforms(id),
-	PRIMARY KEY (listing_id, platform_id)
+	PRIMARY KEY (listing_id, platform_id),
+	index_start int NOT NULL,
+	index_end int NOT NULL
 );
 
 CREATE TABLE listings_platform_editions (
 	listing_id int NOT NULL REFERENCES listings(id),
 	platform_edition_id int NOT NULL REFERENCES platform_editions(id),
-	PRIMARY KEY (listing_id, platform_edition_id)
+	PRIMARY KEY (listing_id, platform_edition_id),
+	index_start int NOT NULL,
+	index_end int NOT NULL
 );
 
 CREATE TABLE listings_games (
 	listing_id int NOT NULL REFERENCES listings(id),
 	game_id int NOT NULL REFERENCES games(id),
-	PRIMARY KEY (listing_id, game_id)
+	PRIMARY KEY (listing_id, game_id),
+	index_start int NOT NULL,
+	index_end int NOT NULL
 );
 
 CREATE TABLE listings_accessories (
 	listing_id int NOT NULL REFERENCES listings(id),
 	accessory_id int NOT NULL REFERENCES accessories(id),
-	PRIMARY KEY (listing_id, accessory_id)
+	PRIMARY KEY (listing_id, accessory_id),
+	index_start int NOT NULL,
+	index_end int NOT NULL
+
 );
 
 CREATE TABLE listings_accessory_variations (
 	listing_id int NOT NULL REFERENCES listings(id),
 	accessory_variation_id int NOT NULL REFERENCES accessory_variations(id),
-	PRIMARY KEY (listing_id, accessory_variation_id)
+	PRIMARY KEY (listing_id, accessory_variation_id),
+	index_start int NOT NULL,
+	index_end int NOT NULL
 );

@@ -3,6 +3,7 @@ import os
 from boardwatch_models import Listing, Platform, PlatformEdition
 from dotenv import load_dotenv, find_dotenv
 import psycopg2 as db
+import pprint
 
 from boardwatch.match.profilers import Profiler
 
@@ -52,7 +53,7 @@ class Match():
 
 		try:
 			if self.item.__class__.__name__ == 'PlatformEdition':
-				cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id) VALUES(%s, %s) RETURNING listing_id, platform_edition_id;""", (self.listing.id, self.item.id,))
+				cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id, index_start, index_end) VALUES(%s, %s, %s, %s) RETURNING listing_id, platform_edition_id;""", (self.listing.id, self.item.id, self.start, self.end))
 				conn.commit()
 			else:
 				raise Exception()
@@ -85,22 +86,7 @@ class Match():
 
 		for listing in Listing.get_all():
 			for edition in PlatformEdition.get_all():
-				# cls.search_for_matches(listing, edition)
-
-				searchtexts = profiler.build_string_matches(edition)
-
-				for degree in searchtexts.keys():
-					# for each listing, iterate through all searchable text segments
-					for searchtext in searchtexts[degree]:
-						for text in [listing.title, listing.body]:
-							# evaluate if preliminary match on spot (wherever hot text within listing happens to be)
-							try:
-								match_index = text.index(searchtext)
-								print('FOUND ' + searchtext + ' @ ' + str(match_index))
-								match = Match(score=1, start=match_index, end=match_index+len(searchtext), item=edition, listing=listing)
-								match.add_to_registry()
-							except Exception:
-								pass
+				cls.search_for_matches(listing, edition)
 
 	@classmethod
 	def remove_competing_matches(cls):
@@ -140,6 +126,8 @@ class Match():
 		"""
 		if type(item).__name__ == 'PlatformEdition':
 			cls.search_for_platform_edition_matches(listing, item)
+		else:
+			raise Exception()
 
 	@classmethod
 	def search_for_platform_edition_matches(cls, listing, edn):
@@ -191,16 +179,18 @@ class Match():
 		if edn.name and (edn.official_color or platform.model_no):
 			hottexts['weak'].append(f"""{edn.name}""")
 		if edn.official_color and edn.official_color not in edn.colors:
-			hottexts['strong'].append(f"""{edn.official_color}""")
+			hottexts['minor'].append(f"""{edn.official_color}""")
+
+		pprint.pprint(hottexts)
 		
-		findings = list()
+		# TODO: split up function so components are testable
 		
 		for degree in hottexts.keys():
 			for hottext in hottexts[degree]:
 				for text in [listing.title, listing.body]:
 					search_start_index = 0
-					while search_start_index < len(hottext):
-						# search progressively further in to listing title and body
+					while search_start_index < len(text):
+						# print(edn.id, search_start_index, len(text))
 						# TODO: add brand
 
 						# organize two lists?
@@ -208,9 +198,13 @@ class Match():
 						# one for corresponding lists of anti-match search protocols
 						try:
 							match_index = text[search_start_index::].index(hottext)
-							print('FOUND ' + hottext + ' @ ' + str(match_index + search_start_index))
-							print(text[search_start_index+match_index::search_start_index+match_index+len(hottext)])
+							# print('FOUND ' + hottext + ' @ ' + str(match_index + search_start_index))
+							# print(text[search_start_index+match_index::search_start_index+match_index+len(hottext)])
 							match = Match(score=cls.MATCH_MULTIPLIERS[degree], start=match_index+search_start_index, end=search_start_index+match_index+len(hottext), item=edn, listing=listing)
-							findings.append(match)
+
+							if match.score > cls.MATCH_SCORE_THRESHOLD:
+								match.add_to_registry()
+
+							search_start_index = match_index + search_start_index + 1
 						except Exception:
-							search_start_index = len(hottext)
+							search_start_index = len(text)
