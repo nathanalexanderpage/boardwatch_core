@@ -96,6 +96,51 @@ class Mailer():
 				# Platform Name
 				this_platform_name = f'\n<h3>{platform.name}</h3>'
 
+				message_text_this_platform_general = ''
+				message_text_this_platform_list = ''
+
+				platform_general_list_start = '\n<ul style="padding: 0; list-style: none;">'
+				if self.platform_presences_per_platform.get(platform.id):
+					listing_ct = 0
+					for listing_id in self.platform_presences_per_platform.get(platform.id):
+						listing = Listing.get_by_id(listing_id)
+						if listing is not None:
+							listing_ct += 1
+
+							# listing title
+							listing_title = None
+							if listing.title is None:
+								listing_title = '(untitled)'
+							else:
+								listing_title = listing.title
+
+							# listing price
+							listing_price = None
+							if listing.price is None:
+								listing_price = '(price not listed)'
+							else:
+								listing_price = str(listing.price)
+
+							# listing URL
+							listing_url = listing.url
+
+							# listing datetime
+							listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')
+
+							message_text_this_platform_list = message_text_this_platform_list + f"""
+							\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
+							\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
+							\n</span>
+							\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
+							\n</li>
+							"""
+				platform_general_list_end = '\n</ul>'
+
+				if len(message_text_this_platform_list) > 0:
+					message_text_this_platform_general = message_text_this_platform_general + f"""{platform_general_list_start}\n{message_text_this_platform_list}\n{platform_general_list_end}"""
+
+
+
 				message_text_all_editions = ''
 
 				if self.platform_editions.get(platform.id):
@@ -161,11 +206,17 @@ class Mailer():
 						# add edition message text
 						message_text_all_editions = message_text_all_editions + message_text_this_edition
 
-				if len(message_text_all_editions) > 0:
+				if len(message_text_all_editions) > 0 or len(message_text_this_platform_general) > 0:
 					# add platform title
 					message_text_this_platform = message_text_this_platform + this_platform_name
-					# add platform editions message text
-					message_text_this_platform = message_text_this_platform + message_text_all_editions
+					if len(message_text_this_platform_general) > 0:
+						products_matched_ct += 1
+						general_platform_matches_title = f'\n<h4>General</h4>'
+						# add platform generic message text
+						message_text_this_platform = message_text_this_platform + general_platform_matches_title + message_text_this_platform_general
+					if len(message_text_all_editions) > 0:
+						# add platform editions message text
+						message_text_this_platform = message_text_this_platform + message_text_all_editions
 					
 			if len(message_text_this_platform) > 0:
 				# add platform editions message text
