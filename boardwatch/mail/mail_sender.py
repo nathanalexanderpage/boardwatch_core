@@ -22,6 +22,7 @@ pp = pprint.PrettyPrinter(indent=2)
 
 class Mailer():
 	pe_presences_per_pe = None
+	platform_presences_per_platform = None
 
 	def __init__(self, user, platforms, platform_editions, games, accessories):
 		self.user = user
@@ -243,3 +244,10 @@ class Mailer():
 		Add reference to dictionary of applicable PlatformEdition presences.
 		"""
 		cls.pe_presences_per_pe = pe_presences_per_pe
+
+	@classmethod
+	def calibrate_platform_presences(cls, platform_presences_per_platform):
+		"""
+		Add reference to dictionary of applicable PlatformEdition presences.
+		"""
+		cls.platform_presences_per_platform = platform_presences_per_platform

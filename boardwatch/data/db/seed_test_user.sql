@@ -58,3 +58,14 @@ SELECT
 		ORDER BY pe.id)
 	AS x ON x.id = pe.id
 	ORDER BY user_id, gen.id, png.name, platform_family, platform;
+
+SELECT
+	wp.user_id as user_id,
+	p.name AS platform,
+	p.id AS p_id,
+	p.model_no AS model_no
+	FROM watchlist_platforms as wp
+	JOIN platforms AS p ON wp.platform_id = p.id
+	JOIN platform_families AS pf ON pf.id = p.platform_family_id
+	LEFT JOIN platform_name_groups AS png ON png.id = p.name_group_id
+	JOIN generations AS gen ON gen.id = pf.generation;

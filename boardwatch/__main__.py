@@ -53,16 +53,31 @@ Match.insert_all_to_db()
 # pull platform edition watches from db
 user_pe_watches = DataPuller.pull_platform_edition_watches()
 
+print('user_pe_watches')
 pp.pprint(user_pe_watches)
 
 # pull platform edition presences from db
 pe_presences_per_pe = DataPuller.pull_platform_edition_presences()
 
+print('pe_presences_per_pe')
 pp.pprint(pe_presences_per_pe)
+
+# pull platform edition watches from db
+user_platform_watches = DataPuller.pull_platform_watches()
+
+print('user_platform_watches')
+pp.pprint(user_platform_watches)
+
+# pull platform presences from db
+platform_presences_per_platform = DataPuller.pull_platform_presences()
+
+print('platform_presences_per_platform')
+pp.pprint(platform_presences_per_platform)
 
 # calibrate Mailer class to platform edition presences
 Mailer.calibrate_pe_presences(pe_presences_per_pe)
-del pe_presences_per_pe
+Mailer.calibrate_platform_presences(platform_presences_per_platform)
+del pe_presences_per_pe, platform_presences_per_platform
 
 # pull all users from db
 DataPuller.pull_users()
@@ -70,7 +85,7 @@ DataPuller.pull_users()
 # iterate through user_pe_watches, sending e-mail notification for each user
 for user_id in user_pe_watches:
 	user = User.get_by_id(user_id)
-	mailer = Mailer(user=user, platforms=None, platform_editions=user_pe_watches.get(user.id), games=None, accessories=None)
+	mailer = Mailer(user=user, platforms=user_platform_watches.get(user.id), platform_editions=user_pe_watches.get(user.id), games=None, accessories=None)
 	is_user_mail_html_compatible = True
 	mailer.send_mail(is_user_mail_html_compatible)
 del user_pe_watches

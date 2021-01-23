@@ -143,6 +143,33 @@ class DataPuller():
 		return user_pe_watches
 
 	@staticmethod
+	def pull_platform_watches():
+		cur = conn.cursor()
+
+		# loop through users. send e-mail notifications only for those whose settings indicate that preference.
+		cur.execute("""SELECT wp.user_id as user_id, p.name AS platform, p.id AS p_id, p.model_no AS model_no FROM watchlist_platforms as wp JOIN platforms AS p ON wp.platform_id = p.id JOIN platform_families AS pf ON pf.id = p.platform_family_id LEFT JOIN platform_name_groups AS png ON png.id = p.name_group_id JOIN generations AS gen ON gen.id = pf.generation;""")
+		raw_platform_watches = cur.fetchall()
+		cur.close()
+
+		platform_watches = []
+
+		for watch in raw_platform_watches:
+			platform_watches.append({
+				'user_id': watch[0],
+				'platform': watch[1],
+				'watched_platform_id': watch[2],
+			})
+
+		user_platform_watches = {}
+
+		for watch in platform_watches:
+			if watch['user_id'] not in user_platform_watches:
+				user_platform_watches[watch['user_id']] = []
+			user_platform_watches[watch['user_id']].append(watch['watched_platform_id'])
+		
+		return user_platform_watches
+
+	@staticmethod
 	def pull_platform_edition_presences():
 		"""
 		Returns product presences, organized in dict (keys are pe_id; values are listing_id)
@@ -170,3 +197,32 @@ class DataPuller():
 		del pe_presences
 			
 		return pe_presences_per_pe
+
+	@staticmethod
+	def pull_platform_presences():
+		"""
+		Returns product presences, organized in dict (keys are p_id; values are listing_id)
+		"""
+		cur = conn.cursor()
+		cur.execute("""SELECT listing_id, platform_id FROM listings_platforms;""")
+		raw_platform_presences = cur.fetchall()
+		cur.close()
+
+		platform_presences = []
+
+		for presence in raw_platform_presences:
+			platform_presences.append({
+				'listing_id': presence[0],
+				'platform_id': presence[1]
+			})
+		del raw_platform_presences
+
+		platform_presences_per_pe = {}
+
+		for presence in platform_presences:
+			if presence['platform_id'] not in platform_presences_per_pe:
+				platform_presences_per_pe[presence['platform_id']] = list()
+			platform_presences_per_pe[presence['platform_id']].append(presence['listing_id'])
+		del platform_presences
+			
+		return platform_presences_per_pe

@@ -55,6 +55,10 @@ class Match():
 			if self.item.__class__.__name__ == 'PlatformEdition':
 				cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id, index_start, index_end) VALUES(%s, %s, %s, %s) RETURNING listing_id, platform_edition_id;""", (self.listing.id, self.item.id, self.start, self.end))
 				conn.commit()
+			elif self.item.__class__.__name__ == 'Platform':
+				print('\t\t\t\t INSERTING ' + str(self.item))
+				cur.execute("""INSERT INTO listings_platforms (listing_id, platform_id, index_start, index_end) VALUES(%s, %s, %s, %s) RETURNING listing_id, platform_id;""", (self.listing.id, self.item.id, self.start, self.end))
+				conn.commit()
 			else:
 				raise Exception()
 		finally:
@@ -87,6 +91,8 @@ class Match():
 		for listing in Listing.get_all():
 			for edition in PlatformEdition.get_all():
 				cls.search_for_matches(listing, edition)
+			for platform in Platform.get_all():
+				cls.search_for_matches(listing, platform)
 
 	@classmethod
 	def remove_competing_matches(cls):
@@ -111,9 +117,14 @@ class Match():
 		"""
 		Insert all matches contained within Match class registry into database.
 		"""
+
+		pprint.pprint('cls.get_all()')
+		pprint.pprint(cls.get_all())
+
 		for match_catalog_for_listing in cls.get_all().values():
 			for product_class_matches in match_catalog_for_listing.values():
 				for match in product_class_matches.values():
+					print(match.item)
 					try:
 						match.insert_into_db()
 					except Exception:
@@ -126,6 +137,8 @@ class Match():
 		"""
 		if type(item).__name__ == 'PlatformEdition':
 			cls.search_for_platform_edition_matches(listing, item)
+		elif type(item).__name__ == 'Platform':
+			cls.search_for_platform_matches(listing, item)
 		else:
 			raise Exception()
 
@@ -197,10 +210,76 @@ class Match():
 						# one for base search texts
 						# one for corresponding lists of anti-match search protocols
 						try:
-							match_index = text[search_start_index::].index(hottext)
+							match_index = text[search_start_index:].index(hottext)
 							# print('FOUND ' + hottext + ' @ ' + str(match_index + search_start_index))
-							# print(text[search_start_index+match_index::search_start_index+match_index+len(hottext)])
+							# print(text[search_start_index+match_index:search_start_index+match_index+len(hottext)])
 							match = Match(score=cls.MATCH_MULTIPLIERS[degree], start=match_index+search_start_index, end=search_start_index+match_index+len(hottext), item=edn, listing=listing)
+
+							if match.score > cls.MATCH_SCORE_THRESHOLD:
+								match.add_to_registry()
+
+							search_start_index = match_index + search_start_index + 1
+						except Exception:
+							search_start_index = len(text)
+
+	@classmethod
+	def search_for_platform_matches(cls, listing, platform):
+		hottexts = {
+			'exact': list(),
+			'strong': list(),
+			'weak': list(),
+			'minor': list()
+		}
+		
+		storage_capacity = None
+		storage_capacity_low = None
+		storage_capacity_high = None
+
+		index_hyphen = None
+
+		if platform.storage_capacity:
+			try:
+				index_hyphen = platform.storage_capacity.index('-')
+				storage_capacity_low = platform.storage_capacity[:index_hyphen]
+				storage_capacity_high = platform.storage_capacity[index_hyphen+1:]
+			except Exception:
+				storage_capacity = platform.storage_capacity
+
+		if platform.name:
+			hottexts['strong'].append(f"""{platform.name}""")
+		if platform.model_no:
+			hottexts['exact'].append(f"""{platform.model_no}""")
+		if storage_capacity and storage_capacity != 'n/a' and platform.name:
+			hottexts['exact'].append(f"""{storage_capacity} {platform.name}""")
+			hottexts['exact'].append(f"""{platform.name} {storage_capacity}""")
+		if storage_capacity_low and platform.name:
+			hottexts['exact'].append(f"""{storage_capacity_low} {platform.name}""")
+			hottexts['exact'].append(f"""{platform.name} {storage_capacity_low}""")
+		if storage_capacity_high and platform.name:
+			hottexts['exact'].append(f"""{storage_capacity_high} {platform.name}""")
+			hottexts['exact'].append(f"""{platform.name} {storage_capacity_high}""")
+
+		pprint.pprint(hottexts)
+		
+		# TODO: split up function so components are testable
+		
+		for degree in hottexts.keys():
+			for hottext in hottexts[degree]:
+				for text in [listing.title, listing.body]:
+					search_start_index = 0
+					while search_start_index < len(text):
+						# print(platform.id, search_start_index, len(text))
+						# TODO: add brand
+
+						# organize two lists?
+						# one for base search texts
+						# one for corresponding lists of anti-match search protocols
+						try:
+							# print(hottext + '  in  ' + text[search_start_index::] + '  ?')
+							match_index = text[search_start_index:].index(hottext)
+							print('FOUND ' + hottext + ' @ ' + str(match_index + search_start_index))
+							print(text[search_start_index+match_index:search_start_index+match_index+len(hottext)])
+							match = Match(score=cls.MATCH_MULTIPLIERS[degree], start=match_index+search_start_index, end=search_start_index+match_index+len(hottext), item=platform, listing=listing)
 
 							if match.score > cls.MATCH_SCORE_THRESHOLD:
 								match.add_to_registry()
