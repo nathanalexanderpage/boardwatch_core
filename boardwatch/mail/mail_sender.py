@@ -106,34 +106,7 @@ class Mailer():
 						listing = Listing.get_by_id(listing_id)
 						if listing is not None:
 							listing_ct += 1
-
-							# listing title
-							listing_title = None
-							if listing.title is None:
-								listing_title = '(untitled)'
-							else:
-								listing_title = listing.title
-
-							# listing price
-							listing_price = None
-							if listing.price is None:
-								listing_price = '(price not listed)'
-							else:
-								listing_price = str(listing.price)
-
-							# listing URL
-							listing_url = listing.url
-
-							# listing datetime
-							listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')
-
-							message_text_this_platform_list = message_text_this_platform_list + f"""
-							\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
-							\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
-							\n</span>
-							\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
-							\n</li>
-							"""
+							message_text_this_platform_list = message_text_this_platform_list + Mailer.create_listing_html(listing, listing_ct)
 				platform_general_list_end = '\n</ul>'
 
 				if len(message_text_this_platform_list) > 0:
@@ -164,34 +137,7 @@ class Mailer():
 
 								if listing is not None:
 									listing_ct += 1
-
-									# listing title
-									listing_title = None
-									if listing.title is None:
-										listing_title = '(untitled)'
-									else:
-										listing_title = listing.title
-
-									# listing price
-									listing_price = None
-									if listing.price is None:
-										listing_price = '(price not listed)'
-									else:
-										listing_price = str(listing.price)
-
-									# listing URL
-									listing_url = listing.url
-
-									# listing datetime
-									listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')
-
-									message_text_this_edition_listings = message_text_this_edition_listings + f"""
-									\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
-									\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
-									\n</span>
-									\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
-									\n</li>
-									"""
+									message_text_this_edition_listings = message_text_this_edition_listings + Mailer.create_listing_html(listing, listing_ct)
 
 							editions_list_end = '\n</ul>'
 
@@ -229,6 +175,41 @@ class Mailer():
 			message_text_matches = message_text_matches + message_text_all_platforms
 		
 		return message_text_matches, products_matched_ct
+
+	@staticmethod
+	def create_listing_html(listing, listing_ct):
+		listing_html = ''
+
+		if listing is not None:
+			# listing title
+			listing_title = None
+			if listing.title is None:
+				listing_title = '(untitled)'
+			else:
+				listing_title = listing.title
+
+			# listing price
+			listing_price = None
+			if listing.price is None:
+				listing_price = '(price not listed)'
+			else:
+				listing_price = str(listing.price)
+
+			# listing URL
+			listing_url = listing.url
+
+			# listing datetime
+			listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')
+
+			listing_html = listing_html + f"""
+			\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
+			\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
+			\n</span>
+			\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
+			\n</li>
+			"""
+
+		return listing_html
 
 	def read_template(self, filename):
 		with open(filename, 'r', encoding='utf-8') as template_file:
