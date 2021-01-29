@@ -12,6 +12,8 @@ from string import Template
 from boardwatch_models import Board, Listing, Platform, PlatformEdition, PlatformNameGroup, User
 from dotenv import load_dotenv
 
+from boardwatch.match.match import Match
+
 load_dotenv()
 GMAIL_ADDRESS = os.getenv('GMAIL_ADDRESS')
 GMAIL_PASSWORD = os.getenv('GMAIL_PASSWORD')
@@ -106,7 +108,8 @@ class Mailer():
 						listing = Listing.get_by_id(listing_id)
 						if listing is not None:
 							listing_ct += 1
-							message_text_this_platform_list = message_text_this_platform_list + Mailer.create_listing_html(listing, listing_ct)
+							match = Match.get_by_info(listing, platform)
+							message_text_this_platform_list = message_text_this_platform_list + Mailer.create_listing_html(match, listing_ct)
 				platform_general_list_end = '\n</ul>'
 
 				if len(message_text_this_platform_list) > 0:
@@ -137,7 +140,8 @@ class Mailer():
 
 								if listing is not None:
 									listing_ct += 1
-									message_text_this_edition_listings = message_text_this_edition_listings + Mailer.create_listing_html(listing, listing_ct)
+									match = Match.get_by_info(listing, edition)
+									message_text_this_edition_listings = message_text_this_edition_listings + Mailer.create_listing_html(match, listing_ct)
 
 							editions_list_end = '\n</ul>'
 
@@ -177,8 +181,10 @@ class Mailer():
 		return message_text_matches, products_matched_ct
 
 	@staticmethod
-	def create_listing_html(listing, listing_ct):
+	def create_listing_html(match, listing_ct):
 		listing_html = ''
+
+		listing = match.listing
 
 		if listing is not None:
 			# listing title
@@ -198,6 +204,9 @@ class Mailer():
 			# listing URL
 			listing_url = listing.url
 
+			# listing text that triggered the match
+			listing_hottext = listing.body[match.start:match.end]
+
 			# listing datetime
 			listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')
 
@@ -205,6 +214,7 @@ class Mailer():
 			\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
 			\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
 			\n</span>
+			\n<p>"...<span style="background-color: yellow;">{listing_hottext}</span>..."</p>
 			\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
 			\n</li>
 			"""

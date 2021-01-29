@@ -10,11 +10,11 @@ import psycopg2 as db
 
 from common.board_site_enums import board_sites
 from data.puller import DataPuller
-from mail.mail_sender import Mailer
-from match.match import Match
-from match.preppers import Prepper
-from scrape.populate_listings import ListingPopulator
-from scrape.listing_pop_maker import ListingPopulatorMaker
+from boardwatch.mail.mail_sender import Mailer
+from boardwatch.match.match import Match
+from boardwatch.match.preppers import Prepper
+from boardwatch.scrape.populate_listings import ListingPopulator
+from boardwatch.scrape.listing_pop_maker import ListingPopulatorMaker
 
 pp = pprint.PrettyPrinter()
 
@@ -49,6 +49,7 @@ DataPuller.pull_listings()
 Match.find_matches()
 Match.remove_competing_matches()
 Match.insert_all_to_db()
+Match.clear_registry()
 
 # pull platform edition watches from db
 user_pe_watches = DataPuller.pull_platform_edition_watches()
@@ -81,6 +82,8 @@ del pe_presences_per_pe, platform_presences_per_platform
 
 # pull all users from db
 DataPuller.pull_users()
+
+pprint.pprint(Match.get_all())
 
 # iterate through user_pe_watches, sending e-mail notification for each user
 for user_id in user_pe_watches:

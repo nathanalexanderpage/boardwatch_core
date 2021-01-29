@@ -15,7 +15,7 @@ POSTGRESQL_HOST = os.getenv('POSTGRESQL_HOST')
 POSTGRESQL_DBNAME = os.getenv('POSTGRESQL_DBNAME')
 
 class Match():
-	registry = {}
+	registry = dict()
 
 	MATCH_SCORE_THRESHOLD = 1.5
 	MATCH_SCORE_DEFAULT = 1
@@ -57,14 +57,20 @@ class Match():
 
 		try:
 			if self.item.__class__.__name__ == 'PlatformEdition':
-				cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id, index_start, index_end) VALUES(%s, %s, %s, %s) RETURNING listing_id, platform_edition_id;""", (self.listing.id, self.item.id, self.start, self.end))
+				cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id, index_start, index_end, score) VALUES(%s, %s, %s, %s, %s) RETURNING listing_id, platform_edition_id;""", (self.listing.id, self.item.id, self.start, self.end, self.score))
 				conn.commit()
+				query_result = cur.fetchone()
+				pprint.pprint(query_result)
 			elif self.item.__class__.__name__ == 'Platform':
 				print('\t\t\t\t INSERTING ' + str(self.item))
-				cur.execute("""INSERT INTO listings_platforms (listing_id, platform_id, index_start, index_end) VALUES(%s, %s, %s, %s) RETURNING listing_id, platform_id;""", (self.listing.id, self.item.id, self.start, self.end))
+				cur.execute("""INSERT INTO listings_platforms (listing_id, platform_id, index_start, index_end, score) VALUES(%s, %s, %s, %s, %s) RETURNING listing_id, platform_id;""", (self.listing.id, self.item.id, self.start, self.end, self.score))
 				conn.commit()
+				query_result = cur.fetchone()
+				print('\t\tquery_result = ' + str(query_result))
 			else:
 				raise Exception()
+		except Exception as error:
+			print(error)
 		finally:
 			cur.close()
 
@@ -83,6 +89,13 @@ class Match():
 		Returns registry of all matches (a dict sorted by listing ID).
 		"""
 		return cls.registry
+
+	@classmethod
+	def get_by_info(cls, listing, item):
+		"""
+		Returns single match based on lookup criteria.
+		"""
+		return cls.registry[listing.id][item.__class__.__name__][item.id]
 
 	@classmethod
 	def find_matches(cls):
