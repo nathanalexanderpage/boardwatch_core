@@ -47,6 +47,10 @@ class Match():
 	def remove_from_registry(self):
 		del Match.registry[self.listing.id][self.item.__class__.__name__][self.item.id]
 
+	@classmethod
+	def clear_registry(cls):
+		cls.registry = dict()
+
 	def insert_into_db(self):
 		conn = db.connect(dbname=POSTGRESQL_DBNAME, user=POSTGRESQL_USERNAME, password=POSTGRESQL_PASSWORD, host=POSTGRESQL_HOST, port=POSTGRESQL_PORT)
 		cur = conn.cursor()
