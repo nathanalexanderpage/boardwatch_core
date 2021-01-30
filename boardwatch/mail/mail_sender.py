@@ -205,7 +205,7 @@ class Mailer():
 			listing_url = listing.url
 
 			# listing text that triggered the match
-			listing_hottext = listing.body[match.start:match.end]
+			listing_hottext = listing.body[match.start:match.end] if match.is_matched_via_body_text else listing.title[match.start:match.end]
 
 			# listing datetime
 			listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')

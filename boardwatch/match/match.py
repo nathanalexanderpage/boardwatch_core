@@ -27,11 +27,12 @@ class Match():
 		'minor': 1.15
 	}
 
-	def __init__(self, score, start, end, item, listing):
+	def __init__(self, score, is_matched_via_body_text, start, end, item, listing):
 		"""
 		Create a new match object.
 		"""
 		self.score = score
+		self.is_matched_via_body_text = is_matched_via_body_text
 		self.start = start
 		self.end = end
 		self.item = item
@@ -57,13 +58,13 @@ class Match():
 
 		try:
 			if self.item.__class__.__name__ == 'PlatformEdition':
-				cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id, index_start, index_end, score) VALUES(%s, %s, %s, %s, %s) RETURNING listing_id, platform_edition_id;""", (self.listing.id, self.item.id, self.start, self.end, self.score))
+				cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id, is_matched_via_body_text, index_start, index_end, score) VALUES(%s, %s, %s, %s, %s, %s) RETURNING listing_id, platform_edition_id;""", (self.listing.id, self.item.id, self.is_matched_via_body_text, self.start, self.end, self.score))
 				conn.commit()
 				query_result = cur.fetchone()
 				pprint.pprint(query_result)
 			elif self.item.__class__.__name__ == 'Platform':
 				print('\t\t\t\t INSERTING ' + str(self.item))
-				cur.execute("""INSERT INTO listings_platforms (listing_id, platform_id, index_start, index_end, score) VALUES(%s, %s, %s, %s, %s) RETURNING listing_id, platform_id;""", (self.listing.id, self.item.id, self.start, self.end, self.score))
+				cur.execute("""INSERT INTO listings_platforms (listing_id, platform_id, is_matched_via_body_text, index_start, index_end, score) VALUES(%s, %s, %s, %s, %s, %s) RETURNING listing_id, platform_id;""", (self.listing.id, self.item.id, self.is_matched_via_body_text, self.start, self.end, self.score))
 				conn.commit()
 				query_result = cur.fetchone()
 				print('\t\tquery_result = ' + str(query_result))
@@ -230,7 +231,8 @@ class Match():
 							match_index = text[search_start_index:].index(hottext)
 							# print('FOUND ' + hottext + ' @ ' + str(match_index + search_start_index))
 							# print(text[search_start_index+match_index:search_start_index+match_index+len(hottext)])
-							match = Match(score=cls.MATCH_MULTIPLIERS[degree], start=match_index+search_start_index, end=search_start_index+match_index+len(hottext), item=edn, listing=listing)
+							is_matched_via_body_text = True if text == listing.body else False
+							match = Match(score=cls.MATCH_MULTIPLIERS[degree], is_matched_via_body_text=is_matched_via_body_text, start=match_index+search_start_index, end=search_start_index+match_index+len(hottext), item=edn, listing=listing)
 
 							if match.score > cls.MATCH_SCORE_THRESHOLD:
 								match.add_to_registry()
@@ -296,11 +298,15 @@ class Match():
 							match_index = text[search_start_index:].index(hottext)
 							print('FOUND ' + hottext + ' @ ' + str(match_index + search_start_index))
 							print(text[search_start_index+match_index:search_start_index+match_index+len(hottext)])
-							match = Match(score=cls.MATCH_MULTIPLIERS[degree], start=match_index+search_start_index, end=search_start_index+match_index+len(hottext), item=platform, listing=listing)
+							is_matched_via_body_text= True if text == listing.body else False
+							print('is_matched_via_body_text')
+							print(is_matched_via_body_text)
+							match = Match(score=cls.MATCH_MULTIPLIERS[degree], is_matched_via_body_text=is_matched_via_body_text, start=match_index+search_start_index, end=search_start_index+match_index+len(hottext), item=platform, listing=listing)
 
 							if match.score > cls.MATCH_SCORE_THRESHOLD:
 								match.add_to_registry()
 
 							search_start_index = match_index + search_start_index + 1
-						except Exception:
+						except Exception as e:
+							print(e)
 							search_start_index = len(text)

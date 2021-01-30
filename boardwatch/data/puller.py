@@ -176,7 +176,7 @@ class DataPuller():
 		Returns product presences, organized in dict (keys are pe_id; values are listing_id)
 		"""
 		cur = conn.cursor()
-		cur.execute("""SELECT listing_id, platform_edition_id, index_start, index_end, score FROM listings_platform_editions;""")
+		cur.execute("""SELECT listing_id, platform_edition_id, is_matched_via_body_text, index_start, index_end, score FROM listings_platform_editions;""")
 		raw_pe_presences = cur.fetchall()
 		cur.close()
 
@@ -186,9 +186,10 @@ class DataPuller():
 			pe_presences.append({
 				'listing_id': presence[0],
 				'platform_edition_id': presence[1],
-				'index_start': presence[2],
-				'index_end': presence[3],
-				'score': presence[4]
+				'is_matched_via_body_text': presence[2],
+				'index_start': presence[3],
+				'index_end': presence[4],
+				'score': presence[5]
 			})
 		del raw_pe_presences
 
@@ -199,7 +200,7 @@ class DataPuller():
 				pe_presences_per_pe[presence['platform_edition_id']] = list()
 			pe_presences_per_pe[presence['platform_edition_id']].append(presence['listing_id'])
 
-			match = Match(score=presence['score'], start=presence['index_start'], end=presence['index_end'], item=PlatformEdition.get_by_id(presence['platform_edition_id']), listing=Listing.get_by_id(presence['listing_id']))
+			match = Match(score=presence['score'], is_matched_via_body_text=presence['is_matched_via_body_text'], start=presence['index_start'], end=presence['index_end'], item=PlatformEdition.get_by_id(presence['platform_edition_id']), listing=Listing.get_by_id(presence['listing_id']))
 			match.add_to_registry()
 			
 		print('inner Match')
@@ -215,7 +216,7 @@ class DataPuller():
 		Returns product presences, organized in dict (keys are p_id; values are listing_id)
 		"""
 		cur = conn.cursor()
-		cur.execute("""SELECT listing_id, platform_id, index_start, index_end, score FROM listings_platforms;""")
+		cur.execute("""SELECT listing_id, platform_id, is_matched_via_body_text, index_start, index_end, score FROM listings_platforms;""")
 		raw_platform_presences = cur.fetchall()
 		cur.close()
 
@@ -225,9 +226,10 @@ class DataPuller():
 			platform_presences.append({
 				'listing_id': presence[0],
 				'platform_id': presence[1],
-				'index_start': presence[2],
-				'index_end': presence[3],
-				'score': presence[4]
+				'is_matched_via_body_text': presence[2],
+				'index_start': presence[3],
+				'index_end': presence[4],
+				'score': presence[5]
 			})
 		del raw_platform_presences
 
@@ -238,7 +240,7 @@ class DataPuller():
 				platform_presences_per_pe[presence['platform_id']] = list()
 			platform_presences_per_pe[presence['platform_id']].append(presence['listing_id'])
 
-			match = Match(score=presence['score'], start=presence['index_start'], end=presence['index_end'], item=Platform.get_by_id(presence['platform_id']), listing=Listing.get_by_id(presence['listing_id']))
+			match = Match(score=presence['score'], is_matched_via_body_text=presence['is_matched_via_body_text'], start=presence['index_start'], end=presence['index_end'], item=Platform.get_by_id(presence['platform_id']), listing=Listing.get_by_id(presence['listing_id']))
 			match.add_to_registry()
 
 		del platform_presences
