@@ -195,11 +195,11 @@ class Mailer():
 				listing_title = listing.title
 
 			# listing price
-			listing_price = None
+			listing_price_code = ''
 			if listing.price is None:
-				listing_price = '(price not listed)'
+				listing_price_code = """<span style="display: inline-block; padding: 2px; background-color: white; border: 1px solid darkgrey; border-radius: 3px; font-size: 0.8em; color: #3b3b3b">price not listed</span>"""
 			else:
-				listing_price = str(listing.price)
+				listing_price_code = f"""<span style="display: inline-block; padding: 2px; background-color: white; border: 1px solid darkgrey; border-radius: 3px; color: green; font-weight: bold;">{str(listing.price)}</span>"""
 
 			# listing URL
 			listing_url = listing.url
@@ -216,15 +216,15 @@ class Mailer():
 			else:
 				listing_title_code = listing_title_code + f"""{listing_title[:match.start]}<span style="text-decoration: 3px orange underline;">{listing_title[match.start:match.end]}</span>{listing_title[match.end:]}"""
 
-			flagged_hottext = ''
+			flagged_hottext_code = ''
 			if match.is_matched_via_body_text:
-				flagged_hottext = flagged_hottext + f"""<p>"...<span style="background-color: yellow;">{listing_hottext}</span>..."</p>"""
+				flagged_hottext_code = flagged_hottext_code + f"""<p>"...<span style="background-color: yellow;">{listing_hottext}</span>..."</p>"""
 
 			listing_html = listing_html + f"""
 			\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
-			\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black; text-decoration: underline;">{listing_title_code}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
+			\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black; text-decoration: underline;">{listing_title_code}</a> – {listing_price_code}
 			\n</span>
-			\n{flagged_hottext}
+			\n{flagged_hottext_code}
 			\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
 			\n</li>
 			"""
