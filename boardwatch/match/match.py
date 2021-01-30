@@ -60,18 +60,19 @@ class Match():
 			if self.item.__class__.__name__ == 'PlatformEdition':
 				cur.execute("""INSERT INTO listings_platform_editions (listing_id, platform_edition_id, is_matched_via_body_text, index_start, index_end, score) VALUES(%s, %s, %s, %s, %s, %s) RETURNING listing_id, platform_edition_id;""", (self.listing.id, self.item.id, self.is_matched_via_body_text, self.start, self.end, self.score))
 				conn.commit()
-				query_result = cur.fetchone()
-				pprint.pprint(query_result)
+				# query_result = cur.fetchone()
+				# pprint.pprint(query_result)
 			elif self.item.__class__.__name__ == 'Platform':
-				print('\t\t\t\t INSERTING ' + str(self.item))
+				# print('\t\t\t\t INSERTING ' + str(self.item))
 				cur.execute("""INSERT INTO listings_platforms (listing_id, platform_id, is_matched_via_body_text, index_start, index_end, score) VALUES(%s, %s, %s, %s, %s, %s) RETURNING listing_id, platform_id;""", (self.listing.id, self.item.id, self.is_matched_via_body_text, self.start, self.end, self.score))
 				conn.commit()
-				query_result = cur.fetchone()
-				print('\t\tquery_result = ' + str(query_result))
+				# query_result = cur.fetchone()
+				# print('\t\tquery_result = ' + str(query_result))
 			else:
 				raise Exception()
 		except Exception as error:
-			print(error)
+			# print(error)
+			pass
 		finally:
 			cur.close()
 
@@ -136,13 +137,13 @@ class Match():
 		Insert all matches contained within Match class registry into database.
 		"""
 
-		pprint.pprint('cls.get_all()')
-		pprint.pprint(cls.get_all())
+		# pprint.pprint('cls.get_all()')
+		# pprint.pprint(cls.get_all())
 
 		for match_catalog_for_listing in cls.get_all().values():
 			for product_class_matches in match_catalog_for_listing.values():
 				for match in product_class_matches.values():
-					print(match.item)
+					# print(match.item)
 					try:
 						match.insert_into_db()
 					except Exception:
@@ -212,7 +213,7 @@ class Match():
 		if edn.official_color and edn.official_color not in edn.colors:
 			hottexts['minor'].append(f"""{edn.official_color}""")
 
-		pprint.pprint(hottexts)
+		# pprint.pprint(hottexts)
 		
 		# TODO: split up function so components are testable
 		
@@ -278,7 +279,7 @@ class Match():
 			hottexts['exact'].append(f"""{storage_capacity_high} {platform.name}""")
 			hottexts['exact'].append(f"""{platform.name} {storage_capacity_high}""")
 
-		pprint.pprint(hottexts)
+		# pprint.pprint(hottexts)
 		
 		# TODO: split up function so components are testable
 		
@@ -296,11 +297,9 @@ class Match():
 						try:
 							# print(hottext + '  in  ' + text[search_start_index::] + '  ?')
 							match_index = text[search_start_index:].index(hottext)
-							print('FOUND ' + hottext + ' @ ' + str(match_index + search_start_index))
-							print(text[search_start_index+match_index:search_start_index+match_index+len(hottext)])
+							# print('FOUND ' + hottext + ' @ ' + str(match_index + search_start_index))
+							# print(text[search_start_index+match_index:search_start_index+match_index+len(hottext)])
 							is_matched_via_body_text= True if text == listing.body else False
-							print('is_matched_via_body_text')
-							print(is_matched_via_body_text)
 							match = Match(score=cls.MATCH_MULTIPLIERS[degree], is_matched_via_body_text=is_matched_via_body_text, start=match_index+search_start_index, end=search_start_index+match_index+len(hottext), item=platform, listing=listing)
 
 							if match.score > cls.MATCH_SCORE_THRESHOLD:
@@ -308,5 +307,5 @@ class Match():
 
 							search_start_index = match_index + search_start_index + 1
 						except Exception as e:
-							print(e)
+							# print(e)
 							search_start_index = len(text)
