@@ -210,11 +210,21 @@ class Mailer():
 			# listing datetime
 			listing_datetime = listing.date_posted.strftime('%I:%M%p on %Y-%m-%d')
 
+			listing_title_code = ''
+			if match.is_matched_via_body_text:
+				listing_title_code = listing_title_code + listing_title
+			else:
+				listing_title_code = listing_title_code + f"""{listing_title[:match.start]}<span style="text-decoration: red wavy underline;">{listing_title[match.start:match.end]}</span>{listing_title[match.end:]}"""
+
+			flagged_hottext = ''
+			if match.is_matched_via_body_text:
+				flagged_hottext = flagged_hottext + f"""<p>"...<span style="background-color: yellow;">{listing_hottext}</span>..."</p>"""
+
 			listing_html = listing_html + f"""
 			\n<li style="margin: 2px 0; border: 3px solid lightgrey; padding: 1em; background-color: #f4f4f4;">
 			\n<span style="font-size: 1.15em;">{listing_ct}. <a href="{listing_url}" style="color: black;">{listing_title}</a> – <span style="color: green; font-weight: bold;">{listing_price}</span>
 			\n</span>
-			\n<p>"...<span style="background-color: yellow;">{listing_hottext}</span>..."</p>
+			\n{flagged_hottext}
 			\n<p><span style="color: #563900;">Posted <time datetime="{str(listing.date_posted)}">{listing_datetime}</time></span></p>
 			\n</li>
 			"""
